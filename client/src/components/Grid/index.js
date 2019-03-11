@@ -1,13 +1,21 @@
 import React from "react";
 
 
-export const Container({ fluid, children }) => {
-    return <div className={`container${fluid ? "-fluid" : ""}`}>{children}</div>;
+export const Container = ({children}) => {
+  return(
+    <div className="container">
+      {children}
+    </div>
+  );
 }
 
 
-export const Row({ fluid, children }) =>{
-  return <div className={`row${fluid ? "-fluid" : ""}`}>{children}</div>;
+export const Row = ({children}) => {
+  return(
+    <div className="row">
+      {children}
+    </div>
+  );
 }
 
 
