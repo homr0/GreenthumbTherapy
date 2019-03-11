@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-function PlantCard(props) {
+const PlantCard = props => {
   return (
     <div className="card">
       <div className="img-container">
@@ -16,6 +16,6 @@ function PlantCard(props) {
       </div>
     </div>
   );
-}
+};
 
 export default PlantCard;
