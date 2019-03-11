@@ -24,7 +24,7 @@ export const Checkbox = props => {
   return (
     <p>
       <label>
-        <input type="checkbox" id={props.id} className="filled-in" />
+        <input type="checkbox" name={props.name} value={props.value} className="filled-in" />
         <span>{props.children}</span>
       </label>
     </p>
