@@ -1,17 +1,33 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Nav()=>{
+const Nav = props => {
   return (
     <nav>
-    <div className="nav-wrapper">
-      <a href="#" class="brand-logo">Greenthumb Therapy</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="questionnaire.html">Questionnaire</a></li>
-        <li><a href="search.html">Search</a></li>
-        <li><a href="user.html">User Page</a></li>
-      </ul>
-    </div>
-  </nav>
+      <div className={"nav-wrapper" + ((props.colorNav) ? " " + props.colorNav : "")}>
+        <a href="/" className="brand-logo">Greenthumb Therapy</a>
+
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li>
+            <Link to="/questionnaire" className={props.colorLink + (window.location.pathname === "/questionnaire" ? " active" : "")}>
+              Questionnaire
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/search" className={props.colorLink + (window.location.pathname === "/search" ? " active" : "")}>
+              Search
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/user" className={props.colorLink + (window.location.pathname === "/user" ? " active" : "")}>
+              User Page
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
   );
 }
 
