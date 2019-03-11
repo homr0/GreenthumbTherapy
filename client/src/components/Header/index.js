@@ -1,6 +1,6 @@
 import React from "react";
 
-function Header({ children }) {
+const Header({ children }) =>{
   return (
     <div>
       <h1>Greenthumb Therapy</h1>
