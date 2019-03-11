@@ -1,27 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Nav = () => {
+const Nav = props => {
   return (
     <nav>
-      <div className="nav-wrapper">
+      <div className={"nav-wrapper" + ((props.colorNav) ? " " + props.colorNav : "")}>
         <a href="/" className="brand-logo">Greenthumb Therapy</a>
 
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li>
-            <Link to="/questionnaire" className={(window.location.pathname === "/questionnaire" ? "active" : "")}>
+            <Link to="/questionnaire" className={props.colorLink + (window.location.pathname === "/questionnaire" ? " active" : "")}>
               Questionnaire
             </Link>
           </li>
 
           <li>
-            <Link to="/search" className={(window.location.pathname === "/search" ? "active" : "")}>
+            <Link to="/search" className={props.colorLink + (window.location.pathname === "/search" ? " active" : "")}>
               Search
             </Link>
           </li>
 
           <li>
-            <Link to="/user" className={(window.location.pathname === "/user" ? "active" : "")}>
+            <Link to="/user" className={props.colorLink + (window.location.pathname === "/user" ? " active" : "")}>
               User Page
             </Link>
           </li>
