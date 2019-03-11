@@ -4,12 +4,12 @@ import "./style.css";
 
 const PlantCard = props => {
   return (
-    <div className={"card " + props.colors}>
+    <div className={"card" + ((props.colorsCard) ? " " +  props.colorsCard : "")}>
       <div className="card-image">
         <img alt={props.name} src={props.image} />
       </div>
 
-      <div className="card-content">
+      <div className={"card-content" + ((props.colorsContent) ? " " +  props.colorsContent : "")}>
         <List>
           <ListItem>
             <strong>Name:</strong> {props.name}
