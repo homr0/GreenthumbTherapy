@@ -1,10 +1,13 @@
 import React from "react";
+import Nav from "../Nav";
 
-const Header({ children }) =>{
+const Header = ({ children }) =>{
   return (
-    <div>
+    <header>
+      <Nav />
+
       <h1>Greenthumb Therapy</h1>
-    </div>
+    </header>
   );
 }
 
