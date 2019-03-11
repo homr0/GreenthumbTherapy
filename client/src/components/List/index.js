@@ -3,14 +3,6 @@ import "./style.css";
 
 
 
-export const List({ children })=> {
-  return (
-    <div className="list-overflow-container">
-      <ul className="list-group">{children}</ul>
-    </div>
-  );
-}
+export const List = ({ list, children }) => (list === "ol") ? <ol className="collection">{children}</ol> : <ul className="collection">{children}</ul>;
 
-export const ListItem({ children })=> {
-  return <li className="list-group-item">{children}</li>;
-}
+export const ListItem = ({ colors, children }) => <li className={"collection-item " + colors}>{children}</li>;
