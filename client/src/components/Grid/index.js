@@ -19,14 +19,9 @@ export const Row = ({children}) => {
 }
 
 
-export const Col({ size, children })=> {
+export const Col =({ size, children })=> {
   return (
-    <div
-      className={size
-        .split(" ")
-        .map(size => "col-" + size)
-        .join(" ")}
-    >
+    <div className={"col " + ((size) ? size : "s12")}>
       {children}
     </div>
   );
