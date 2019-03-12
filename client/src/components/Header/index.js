@@ -6,7 +6,7 @@ const Header = ({ children }) =>{
     <header>
       <Nav
         colorNav="green"
-        colorLink="green darken-1"
+        colorLink="green"
       />
 
       <h1>Greenthumb Therapy</h1>
