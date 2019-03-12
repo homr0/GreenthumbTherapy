@@ -3,9 +3,13 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+<<<<<<< HEAD
 const routes = require("./views");
 const User = require("./models/User");
 const withAuth = require("./middleware");
+=======
+// const routes = require("./views");
+>>>>>>> 3478d945863443efbb864699931dae27bcb79257
 const app = express();
 const PORT = process.env.PORT || 3001;
 const secret = "mysecretsshhh";
@@ -25,6 +29,7 @@ if (process.env.NODE_ENV === "production") {
 // Connect to the Mongo DB
 const mongo_uri = "mongodb://localhost/react-auth";
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/greenthumbtherapy");
 
 app.use(express.static(path.join(__dirname, "public")));
 
