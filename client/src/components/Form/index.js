@@ -24,7 +24,7 @@ export const Checkbox = props => {
   return (
     <p>
       <label>
-        <input type="checkbox" id={props.id} className="filled-in" onChange={props.handleInputChange} />
+        <input type="checkbox" name={props.name} value={props.value} className="filled-in" onChange={props.handleInputChange}  />
         <span>{props.children}</span>
       </label>
     </p>
