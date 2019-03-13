@@ -7,7 +7,7 @@ const Nav = props => {
       <div className={"nav-wrapper" + ((props.colorNav) ? " " + props.colorNav : "")}>
         <a href="/" className="brand-logo">Greenthumb Therapy</a>
 
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <ul id="nav-mobile" className="right hide-on-med-and-down">
           <li>
             <Link to="/questionnaire" className={props.colorLink + (window.location.pathname === "/questionnaire" ? " active" : "")}>
               Questionnaire
