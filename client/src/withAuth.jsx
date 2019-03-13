@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import API from "./utils/API";
 
 export default function withAuth(ComponentToProtect) {
     return class extends Component {
@@ -12,7 +13,7 @@ export default function withAuth(ComponentToProtect) {
         }
 
         componentDidMount() {
-            fetch("/checkToken")
+            API.checkToken()
             .then(res => {
                 if (res.status === 200) {
                     this.setState({ loading: false });
