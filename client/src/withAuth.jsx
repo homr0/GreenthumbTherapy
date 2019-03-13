@@ -13,7 +13,6 @@ export default function withAuth(ComponentToProtect) {
         }
 
         componentDidMount() {
-            fetch("/checkToken")
             API.checkToken()
             .then(res => {
                 if (res.status === 200) {
