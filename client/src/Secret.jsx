@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import API from "./utils/API";
 
 export default class Secret extends Component {
     constructor() {
@@ -9,7 +10,7 @@ export default class Secret extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/secret")
+        API.secretTest()
         .then(res => res.text())
         .then(res => this.setState({message: res}));
     }

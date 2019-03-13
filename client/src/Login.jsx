@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import API from "./utils/API";
 
 export default class Login extends Component {
     constructor(props) {
@@ -18,24 +19,17 @@ export default class Login extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        fetch("/api/authenticate", {
-            method: "POST",
-            body: JSON.stringify(this.state),
-            headers: {
-                "Content-Type": "apllication/json"
-            }
-        })
+        API.loginTest(JSON.stringify(this.state))
         .then(res => {
-            if (res.status === 200) {
-                this.props.history.push("/");
-            } else {
+            if(res.status === 200) this.props.history.push("/");
+            else {
                 const error = new Error(res.error);
                 throw error;
             }
         })
         .catch(err => {
-            console.error(err);
-            alert("Error logging in please try again");
+            console.log(err);
+            alert("Error logging in. Please Try again.");
         });
     }
 

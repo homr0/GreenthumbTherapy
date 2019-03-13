@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import API from "./utils/API";
 
 export default class Home extends Component {
     constructor() {
@@ -9,9 +10,8 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/Home")
-        .then(res => res.text())
-        .then(res => this.setState({message: res}));
+        API.homeTest()
+          .then(res => this.setState({message: res.data}));
     }
 
     render() {
