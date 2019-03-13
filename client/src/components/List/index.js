@@ -1,5 +1,5 @@
 import React from "react";
-import "./style.css";
+// import "./style.css";
 
 export const List = ({ list, children }) => (list === "ol") ? <ol className="collection">{children}</ol> : <ul className="collection">{children}</ul>;
 
