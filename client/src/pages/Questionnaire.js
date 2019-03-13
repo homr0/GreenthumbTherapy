@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import Btn from "../components/Btn";
-import Nav from "../components/Nav";
-import Header from "../components/Header";
+import {Btn} from "../components/Btn";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
+import { List, ListItem, ListHeader } from "../components/List";
 import { Input, Radio, Checkbox } from "../components/Form";
 
 class Questionnaire extends Component {
@@ -18,7 +15,7 @@ class Questionnaire extends Component {
   }
 
   loadPlants = () => {
-    API.getPlants()
+    API.searchPlants()
       .then(res => this.setState({ plants: res.data }))
       .catch(err => console.log(err));
   };
@@ -79,11 +76,6 @@ class Questionnaire extends Component {
 
 
 
-
-
-
-
-
     API.searchPlants(query);
 
     if (this.state.title && this.state.author) {
@@ -103,13 +95,14 @@ class Questionnaire extends Component {
       <Container>
         <Row>
           <Col>
-            <p>Plant Matcher</p>
-
-            <List list="ol">
+            <List>
+              <ListHeader>
+                <h2>Plant Matcher</h2>
+              </ListHeader>
               <ListItem>
                 <Row>
                   <Col>
-                    What type of plant appeals to you?
+                    1. What type of plant appeals to you?
                     {[
                       { value: "flower", label: "Flower" },
                       { value: "edible", label: "Edible" },
@@ -121,17 +114,11 @@ class Questionnaire extends Component {
                       <Radio
                         name="plant_type"
                         value={plant.value}
-                        onChange={() => handleInputChange()}
+                        onChange={() => this.handleInputChange()}
                       >
                         {plant.label}
                       </Radio>
                     ))}
-                    {/* <Radio name="plant_type" value="flower">Flower</Radio><br />
-                        <Radio name="plant_type" value="edible">Edible</Radio><br />
-                        <Radio name="plant_type" value="succulent">Succulent/Cactus</Radio><br />
-                        <Radio name="plant_type" value="tree">Tree</Radio><br />
-                        <Radio name="plant_type" value="shrub">Shrub</Radio><br />
-                        <Radio name="plant_type" value="none">No Preference</Radio> */}
                   </Col>
                 </Row>
               </ListItem>
@@ -139,34 +126,46 @@ class Questionnaire extends Component {
               <ListItem>
                 <Row>
                   <Col>
-                    Where will your plant be located?
-                    <Checkbox name="plant_location" value="bedroom">
-                      Bedroom
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_location" value="office">
-                      Office
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_location" value="kitchen">
-                      Kitchen
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_location" value="bathroom">
-                      Bathroom
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_location" value="livingroom">
-                      Living Room
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_location" value="front">
-                      Front Yard
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_location" value="back">
-                      Backyard
-                    </Checkbox>
+                    2. Where will your plant be located?
+                    {[
+                      { value: "bedroom", label: "Bedroom" },
+                      { value: "office", label: "Office" },
+                      { value: "kitchen", label: "Kitchen" },
+                      { value: "bathroom", label: "Bathroom" },
+                      { value: "livingroom", label: "Living Room" },
+                      { value: "frontyard", label: "Front Yard" },
+                      { value: "backyard", label: "Backyard" }
+                    ].map(plant => (
+                      <Checkbox
+                        name="plant_location"
+                        value={plant.value}
+                        onChange={() => this.handleInputChange()}
+                      >
+                        {plant.label}
+                      </Checkbox>
+                    ))}
+                    </Col>
+                    </Row>
+                    </ListItem>
+              <ListItem>
+                <Row>
+                  <Col>
+                    3. How big do you want your plant to be?
+                    {[
+                      { value: "1", label: " Tiny (&lt;12in)" },
+                      { value: "2", label: " Small (12-24in)" },
+                      { value: "3", label: "Medium (24-36in)" },
+                      { value: "4", label: "Tree Large (&gt;36in)" },
+                      { value: "none", label: "No Preference" }
+                    ].map(plant => (
+                      <Radio
+                        name="plant_height"
+                        value={plant.value}
+                        onChange={() => this.handleInputChange()}
+                      >
+                        {plant.label}
+                      </Radio>
+                    ))}                  
                   </Col>
                 </Row>
               </ListItem>
@@ -174,26 +173,20 @@ class Questionnaire extends Component {
               <ListItem>
                 <Row>
                   <Col>
-                    How big do you want your plant to be?
-                    <Radio name="plant_height" value="1">
-                      Tiny (&lt;12in)
-                    </Radio>
-                    <br />
-                    <Radio name="plant_height" value="2">
-                      Small (12-24in)
-                    </Radio>
-                    <br />
-                    <Radio name="plant_height" value="3">
-                      Medium (24-36in)
-                    </Radio>
-                    <br />
-                    <Radio name="plant_height" value="4">
-                      Large (&gt;36in)
-                    </Radio>
-                    <br />
-                    <Radio name="plant_height" value="none">
-                      No Preference
-                    </Radio>
+                  4.  How much sunlight does your space get during the day?
+                    {[
+                      { value: "intolerant", label: " A lot of sunlight" },
+                      { value: "tolerant", label: " Not a lot of sunlight" },
+                      { value: "adjustable", label: "Adjustable" }      
+                    ].map(plant => (
+                      <Radio
+                        name="plant_light"
+                        value={plant.value}
+                        onChange={() => this.handleInputChange()}
+                      >
+                        {plant.label}
+                      </Radio>
+                    ))}
                   </Col>
                 </Row>
               </ListItem>
@@ -201,18 +194,21 @@ class Questionnaire extends Component {
               <ListItem>
                 <Row>
                   <Col>
-                    How much sunlight does your space get during the day?
-                    <Radio name="plant_light" value="intolerant">
-                      A lot of sunlight
-                    </Radio>
-                    <br />
-                    <Radio name="plant_light" value="tolerant">
-                      Not a lot of sunlight
-                    </Radio>
-                    <br />
-                    <Radio name="plant_light" value="adjustable">
-                      Adjustable
-                    </Radio>
+                   5.  What is the average climate of your space?
+                   {[
+                      { value: "45", label: "FlowerCold (&gt;45F)" },
+                      { value: "60", label: " Warm (45-74F)" },
+                      { value: "75", label: " Hot (&gt;75F)" },
+                      { value: "adjustable", label: "Adjustable" },   
+                    ].map(plant => (
+                      <Radio
+                        name="space_climate"
+                        value={plant.value}
+                        onChange={() => this.handleInputChange()}
+                      >
+                        {plant.label}
+                      </Radio>
+                    ))}
                   </Col>
                 </Row>
               </ListItem>
@@ -220,22 +216,21 @@ class Questionnaire extends Component {
               <ListItem>
                 <Row>
                   <Col>
-                    What is the average climate of your space?
-                    <Radio name="space_climate" value="45">
-                      Cold (&gt;45F)
-                    </Radio>
-                    <br />
-                    <Radio name="space_climate" value="60">
-                      Warm (45-74F)
-                    </Radio>
-                    <br />
-                    <Radio name="space_climate" value="75">
-                      Hot (&gt;75F)
-                    </Radio>
-                    <br />
-                    <Radio name="space_climate" value="adjustable">
-                      Adjustable
-                    </Radio>
+                  6.  Which best describes the weather condition of your space?
+                 {[
+                      { value: "dry", label: "Dry" },
+                      { value: "temperate", label: "Temperate" },
+                      { value: "humid", label: "Humid" },
+                      { value: "adjustable", label: "Adjustable" },
+                    ].map(plant => (
+                      <Radio
+                        name="weather_space"
+                        value={plant.value}
+                        onChange={() => this.handleInputChange()}
+                      >
+                        {plant.label}
+                      </Radio>
+                    ))}
                   </Col>
                 </Row>
               </ListItem>
@@ -243,22 +238,22 @@ class Questionnaire extends Component {
               <ListItem>
                 <Row>
                   <Col>
-                    Which best describes the weather condition of your space?
-                    <Radio name="weather_space" value="dry">
-                      Dry
-                    </Radio>
-                    <br />
-                    <Radio name="weather_space" value="temperate">
-                      Temperate
-                    </Radio>
-                    <br />
-                    <Radio name="weather_space" value="humid">
-                      Humid
-                    </Radio>
-                    <br />
-                    <Radio name="weather_space" value="adjustable">
-                      Adjustable
-                    </Radio>
+                 7.  How often would you like to water your plant?
+                 {[
+                      { value: "daily", label: "Daily" },
+                      { value: "few", label: "Every few days" },
+                      { value: "weekly", label: "Weekly" },
+                      { value: "low", label: "As little as possible" },
+                    ].map(plant => (
+                      <Radio
+                        name="plant_water"
+                        value={plant.value}
+                        onChange={() => this.handleInputChange()}
+                      >
+                        {plant.label}
+                      </Radio>
+                    ))}                 
+                      
                   </Col>
                 </Row>
               </ListItem>
@@ -266,22 +261,26 @@ class Questionnaire extends Component {
               <ListItem>
                 <Row>
                   <Col>
-                    How often would you like to water your plant?
-                    <Radio name="plant_water" value="daily">
-                      Daily
-                    </Radio>
-                    <br />
-                    <Radio name="plant_water" value="few">
-                      Every few days
-                    </Radio>
-                    <br />
-                    <Radio name="plant_water" value="weekly">
-                      Weekly
-                    </Radio>
-                    <br />
-                    <Radio name="plant_water" value="low">
-                      As little as possible
-                    </Radio>
+                    8.  What kind of pets do you have?
+                    {[
+                      { value: "dog", label: "Dog" },
+                      { value: "cat", label: "Cat" },
+                      { value: "rodent", label: "Rodent" },
+                      { value: "rabbit", label: "Rabbit" },
+                      { value: "ferret", label: "Ferret" },
+                      { value: "bird", label: "Bird" },
+                      { value: "reptile", label: "Reptile" },
+                      { value: "fish", label: "Fish" },
+                    ].map(plant => (
+                      <Checkbox
+                        name="plant_pets"
+                        value={plant.value}
+                        onChange={() => this.handleInputChange()}
+                      >
+                        {plant.label}
+                      </Checkbox>
+                    ))}
+                   
                   </Col>
                 </Row>
               </ListItem>
@@ -289,58 +288,24 @@ class Questionnaire extends Component {
               <ListItem>
                 <Row>
                   <Col>
-                    What kind of pets do you have?
-                    <Checkbox name="plant_pets" value="dog">
-                      Dog
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_pets" value="cat">
-                      Cat
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_pets" value="rodent">
-                      Rodent
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_pets" value="rabbit">
-                      Rabbit
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_pets" value="ferret">
-                      Ferret
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_pets" value="bird">
-                      Bird
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_pets" value="reptile">
-                      Reptile
-                    </Checkbox>
-                    <br />
-                    <Checkbox name="plant_pets" value="fish">
-                      Fish
-                    </Checkbox>
+                    9.  Do you have an allergy to pollen?
+                    {[
+                      { value: "yes", label: "Yes" },
+                      { value: "no", label: "No" },
+                    ].map(plant => (
+                      <Radio
+                        name="plant_allergy"
+                        value={plant.value}
+                        onChange={() => this.handleInputChange()}
+                      >
+                        {plant.label}
+                      </Radio>
+                    ))}         
                   </Col>
                 </Row>
               </ListItem>
 
-              <ListItem>
-                <Row>
-                  <Col>
-                    Do you have an allergy to pollen?
-                    <Radio name="plant_allergy" value="yes">
-                      Yes
-                    </Radio>
-                    <br />
-                    <Radio name="plant_allergy" value="no">
-                      No
-                    </Radio>
-                  </Col>
-                </Row>
-              </ListItem>
-
-              <ListItem>
+               <ListItem>
                 <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
               </ListItem>
             </List>
@@ -351,9 +316,9 @@ class Questionnaire extends Component {
           <Col>
             <h1>Your Plant Matches</h1>
 
-            {this.state.plants.map(plant => (
+            {/* {this.state.plants.map(plant => (
               <PlantCard name={plant.name} image={plant.image} />
-            ))}
+            ))} */}
           </Col>
         </Row>
       </Container>
