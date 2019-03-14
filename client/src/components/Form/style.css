@@ -1,0 +1,9 @@
+label.input-list {
+  display: list-item;
+  padding: 0;
+}
+
+label.input-line {
+  display: inline;
+  padding: 0 1rem 0 0;
+}
