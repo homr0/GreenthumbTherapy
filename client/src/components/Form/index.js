@@ -30,3 +30,14 @@ export const Checkbox = props => {
     </p>
   );
 }
+
+export const Select = props => {
+  return (
+    <p>
+      <label>
+        <input type="select" name={props.name} value={props.value} className="input-field col s12" onChange={props.handleInputChange}  />
+        <span>{props.children}</span>
+      </label>
+    </p>
+  );
+}

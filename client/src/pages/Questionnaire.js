@@ -196,7 +196,7 @@ class Questionnaire extends Component {
                   <Col>
                    5.  What is the average climate of your space?
                    {[
-                      { value: "45", label: "FlowerCold (&gt;45F)" },
+                      { value: "45", label: "Cold (&gt;45F)" },
                       { value: "60", label: " Warm (45-74F)" },
                       { value: "75", label: " Hot (&gt;75F)" },
                       { value: "adjustable", label: "Adjustable" },   
@@ -308,6 +308,7 @@ class Questionnaire extends Component {
                <ListItem>
                 <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
               </ListItem>
+
             </List>
           </Col>
         </Row>
@@ -321,6 +322,7 @@ class Questionnaire extends Component {
             ))} */}
           </Col>
         </Row>
+        
       </Container>
     );
   }
