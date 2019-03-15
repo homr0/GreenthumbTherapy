@@ -3,7 +3,7 @@ import {Btn} from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem, ListHeader } from "../components/List";
-import { Input, Radio, Checkbox, Select } from "../components/Form";
+import { Input, Radio, Checkbox} from "../components/Form";
 
 class Search extends Component {
   state = {
@@ -87,23 +87,17 @@ class Search extends Component {
                       { value: "shrub", label: "Shrub" },
                       { value: "none", label: "None" }
                     ].map(plant => (
-                      <Select
+                      <Radio
                         name="plant_type"
                         value={plant.value}
                         onChange={() => this.handleInputChange()}
                       >
                         {plant.label}
-                      </Select>
+                      </Radio>
                     ))}
                   </Col>
                 </Row>
               </ListItem>
-
-              <Input
-                onChange={this.handleInputChange}
-                name="plant_height"
-                placeholder="Number in inches"
-              ></Input>
 
               <ListItem>
                 <Row>
@@ -111,16 +105,17 @@ class Search extends Component {
                  Sunlight needed:
                     {[
                       { value: "intolerant", label: " A lot of sunlight" },
+                      { value: "intermediate", label: " Some sunlight" },
                       { value: "tolerant", label: " Not a lot of sunlight" },
                       { value: "adjustable", label: "Adjustable" }      
                     ].map(plant => (
-                      <Select
+                      <Radio
                         name="plant_light"
                         value={plant.value}
                         onChange={() => this.handleInputChange()}
                       >
                         {plant.label}
-                      </Select>
+                      </Radio>
                     ))}
                   </Col>
                 </Row>
@@ -136,13 +131,13 @@ class Search extends Component {
                       { value: "humid", label: "Humid" },
                       { value: "adjustable", label: "Adjustable" },
                     ].map(plant => (
-                      <Select
+                      <Radio
                         name="weather_space"
                         value={plant.value}
                         onChange={() => this.handleInputChange()}
                       >
                         {plant.label}
-                      </Select>
+                      </Radio>
                     ))}
                   </Col>
                 </Row>
@@ -153,18 +148,18 @@ class Search extends Component {
                   <Col>
                   Temperature needed to grow:
                    {[
-                      { value: "45", label: "Cold (&gt;45F)" },
+                      { value: "45", label: "Cold (<45F)" },
                       { value: "60", label: " Warm (45-74F)" },
-                      { value: "75", label: " Hot (&gt;75F)" },
+                      { value: "75", label: " Hot (>75F)" },
                       { value: "adjustable", label: "Adjustable" },   
                     ].map(plant => (
-                      <Select
+                      <Radio
                         name="space_climate"
                         value={plant.value}
                         onChange={() => this.handleInputChange()}
                       >
                         {plant.label}
-                      </Select>
+                      </Radio>
                     ))}
                   </Col>
                 </Row>

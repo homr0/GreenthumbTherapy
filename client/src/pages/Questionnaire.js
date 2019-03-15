@@ -188,27 +188,6 @@ class Questionnaire extends Component {
               </ListItem>
 
               <ListItem>
-<<<<<<< HEAD
-                <Row>
-                  <Col>
-                   5.  What is the average climate of your space?
-                   {[
-                      { value: "45", label: "Cold (&gt;45F)" },
-                      { value: "60", label: " Warm (45-74F)" },
-                      { value: "75", label: " Hot (&gt;75F)" },
-                      { value: "adjustable", label: "Adjustable" },   
-                    ].map(plant => (
-                      <Radio
-                        name="space_climate"
-                        value={plant.value}
-                        onChange={() => this.handleInputChange()}
-                      >
-                        {plant.label}
-                      </Radio>
-                    ))}
-                  </Col>
-                </Row>
-=======
                 <p>5. What is the average climate of your space?</p>
 
                 {[
@@ -226,7 +205,6 @@ class Questionnaire extends Component {
                     {plant.label}
                   </Radio>
                 ))}
->>>>>>> f83e77ab7b60517f0110774ae9d639a9a4f49c58
               </ListItem>
 
               <ListItem>
