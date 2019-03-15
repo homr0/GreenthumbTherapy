@@ -12,7 +12,8 @@ const PlantSchema = new mongoose.Schema({
   },
 
   scientific_name: {
-    type: String
+    type: String,
+    required: true
   },
 
   image: {
