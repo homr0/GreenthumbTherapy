@@ -2,7 +2,7 @@ import React from "react";
 import { Col } from "../Grid";
 import {List, ListItem} from "../List";
 // import "./style.css";
-import placeholder from "./tulips.jpg";
+import placeholder from "./placeholder.png";
 
 const PlantCard = props => {
   return (
