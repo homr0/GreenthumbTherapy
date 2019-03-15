@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Connect to the Mongo DB
 // const mongo_uri = "mongodb://localhost/react-auth";
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/greenthumbtherapy");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/greenthumbtherapy", {useNewUrlParser: true});
 
 // Add routes for API and for database.
 app.use(routes);
