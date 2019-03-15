@@ -9,11 +9,11 @@ import Header from "./components/Header";
 import Questionnaire from "./pages/Questionnaire";
 // import Search from "./pages/Search";
 // import User from "./pages/User";
-
 // import HomeTest from "./Home";
 // import withAuth from "./withAuth";
 // import SecretTest from "./Secret";
 // import LoginTest from "./Login";
+
 
 class App extends Component {
   render() {
@@ -28,7 +28,7 @@ class App extends Component {
           {/* <Route path="/search" exact component={Search} />
           <Route path="/user" exact component={User} /> */}
 
-          {/* <Route path="/" exact component={HomeTest} />
+          {/*</Switch>{<Route path="/" exact component={HomeTest} />
           <Route path="/secret" exact component={withAuth(SecretTest)} />
           <Route path="/login" exact component={LoginTest} /> */}
         </Switch>
