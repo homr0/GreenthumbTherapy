@@ -305,6 +305,7 @@ class Questionnaire extends Component {
               {this.state.plants.map(plant => (
                 <PlantCard
                   key={plant.id}
+                  id={plant.id}
                   common_name={plant.common_name}
                   scientific_name={plant.scientific_name} />
               ))}
