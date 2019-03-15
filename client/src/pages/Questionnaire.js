@@ -301,7 +301,7 @@ class Questionnaire extends Component {
           <Col>
             <h1>Your Plant Matches</h1>
 
-            <Row>
+            <Row id="plant-results">
               {this.state.plants.map(plant => (
                 <PlantCard
                   key={plant.id}
