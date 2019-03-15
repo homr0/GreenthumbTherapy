@@ -3,7 +3,7 @@ import {Btn} from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem, ListHeader } from "../components/List";
-import { Input, Radio, Checkbox} from "../components/Form";
+import { Input, Radio, Checkbox, Select} from "../components/Form";
 
 class Search extends Component {
   state = {
@@ -11,7 +11,7 @@ class Search extends Component {
   };
 
   componentDidMount() {
-    this.loadPlants();
+    // this.loadPlants();
   }
 
   loadPlants = () => {
@@ -72,29 +72,26 @@ class Search extends Component {
                 onChange={this.handleInputChange}
                 name="plant_height"
                 placeholder="Number in inches"
+                type="number"
               >Height in inches </Input>
               
               
                 <ListItem>
                   <Row>
                     <Col>
-                    Type of Plant:
-                    {[
-                      { value: "flower", label: "Flower" },
-                      { value: "edible", label: "Edible" },
-                      { value: "succulent", label: "Succulent/Cactus" },
-                      { value: "tree", label: "Tree" },
-                      { value: "shrub", label: "Shrub" },
-                      { value: "none", label: "None" }
-                    ].map(plant => (
-                      <Radio
+                    
+                      <Select
                         name="plant_type"
-                        value={plant.value}
-                        onChange={() => this.handleInputChange()}
-                      >
-                        {plant.label}
-                      </Radio>
-                    ))}
+                        options={[
+                          { value: "flower", label: "Flower" },
+                          { value: "edible", label: "Edible" },
+                          { value: "succulent", label: "Succulent/Cactus" },
+                          { value: "tree", label: "Tree" },
+                          { value: "shrub", label: "Shrub" },
+                        ]}
+                        onChange={this.handleInputChange}
+                      >Type of Plant:
+                      </Select>
                   </Col>
                 </Row>
               </ListItem>

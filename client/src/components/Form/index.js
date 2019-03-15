@@ -31,7 +31,7 @@ export const Checkbox = props => {
 export const Select = props => {
   return (
     <div className="input-field col s12">
-      <select>
+      <select name={props.name}>
         {props.options.map(option => <option 
           value={option.value}
           onChange={props.handleInputChange}
