@@ -17,28 +17,32 @@ router.route("/search")
 
         // Gets the individual plant id and checks if it's already in the database.
         response.data.map(plant => {
-          // If the plant is in the database, then pull its information from the database.
-          Plant.findById(plant.id)
-            .then(dbModel => plants.push(dbModel))
-            .catch(err => {
-              console.log(err);
+            plants.push(plant);
 
-              // The plant is not in the database and needs to be pulled from Trefle.
-              axios.get(PLANTURL + "/" + plant.id, {
-                params: { token: PLANTAPIKEY}
-              })
-                .then(plantData => {
-                  Plant.create(plantData.data)
-                    .then(() => plants.push(plantData.data))
-                    .catch((err) => console.log(err));
-                })
-                .catch(err => console.log(err));
-            });
+            console.log(PLANTURL + "/" + plant.id);
+          // If the plant is in the database, then pull its information from the database.
+          // Plant.findById(plant.id)
+          //   .then(dbModel => plants.push(dbModel))
+          //   .catch(err => {
+          //     console.log(err);
+
+          // //  The plant is not in the database and needs to be pulled from Trefle.
+          //     axios.get(PLANTURL + "/" + plant.id, {
+          //       params: { token: PLANTAPIKEY}
+          //     })
+          //       .then(plantData => {
+          //         Plant.create(plantData.data)
+          //           .then(() => plants.push(plantData.data))
+          //           .catch((err) => console.log(err));
+          //       })
+          //       .catch(err => console.log(err));
+          //   });
+          // // plants.push(plant.id);
         });
         console.log(plants);
-        res.json(plants);
+        res.send(plants);
       })
-      .catch(err => console.log("Error: " + err.response.data));
+      .catch(err => console.log(err));
   });
 
 module.exports = router;

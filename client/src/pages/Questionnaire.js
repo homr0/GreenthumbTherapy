@@ -4,6 +4,7 @@ import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem, ListHeader } from "../components/List";
 import { Radio, Checkbox } from "../components/Form";
+import PlantCard from "../components/PlantCard";
 
 class Questionnaire extends Component {
   state = {
@@ -301,9 +302,15 @@ class Questionnaire extends Component {
           <Col>
             <h1>Your Plant Matches</h1>
 
-            {/* {this.state.plants.map(plant => (
-              <PlantCard name={plant.name} image={plant.image} />
-            ))} */}
+            <Row id="plant-results">
+              {this.state.plants.map(plant => (
+                <PlantCard
+                  key={plant.id}
+                  id={plant.id}
+                  common_name={plant.common_name}
+                  scientific_name={plant.scientific_name} />
+              ))}
+            </Row>
           </Col>
         </Row>
         
