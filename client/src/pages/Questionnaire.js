@@ -144,10 +144,10 @@ class Questionnaire extends Component {
                 <p>3. How big do you want your plant to be?</p>
 
                 {[
-                  { value: "1", label: "Tiny (< 12in)" },
-                  { value: "2", label: "Small (12-24in)" },
-                  { value: "3", label: "Medium (24-36in)" },
-                  { value: "4", label: "Tree Large (> 36in)" },
+                  { value: "1", label: "Tiny (< 1foot)" },
+                  { value: "2", label: "Small (2-5feet)" },
+                  { value: "3", label: "Medium (6-9feet)" },
+                  { value: "4", label: "Large (> 10feet)" },
                   { value: "none", label: "No Preference" }
                 ].map(plant => (
                   <Radio
