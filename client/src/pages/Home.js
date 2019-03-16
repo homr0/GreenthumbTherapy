@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import Btn from "../components/Btn";
-import Nav from "../components/Nav";
-import Header from "../components/Header";
-import API from "../utils/API";
-import { Link } from "react-router-dom";
+// import Btn from "../components/Btn";
+// import Nav from "../components/Nav";
+// import Header from "../components/Header";
+// import API from "../utils/API";
+// import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { cpus } from "os";
+// import { cpus } from "os";
 
 class Home extends Component {
     state = {
@@ -14,7 +14,7 @@ class Home extends Component {
 
 render() {
     return (
-       <container fluid>
+       <Container fluid>
            <Row>
                <Col size="s12 m4">
                <h5>Plant Matcher</h5>
@@ -26,7 +26,7 @@ render() {
                <h5>User Page</h5>
               </Col>
          </Row>
-       </container>
+       </Container>
     )
 }
 }
