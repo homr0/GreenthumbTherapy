@@ -12,10 +12,23 @@ const PlantSchema = new mongoose.Schema({
   },
 
   scientific_name: {
-    type: String
+    type: String,
+    required: true
   },
 
   image: {
+    type: String
+  },
+
+  height_mature_ft: {
+    type: String
+  },
+
+  shade_tolerance: {
+    type: String
+  },
+
+  moisture_use: {
     type: String
   }
 });
