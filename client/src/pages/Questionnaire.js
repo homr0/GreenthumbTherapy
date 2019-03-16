@@ -259,7 +259,8 @@ class Questionnaire extends Component {
                   key={plant.id}
                   id={plant.id}
                   common_name={plant.common_name}
-                  scientific_name={plant.scientific_name} />
+                  scientific_name={plant.scientific_name}
+                  image={plant.image} />
               ))}
             </Row>
           </Col>
