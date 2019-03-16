@@ -4,7 +4,6 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header";
-
 import Home from "./pages/Home";
 import Questionnaire from "./pages/Questionnaire";
 import Search from "./pages/Search";
@@ -15,6 +14,7 @@ import User from "./pages/User";
 //import LoginTest from "./Login";
 
 import PlantAdd from "./pages/PlantAdd";
+import UserDetails from "./pages/UserDetails";
 
 class App extends Component {
   render() {
@@ -27,17 +27,18 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/questionnaire" exact component={Questionnaire} />
           <Route path="/search" exact component={Search} />
-          {/* <Route path="/user" exact component={User} />  */}
+          <Route path="/user" exact component={User} /> 
 
           {/* <Route path="/" exact component={HomeTest} />
           <Route path="/secret" exact component={withAuth(SecretTest)} />
           <Route path="/login" exact component={LoginTest} /> */}
           <Route path="/plant" exact component={PlantAdd} />
+          <Route path="/register" exact component={UserDetails} />
         </Switch>
         </>
       </Router>
     );
   }
-});
+};
 
 export default App;
