@@ -1,48 +1,58 @@
-import React from "react";
+import React, { Component } from "react";
 import {Btn}  from "../components/Btn";
 import { Input } from "../components/Form";
 import { Col, Row, Container } from "../components/Grid";
-// import { Input } from "../components/Form";
 
-export default class Register extends React.Component {
-    state = {
-        email: "",
-        password: "",
+export default class Register extends Component {
+  state = {
+    email: "",
+    password: ""
+  }
 
-    }
-    onChange = (e) => {
-        const value = e.target.checked === undefined? e.target.value: e.target.checked;
-        this.setState({
-            [e.target.email]: value
-        });
-    }
-    render() {
-        return (
-            <Row>
-            <Col size="m6">
+  onChange = e => {
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    // Modify this so that the email and password are sent to the API.
+    console.log("Need to do something with the email and password.");
+  }
+
+  render() {
+    return(
+      <Container>
+        <Row>
+          <Col>
             <form>
-            <Input 
-                name="email" type="email" id="email"
-                handleInputChange={this.handleInputChange}
-               // onChange={e => this.onChange(e)} value={this.state.email} 
-                size="s6">Email
-             </Input>
-            <Input 
-                name="password" type="password" id="password"
-                handleInputChange={this.handleInputChange}
-                // onChange={e => this.onChange(e)} value={this.state.password}
-                size="s6">Password
-            </Input>
-             <Btn
-                 //  
-                   onClick={this.handleFormSubmit}
-                  >
-                   Update Password
-           </Btn>
+              <Input
+                size="s6"
+                name="email"
+                type="email"
+                id="email"
+                handleInputChange={this.onChange}
+                >Email</Input>
+
+                <Input
+                  size="s6"
+                  name="password"
+                  type="password"
+                  id="password"
+                  handleInputChange={this.onChange}
+                  >Password</Input>
+
+                  <Btn handleClickEvent={this.handleFormSubmit}>Update Password</Btn>
             </form>
-            </Col>
-            </Row>
-            
-        );
-    }
-}  
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
+}
