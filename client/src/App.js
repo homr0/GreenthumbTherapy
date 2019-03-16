@@ -5,9 +5,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header";
 
-// import Home from "./pages/Home";
+import Home from "./pages/Home";
 import Questionnaire from "./pages/Questionnaire";
-// import Search from "./pages/Search";
+import Search from "./pages/Search";
 // import User from "./pages/User";
 
 // import HomeTest from "./Home";
@@ -23,10 +23,10 @@ class App extends Component {
         <Header />
 
         <Switch>
-          <Route path="/" exact component={Questionnaire} />
+          <Route path="/" exact component={Home} />
           <Route path="/questionnaire" exact component={Questionnaire} />
-          {/* <Route path="/search" exact component={Search} />
-          <Route path="/user" exact component={User} /> */}
+          <Route path="/search" exact component={Search} />
+          {/* <Route path="/user" exact component={User} />  */}
 
           {/* <Route path="/" exact component={HomeTest} />
           <Route path="/secret" exact component={withAuth(SecretTest)} />

@@ -12,9 +12,7 @@ class Questionnaire extends Component {
     plant_type: "",
     plant_height: "none",
     plant_light: "adjustable",
-    space_climate: "adjustable",
-    weather_space: "adjustable",
-    plant_water: "low"
+    plant_water: "none"
   };
 
   componentDidMount() {
@@ -44,28 +42,29 @@ class Questionnaire extends Component {
     event.preventDefault();
 
     // let query="&nursery_stock_product=true";
-    let query = {
-      nursery_stock_product: true
-    }
+    let query = {};
 
     // Translate type of plant to query.
     switch(this.state.plant_type) {
       case "flower":
         query.flower_conspicuous = true;
+        query.propogated_by_seed = true;
         break;
       case "edible":
         query.palatable_human = true;
+        query.propogated_by_seed = true;
         break;
       case "succulent":
-        // query += "&moisture_use=Low";
         query.moisture_use = "Low";
         break;
       case "tree":
         query.lumber_product = true;
         query.growth_habit = "Tree";
+        query.nursery_stock_product = true;
         break;
       case "shrub":
         query.growth_habit = "Shrub";
+        query.nursery_stock_product = true;
         break;
       default:
     };
@@ -76,14 +75,9 @@ class Questionnaire extends Component {
     //Plant Shade
     if(this.state.plant_light !== "adjustable") query.shade_tolerance = this.state.plant_light;
 
-    //Space Climate
-    if(this.state.space_climate !== "adjustable") query.temperature_minimum_deg_f = this.state.space_climate;
-
-    //Weather Space
-    if(this.state.weather_space !== "adjustable") query.precipitation_minimum = this.state.weather_space;
 
     //Plant Water
-    if(this.state.plant_water !=="low" ) query.moisture_use = this.state.plant_water;
+    if(this.state.plant_water !=="none" ) query.moisture_use = this.state.plant_water;
 
     //Plant Pets
 
@@ -111,7 +105,6 @@ class Questionnaire extends Component {
                   { value: "succulent", label: "Succulent/Cactus" },
                   { value: "tree", label: "Tree" },
                   { value: "shrub", label: "Shrub" },
-                  { value: "none", label: "None" }
                 ].map(plant => (
                   <Radio
                     key={"plant_type=" + plant.value}
@@ -188,54 +181,15 @@ class Questionnaire extends Component {
                 ))}
               </ListItem>
 
+              
               <ListItem>
-                <p>5. What is the average climate of your space?</p>
-
-                {[
-                  { value: "-43", label: "Cold(< 45F)" },
-                  { value: "-23", label: "Warm (45-74F)" },
-                  { value: "50", label: "Hot (> 75F)" },
-                  { value: "adjustable", label: "Adjustable" },   
-                ].map(plant => (
-                  <Radio
-                    key={"space_climate=" + plant.value}
-                    name="space_climate"
-                    value={plant.value}
-                    handleInputChange={this.handleInputChange}
-                  >
-                    {plant.label}
-                  </Radio>
-                ))}
-              </ListItem>
-
-              <ListItem>
-                <p>6. Which best describes the weather condition of your space?</p>
-                  
-                {[
-                  { value: "12", label: "Dry" },
-                  { value: "24", label: "Temperate" },
-                  { value: "36", label: "Humid" },
-                  { value: "adjustable", label: "Adjustable" },
-                ].map(plant => (
-                  <Radio
-                    key={"weather_space=" + plant.value}
-                    name="weather_space"
-                    value={plant.value}
-                    handleInputChange={this.handleInputChange}
-                  >
-                    {plant.label}
-                  </Radio>
-                ))}
-              </ListItem>
-
-              <ListItem>
-                 <p>7. How often would you like to water your plant?</p>
+                 <p>5. How often would you like to water your plant?</p>
                  
                  {[
                     { value: "High", label: "Daily" },
                     { value: "Medium", label: "Every few days" },
                     { value: "Low", label: "Weekly" },
-                    { value: "low", label: "As little as possible" },
+                    { value: "none", label: "No preference" },
                   ].map(plant => (
                     <Radio
                       key={"plant_water=" + plant.value}
@@ -249,17 +203,14 @@ class Questionnaire extends Component {
               </ListItem>
 
               <ListItem>
-                <p>8. What kind of pets do you have?</p>
+                <p>6. What kind of pets do you have?</p>
                     
                 {[
                   { value: "dog", label: "Dog" },
                   { value: "cat", label: "Cat" },
-                  { value: "rodent", label: "Rodent" },
                   { value: "rabbit", label: "Rabbit" },
                   { value: "ferret", label: "Ferret" },
                   { value: "bird", label: "Bird" },
-                  { value: "reptile", label: "Reptile" },
-                  { value: "fish", label: "Fish" },
                 ].map(plant => (
                   <Checkbox
                     key={"plant_pets=" + plant.value}
@@ -273,7 +224,7 @@ class Questionnaire extends Component {
               </ListItem>
 
               <ListItem>
-                <p>9. Do you have an allergy to pollen?</p>
+                <p>7. Do you have an allergy to pollen?</p>
                     
                 {[
                   { value: "yes", label: "Yes" },
@@ -293,6 +244,7 @@ class Questionnaire extends Component {
                <ListItem>
                 <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
               </ListItem>
+
             </List>
           </Col>
         </Row>
@@ -312,6 +264,7 @@ class Questionnaire extends Component {
             </Row>
           </Col>
         </Row>
+        
       </Container>
     );
   }

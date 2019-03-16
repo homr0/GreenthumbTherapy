@@ -15,6 +15,8 @@ router.route("/search")
       .then(response => {
         let plants = [];
 
+        console.log(response);
+
         // Gets the individual plant id and checks if it's already in the database.
         response.data.map(plant => {
             plants.push(plant);
