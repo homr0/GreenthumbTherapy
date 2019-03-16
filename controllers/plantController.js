@@ -4,7 +4,7 @@ module.exports = {
   // Gets all plants with a certain parameter.
   findAll: (req, res) => {
     db.Plant
-      .find(req.query)
+      .find(req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

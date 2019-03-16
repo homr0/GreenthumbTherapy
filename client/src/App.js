@@ -15,6 +15,8 @@ import Search from "./pages/Search";
 // import SecretTest from "./Secret";
 // import LoginTest from "./Login";
 
+import PlantAdd from "./pages/PlantAdd";
+
 class App extends Component {
   render() {
     return (
@@ -31,6 +33,7 @@ class App extends Component {
           {/* <Route path="/" exact component={HomeTest} />
           <Route path="/secret" exact component={withAuth(SecretTest)} />
           <Route path="/login" exact component={LoginTest} /> */}
+          <Route path="/plant" exact component={PlantAdd} />
         </Switch>
         </>
       </Router>
