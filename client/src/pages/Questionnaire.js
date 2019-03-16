@@ -1,168 +1,273 @@
 import React, { Component } from "react";
-import Btn from "../components/Btn";
-import Nav from "../components/Nav";
-import Header from "../components/Header";
+import {Btn} from "../components/Btn";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input, Radio, Checkbox } from "../components/Form";
+import { List, ListItem, ListHeader } from "../components/List";
+import { Radio, Checkbox } from "../components/Form";
+import PlantCard from "../components/PlantCard";
 
 class Questionnaire extends Component {
-    state = {
-      plants: []
+  state = {
+    plants: [],
+    plant_type: "",
+    plant_height: "none",
+    plant_light: "adjustable",
+    plant_water: "none"
+  };
+
+  componentDidMount() {
+    // this.loadPlants();
+  }
+
+  loadPlants = query => {
+    API.searchPlants(query)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ plants: res.data });
+      })
+      .catch(err => console.log(err));
+  };
+
+  handleInputChange = event => {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+
+    // let query="&nursery_stock_product=true";
+    let query = {};
+
+    // Translate type of plant to query.
+    switch(this.state.plant_type) {
+      case "flower":
+        query.flower_conspicuous = true;
+        query.propogated_by_seed = true;
+        break;
+      case "edible":
+        query.palatable_human = true;
+        query.propogated_by_seed = true;
+        break;
+      case "succulent":
+        query.moisture_use = "Low";
+        break;
+      case "tree":
+        query.lumber_product = true;
+        query.growth_habit = "Tree";
+        query.nursery_stock_product = true;
+        break;
+      case "shrub":
+        query.growth_habit = "Shrub";
+        query.nursery_stock_product = true;
+        break;
+      default:
     };
-  
-    componentDidMount() {
-      this.loadPlants();
-    }
-  
-    loadPlants = () => {
-      API.getPlants()
-        .then(res => this.setState({ plants: res.data }))
-        .catch(err => console.log(err));
-    };
-  
-    render() {
-      return (
-        <Container>
-          <Row>
-            <Col>
-               <p>Plant Matcher</p>
+
+    //Plant Height
+    if(this.state.plant_height !== "none") query.height_mature_ft = this.state.plant_height;
+
+    //Plant Shade
+    if(this.state.plant_light !== "adjustable") query.shade_tolerance = this.state.plant_light;
+
+
+    //Plant Water
+    if(this.state.plant_water !=="none" ) query.moisture_use = this.state.plant_water;
+
+    //Plant Pets
+
+    // Load plants
+    this.loadPlants(query);
+  };
+
+
+  render() {
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <List>
+              <ListHeader>
+                <h2 className="center">Plant Matcher</h2>
+              </ListHeader>
+
+              <ListItem>
+                <p>1. What type of plant appeals to you?</p>
+
+                {[
+                  { value: "flower", label: "Flower" },
+                  { value: "edible", label: "Edible" },
+                  { value: "succulent", label: "Succulent/Cactus" },
+                  { value: "tree", label: "Tree" },
+                  { value: "shrub", label: "Shrub" },
+                ].map(plant => (
+                  <Radio
+                    key={"plant_type=" + plant.value}
+                    name="plant_type"
+                    value={plant.value}
+                    handleInputChange={this.handleInputChange}
+                  >
+                    {plant.label}
+                  </Radio>
+                ))}
+              </ListItem>
+
+              <ListItem>
+                <p>2. Where will your plant be located?</p>
+
+                {[
+                  { value: "bedroom", label: "Bedroom" },
+                  { value: "office", label: "Office" },
+                  { value: "kitchen", label: "Kitchen" },
+                  { value: "bathroom", label: "Bathroom" },
+                  { value: "livingroom", label: "Living Room" },
+                  { value: "frontyard", label: "Front Yard" },
+                  { value: "backyard", label: "Backyard" }
+                ].map(plant => (
+                  <Checkbox
+                    key={"plant_location=" + plant.value}
+                    name="plant_location"
+                    value={plant.value}
+                    handleInputChange={this.handleInputChange}
+                  >
+                    {plant.label}
+                  </Checkbox>
+                ))}
+              </ListItem>
+
+              <ListItem>
+                <p>3. How big do you want your plant to be?</p>
+
+                {[
+                  { value: "1", label: "Tiny (< 12in)" },
+                  { value: "2", label: "Small (12-24in)" },
+                  { value: "3", label: "Medium (24-36in)" },
+                  { value: "4", label: "Tree Large (> 36in)" },
+                  { value: "none", label: "No Preference" }
+                ].map(plant => (
+                  <Radio
+                    key={"plant_height=" + plant.value}
+                    name="plant_height"
+                    value={plant.value}
+                    handleInputChange={this.handleInputChange}
+                  >
+                    {plant.label}
+                  </Radio>
+                ))}
+              </ListItem>
+
+              <ListItem>
+                <p>4. How much sunlight does your space get during the day?</p>
                   
-                <List list="ol">
-                  <ListItem>
-                      <Row>
-                          <Col>                      
-                            What type of plant appeals to you?
-                            <Radio name="plant" value="flower">Flower</Radio>
-                            <Radio name="plant" value="edible">Edible</Radio><br>
-                            <Radio name="plant"value="cactus">Succulent/Cactus</Radio></br>
-                            <Radio name="plant" value="tree">Tree</Radio><br>
-                            <Radio name="plant"value="shrub">Shrub</Radio><br>
-                            <Radio name="plant"value="none">No Preference</Radio></br>
-                        </Col>
-                        </Row>
-                        </ListItem>
+                {[
+                  { value: "Intolerant", label: " A lot of sunlight" },
+                  { value: "Intermediate", label: "Some sunlight" },
+                  { value: "Tolerant", label: " Not a lot of sunlight" },
+                  { value: "adjustable", label: "Adjustable" }      
+                ].map(plant => (
+                  <Radio
+                    key={"plant_light=" + plant.value}
+                    name="plant_light"
+                    value={plant.value}
+                    handleInputChange={this.handleInputChange}
+                  >
+                    {plant.label}
+                  </Radio>
+                ))}
+              </ListItem>
 
-                        
-                  <ListItem>
-                      <Row>
-                          <Col>                          
-                          Where will your plant be located?
-                          <Checkbox name="location" value="bedroom">Bedroom</Checkbox><br>
-                          <Checkbox name="location"value="office">Office</Checkbox><br>
-                          <Checkbox name="location"value="kitchen">Kitchen</Checkbox><br>
-                          <Checkbox name="location"value="bathroom">Bathroom</Checkbox><br>
-                          <Checkbox name="location"value="livingroom">Living Room</Checkbox><br>
-                          <Checkbox name="location"value="front">Front Yard</Checkbox><br>
-                          <Checkbox name="location"value="back">Backyard</Checkbox><br>
-                        </Col>
-                        </Row>
-                        </ListItem>
+              
+              <ListItem>
+                 <p>5. How often would you like to water your plant?</p>
+                 
+                 {[
+                    { value: "High", label: "Daily" },
+                    { value: "Medium", label: "Every few days" },
+                    { value: "Low", label: "Weekly" },
+                    { value: "none", label: "No preference" },
+                  ].map(plant => (
+                    <Radio
+                      key={"plant_water=" + plant.value}
+                      name="plant_water"
+                      value={plant.value}
+                      handleInputChange={this.handleInputChange}
+                    >
+                      {plant.label}
+                    </Radio>
+                  ))}
+              </ListItem>
 
-                        <ListItem>
-                      <Row>
-                          <Col>                          
-                           How big do you want your plant to be?
-                          <Radio name="size" value="tiny">Tiny (<12in)</Radio><br>
-                          <Radio name="size" value="small">Small (12-24in)</Radio><br>
-                          <Radio name="size" value="medium">Medium (24-36in)</Radio></br>
-                          <Radio name="size" value="large">Large (>36in)</Radio><br>
-                          <Radio name="size" value="none"> No Preference</Radio></br>
-                        </Col>
-                        </Row>
-                        </ListItem>
+              <ListItem>
+                <p>6. What kind of pets do you have?</p>
+                    
+                {[
+                  { value: "dog", label: "Dog" },
+                  { value: "cat", label: "Cat" },
+                  { value: "rabbit", label: "Rabbit" },
+                  { value: "ferret", label: "Ferret" },
+                  { value: "bird", label: "Bird" },
+                ].map(plant => (
+                  <Checkbox
+                    key={"plant_pets=" + plant.value}
+                    name="plant_pets"
+                    value={plant.value}
+                    onChange={this.handleInputChange}
+                  >
+                    {plant.label}
+                  </Checkbox>
+                ))}
+              </ListItem>
 
-                        <ListItem>
-                      <Row>
-                          <Col>                          
-                           How much sunlight does your space get during the day?
-                          <Radio name="light" value="alot">A lot of sunlight</Radio><br>
-                          <Radio name="light" value="some">Some sunlight</Radio><br>
-                          <Radio name="light" value="none">Not alot of sunlight</Radio></br>
-                          <Radio name="light" value="adjust">Adjustable</Radio><br>
-                        </Col>
-                        </Row>
-                        </ListItem>
+              <ListItem>
+                <p>7. Do you have an allergy to pollen?</p>
+                    
+                {[
+                  { value: "yes", label: "Yes" },
+                  { value: "no", label: "No" },
+                ].map(plant => (
+                  <Radio
+                    key={"plant_allergy=" + plant.value}
+                    name="plant_allergy"
+                    value={plant.value}
+                    onChange={this.handleInputChange}
+                  >
+                    {plant.label}
+                  </Radio>
+                ))}
+              </ListItem>
 
-                        <ListItem>
-                      <Row>
-                          <Col>                          
-                           What is the average climate of your space?
-                           <Radio name="climate" value="cold">Cold (>45F)</Radio><br>
-                           <Radio name="climate" value="warm">Warm (45-74F)</Radio><br>
-                           <Radio name="climate" value="hot">Hot (>75F)</Radio>></br>
-                           <Radio name="climate" value="adjustable">Adjustable</Radio><br>
-                        </Col>
-                        </Row>
-                        </ListItem>
-                          
-                          
-                        <ListItem>
-                      <Row>
-                          <Col>                          
-                           Which best describes the weather condition of your space?
-                           <Radio name="weather" value="dry">Dry</Radio><br>
-                           <Radio name="weather" value="temperate">Temperate</Radio><br>
-                           <Radio name="weather"value="humid">Humid</Radio></br>
-                           <Radio name="weather" value="adjust">Adjustable</Radio><br>
-                        </Col>
-                        </Row>
-                        </ListItem>
+               <ListItem>
+                <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
+              </ListItem>
 
-                        <ListItem>
-                      <Row>
-                          <Col>                          
-                          How often would you like to water your plant?
-                          <Radio name="water" value="daily">Daily</Radio><br>
-                          <Radio name="water" value="few">Every few days</Radio><br>
-                          <Radio name="water" value="weekly">Weekly</Radio></br>
-                          <Radio name="water" value="little">As little as possible</Radio><br>
-                        </Col>
-                        </Row>
-                        </ListItem>
-
-                        <ListItem>
-                         <Row>
-                          <Col>                          
-                           What kind of pets do you have?
-                          <Checkbox name="pets" value="dog">Dog</Checkbox><br>
-                          <Checkbox name="pets" value="cat">Cat</Checkbox><br>
-                          <Checkbox name="pets" value="rodent">Rodent</Checkbox><br>
-                          <Checkbox name="pets" value="rabbit">Rabbit</Checkbox><br>
-                          <Checkbox name="pets" value="ferret">Ferret</Checkbox><br>
-                          <Checkbox name="pets" value="bird">Bird</Checkbox><br>
-                          <Checkbox name="pets" value="reptile">Reptile</Checkbox><br>
-                          <Checkbox name="pets" value="fish">Fish</Checkbox><br>
-                        </Col>
-                        </Row>
-                        </ListItem>
-
-                        <ListItem>
-                         <Row>
-                          <Col>  
-                          Do you have an allergy to pollen?
-                          <Radio name="allergy" value="yes">Yes</Radio></br>
-                          <Radio name="allergy" value="no">No</Radio><br>
-                        </Col>
-                        </Row>
-                        </ListItem>  
-                  </List>
-                  <Col>
-            <Container>
-              <h1>Your Plant Matches</h1>
-            </Container>
-            
+            </List>
           </Col>
         </Row>
+
+        <Row>
+          <Col>
+            <h1>Your Plant Matches</h1>
+
+            <Row id="plant-results">
+              {this.state.plants.map(plant => (
+                <PlantCard
+                  key={plant.id}
+                  id={plant.id}
+                  common_name={plant.common_name}
+                  scientific_name={plant.scientific_name} />
+              ))}
+            </Row>
+          </Col>
+        </Row>
+        
       </Container>
     );
   }
 }
-                 
-                
-              
-            
-  export default Questionnaire;
-  
+
+export default Questionnaire;

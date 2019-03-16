@@ -10,9 +10,9 @@ export const Container = ({children}) => {
 }
 
 
-export const Row = ({children}) => {
+export const Row = ({id, children}) => {
   return(
-    <div className="row">
+    <div className="row" id={id}>
       {children}
     </div>
   );

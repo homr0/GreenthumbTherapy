@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {Btn}  from "../components/Btn";
 // import Nav from "../components/Nav";
 // import Header from "../components/Header";
-// import API from "../utils/API";
+import API from "../utils/API";
 // import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 // import { List, ListItem } from "../components/List";
@@ -10,6 +10,28 @@ import { Input } from "../components/Form";
 // import { userInfo } from "os";
 
 class User extends Component {
+  state = {
+    email: null,
+    password: null
+  }
+
+  handleInputChange = event => {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFormSubmit = event => {
+    event.preventDefault();
+
+    //Calling Login test to validatge email and password from API
+      this.LoginTest(); 
+
+  }
 
 
    render() {
@@ -20,25 +42,16 @@ class User extends Component {
        <form>
            <Input
             name="email" type="email" id="email"
-             handleInputChange = event => {
-               Const email = target.email;
-                this.setState({
-                  [email]: value
-                });
-              }
-            
-              handleFormSubmit = event => {
-                event.preventDefault()
-              }
+             handleInputChange={this.handleInputChange}
              size="s6">Email
             </Input>
            <Input
               name="password" type="password" id="password"
-               handleInputChange={this.function}
+               handleInputChange={this.handleInputChange}
                size="s6">Password
             </Input>
            <Btn
-                 //  disabled={!(this.state.author && this.state.title)}
+                 //  
                    onClick={this.handleFormSubmit}
                   >
                    Update Password
