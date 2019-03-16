@@ -12,6 +12,8 @@ export default {
   },
   searchPlant: id => axios.get(PROXYURL + PLANTURL + "api/plants/" + id + "?" + PLANTAPIKEY),
 
+  plantAddTest: query => axios.post("/api/plants/", query),
+
   homeTest: () => axios.get("/api/home"),
   loginTest: userData => axios.post("/api/authenticate", userData),
   registerTest: userData => axios.post("/api/register", userData),
