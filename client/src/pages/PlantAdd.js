@@ -7,9 +7,12 @@ import API from "../utils/API";
 class PlantAdd extends Component {
   state = {
     plant_id: "",
-    common_name: "",
+    common_name: null,
     scientific_name: "",
-    image: "",
+    image: null,
+    height_mature_ft: null,
+    shade_tolerance: null,
+    moisture_use: null,
     status: "Register a plant!"
   }
 
@@ -28,21 +31,17 @@ class PlantAdd extends Component {
   handleClickEvent = event => {
     event.preventDefault();
 
-    console.log({
-      id: this.state.plant_id,
-      common_name: this.state.common_name,
-      scientific_name: this.state.scientific_name,
-      image: this.state.image
-    })
-
     API.plantAddTest({
       id: this.state.plant_id,
       common_name: this.state.common_name,
       scientific_name: this.state.scientific_name,
-      image: this.state.image
+      image: this.state.image,
+      height_mature_ft: this.state.height_mature_ft,
+      shade_tolerance: this.state.shade_tolerance,
+      moisture_use: this.state.moisture_use
     })
       .then(() => this.setState({status: "Successfully registered a plant!"}))
-      .catch(err => this.setState({status: "Plant was not successfully registered."}));
+      .catch(err => this.setState({status: "Plant was not successfully registered. You may have a duplicate plant id."}));
   }
 
   render() {
@@ -59,28 +58,55 @@ class PlantAdd extends Component {
         <Row>
           <Col>
             <Input 
+              size="s6"
               name="plant_id"
               id="plantId"
               handleInputChange={this.handleInputChange}>
               Plant ID</Input>
 
             <Input
+              size="s6"
               name="common_name"
               id="plantCommon"
               handleInputChange={this.handleInputChange}>
               Plant Common Name</Input>
 
             <Input
+              size="s6"
               name="scientific_name"
               id="plantScience"
               handleInputChange={this.handleInputChange}>
               Plant Scientific Name</Input>
 
             <Input
+              size="s6"
               name="image"
               id="plantImage"
               handleInputChange={this.handleInputChange}>
               Plant Image URL</Input>
+
+            <Input
+              size="s6"
+              name="height_mature_ft"
+              id="plantHeight"
+              handleInputChange={this.handleInputChange}
+              >Plant Height (ft)</Input>
+              
+
+            <Input
+              size="s6"
+              name="shade_tolerance"
+              id="plantShade"
+              handleInputChange={this.handleInputChange}
+              >Plant Shade Tolerance</Input>
+              
+
+            <Input
+              size="s6"
+              name="moisture_use"
+              id="plantMoisture"
+              handleInputChange={this.handleInputChange}
+              >Plant Moisture Use</Input>
 
             <Btn handleClickEvent={this.handleClickEvent}>
               Submit a Plant
