@@ -1,5 +1,8 @@
 import React from "react";
+import {Btn}  from "../components/Btn";
 import { Input } from "../components/Form";
+import { Col, Row, Container } from "../components/Grid";
+// import { Input } from "../components/Form";
 
 export default class Register extends React.Component {
     state = {
@@ -15,14 +18,31 @@ export default class Register extends React.Component {
     }
     render() {
         return (
-            <div>
-            <Input name="email" type="email"
-             placeholder="Email"
-              onChange={e => this.onChange(e)} value={this.state.email} />
-            <Input name="password" type="password"
-             placeholder="Password"
-             onChange={e => this.onChange(e)} value={this.state.password} />
-            </div>
+            <Row>
+            <Col size="m6">
+            <form>
+            <Input 
+                name="email" type="email" id="email"
+                handleInputChange={this.handleInputChange}
+               // onChange={e => this.onChange(e)} value={this.state.email} 
+                size="s6">Email
+             </Input>
+            <Input 
+                name="password" type="password" id="password"
+                handleInputChange={this.handleInputChange}
+                // onChange={e => this.onChange(e)} value={this.state.password}
+                size="s6">Password
+            </Input>
+             <Btn
+                 //  
+                   onClick={this.handleFormSubmit}
+                  >
+                   Update Password
+           </Btn>
+            </form>
+            </Col>
+            </Row>
+            
         );
     }
 }  
