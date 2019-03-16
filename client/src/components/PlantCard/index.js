@@ -2,16 +2,16 @@ import React from "react";
 import { Col } from "../Grid";
 import {List, ListItem} from "../List";
 import {Btn} from "../Btn";
-// import "./style.css";
+import "./style.css";
 import placeholder from "./placeholder.png";
 
 const PlantCard = props => {
   return (
-    <Col size={(props.size) ? props.size : "s12 m4"}>
+    <Col size={(props.size) ? props.size : "s12 m4 plant-card"}>
       <div className={"card" + ((props.colorsCard) ? " " +  props.colorsCard : "")}>
         <div className="card-image">
           <img alt={(props.image) ? props.common_name : "Plant placeholder image"} src={(props.image) ? props.image : placeholder} />
-          
+
           <Btn colors="btn-floating halfway-fab green" handleClickEvent={props.handleClickEvent}>
             <i className="material-icons">save</i>
           </Btn>
