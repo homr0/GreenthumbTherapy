@@ -1,41 +1,112 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-// import './App.css';
+import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header";
 
 // import Home from "./pages/Home";
 import Questionnaire from "./pages/Questionnaire";
-// import Search from "./pages/Search";
-// import User from "./pages/User";
-// import HomeTest from "./Home";
-// import withAuth from "./withAuth";
-// import SecretTest from "./Secret";
-// import LoginTest from "./Login";
+//import Search from "./pages/Search";
+//import User from "./pages/User";
+//import HomeTest from "./Home";
+//import withAuth from "./withAuth";
+//import SecretTest from "./Secret";
+//import LoginTest from "./Login";
 
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <>
-        <Header />
 
-        <Switch>
-          <Route path="/" exact component={Questionnaire} />
-          <Route path="/questionnaire" exact component={Questionnaire} />
-          {/* <Route path="/search" exact component={Search} />
-          <Route path="/user" exact component={User} /> */}
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs');
+const passport = require('passport');
+// Load User model
+const User = require('../models/User');
 
-          {/*</Switch>{<Route path="/" exact component={HomeTest} />
-          <Route path="/secret" exact component={withAuth(SecretTest)} />
-          <Route path="/login" exact component={LoginTest} /> */}
-        </Switch>
-        </>
-      </Router>
-    );
+// Login Page
+router.get('/login', (req, res) => res.render('login'));
+
+// Register Page
+router.get('/register', (req, res) => res.render('register'));
+
+// Register
+router.post('/register', (req, res) => {
+  const { name, email, password, password2 } = req.body;
+  let errors = [];
+
+  if (!name || !email || !password || !password2) {
+    errors.push({ msg: 'Please enter all fields' });
   }
-}
 
-export default App;
+  if (password != password2) {
+    errors.push({ msg: 'Passwords do not match' });
+  }
+
+  if (password.length < 6) {
+    errors.push({ msg: 'Password must be at least 6 characters' });
+  }
+
+  if (errors.length > 0) {
+    res.render('register', {
+      errors,
+      name,
+      email,
+      password,
+      password2
+    });
+  } else {
+    User.findOne({ email: email }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email already exists' });
+        res.render('register', {
+          errors,
+          name,
+          email,
+          password,
+          password2
+        });
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password
+        });
+
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                req.flash(
+                  'success_msg',
+                  'You are now registered and can log in'
+                );
+                res.redirect('/users/login');
+              })
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
+  }
+});
+
+// Login
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next);
+});
+
+// Logout
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are logged out');
+  res.redirect('/users/login');
+});
+
+module.exports = router;

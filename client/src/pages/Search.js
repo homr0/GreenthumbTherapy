@@ -36,4 +36,6 @@ class Questionnaire extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    let query="&nursery_stock_product=true";
+    let query = "&nursery_stock_product=true";
+
+    
