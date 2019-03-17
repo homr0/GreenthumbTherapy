@@ -241,6 +241,7 @@ class Search extends Component {
                   id={plant.id}
                   common_name={plant.common_name}
                   scientific_name={plant.scientific_name}
+                  image={plant.image}
                 />
               ))}
             </Row>
