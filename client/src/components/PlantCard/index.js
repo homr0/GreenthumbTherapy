@@ -12,9 +12,16 @@ const PlantCard = props => {
         <div className="card-image">
           <img alt={(props.image) ? props.common_name : "Plant placeholder image"} src={(props.image) ? props.image : placeholder} />
 
-          <Btn colors="btn-floating halfway-fab green" handleClickEvent={props.handleClickEvent}>
-            <i className="material-icons">save</i>
-          </Btn>
+          {(props.favorite)
+            ? <Btn colors="btn-floating halfway-fab red" handleClickEvent={props.handleDeleteEvent}>
+              <i className="material-icons">delete</i>
+            </Btn>
+            
+            : <Btn colors="btn-floating halfway-fab green" handleClickEvent={props.handleSaveEvent}>
+              <i className="material-icons">save</i>
+            </Btn>
+          }
+
         </div>
 
         <div className={"card-content" + ((props.colorsContent) ? " " +  props.colorsContent : "")}>
