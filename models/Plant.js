@@ -30,6 +30,30 @@ const PlantSchema = new mongoose.Schema({
 
   moisture_use: {
     type: String
+  },
+
+  growth_habit: {
+    type: String
+  },
+
+  flower_conspicuous: {
+    type: Boolean
+  },
+
+  propogated_by_seed: {
+    type: Boolean
+  },
+
+  palatable_human: {
+    type: Boolean
+  },
+
+  lumber_product: {
+    type: Boolean
+  },
+
+  nursery_stock_product: {
+    type: Boolean
   }
 });
 

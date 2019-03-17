@@ -8,13 +8,14 @@ import Home from "./pages/Home";
 import Questionnaire from "./pages/Questionnaire";
 import Search from "./pages/Search";
 import User from "./pages/User";
-//import HomeTest from "./Home";
-//import withAuth from "./withAuth";
-//import SecretTest from "./Secret";
-//import LoginTest from "./Login";
+
+// import HomeTest from "./Home";
+// import withAuth from "./withAuth";
+// import SecretTest from "./Secret";
+// import LoginTest from "./Login";
 
 import PlantAdd from "./pages/PlantAdd";
-import UserDetails from "./pages/UserDetails";
+import Register from "./pages/register";
 
 class App extends Component {
   render() {
@@ -33,7 +34,11 @@ class App extends Component {
           <Route path="/secret" exact component={withAuth(SecretTest)} />
           <Route path="/login" exact component={LoginTest} /> */}
           <Route path="/plant" exact component={PlantAdd} />
+<<<<<<< HEAD
           <Route path="/register" exact component={UserDetails} />
+=======
+          <Route path="/register" exact component={Register} />
+>>>>>>> 674661c89247f8ea2fc6a59eb854f75a749c249b
         </Switch>
         </>
       </Router>
