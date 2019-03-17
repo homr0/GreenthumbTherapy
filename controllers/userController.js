@@ -73,7 +73,7 @@ module.exports = {
 
   removePlant: (req, res) => {
     db.User
-      .findOneAndUpdate({_id: req.params.id}, {$pull: {plants: req.body.plant_id}})
+      .findOneAndUpdate({_id: req.params.id}, {$pull: {plants: req.params.plant_id}})
       .then(() =>res.status(200).send("Plant has been removed from favorites"))
       .catch(err => res.status(500)
         .json({
