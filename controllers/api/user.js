@@ -6,3 +6,5 @@ router.route("/:id")
   .get(User.getPlants)
   .post(User.favoritePlant)
   .delete(User.removePlant);
+
+module.exports = router;

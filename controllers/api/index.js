@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../userController");
+const userRoutes = require("./user");
 const plantRoutes = require("./plant");
 
 // User routes
