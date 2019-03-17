@@ -46,5 +46,39 @@ module.exports = {
           error: "Internal error please try again"
         })
       );
-  } 
+  },
+
+  getPlants: (req, res) => {
+    db.User
+      .findOne({_id: req.params.id})
+      .populate("plant")
+      .then(dbUser => res.status(200).send(dbUser))
+      .catch(err => res.status(500)
+        .json({
+          error: "Internal error please try again."
+        })
+      );
+  },
+
+  favoritePlant: (req, res) => {
+    db.User
+      .findOneAndUpdate({_id: req.params.id}, {$push: {plants: req.body.plant_id}}, {new: true})
+      .then(() => res.status(200).send("Favorited plant successfully!"))
+      .catch(err => res.status(500)
+        .json({
+          error: "Internal error. Could not favorite plant."
+        })
+      );
+  },
+
+  removePlant: (req, res) => {
+    db.User
+      .findOneAndUpdate({_id: req.params.id}, {$pull: {plants: req.params.plant_id}})
+      .then(() =>res.status(200).send("Plant has been removed from favorites"))
+      .catch(err => res.status(500)
+        .json({
+          error: "Internal error. Could not remove plant from favorites."
+        })
+      );
+  }
 }

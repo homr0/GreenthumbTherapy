@@ -3,11 +3,31 @@ import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { Input } from "../components/Form";
+import PlantCard from "../components/PlantCard";
 
 class User extends Component {
   state = {
+    user: null,
+    favorites: [],
+
     email: null,
     password: null
+  }
+
+  componentDidMount() {
+    this.viewFavoritePlants();
+  }
+
+  viewFavoritePlants = () => {
+    API.viewFavorites(this.state.user)
+      .then(data => this.setState({favorites: data}))
+      .catch(err => console.log(err));
+  }
+
+  unfavoritePlant = id => {
+    API.removeFavorite(this.state.user, id)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   }
 
   handleInputChange = event => {
@@ -23,11 +43,11 @@ class User extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    //Calling Login test to validatge email and password from API
+    //Calling Login test to validate email and password from API
     API.loginTest({
       email: this.state.email,
       password: this.state.password
-    }); 
+    });
 
   }
 
@@ -55,15 +75,24 @@ class User extends Component {
 
       <Row>
         <Col size="s12 m4">
-          <h6 className="center">Favorites</h6>
+          <h3 className="center">Favorites</h3>
+
+          {this.state.favorites.map(plant => <PlantCard
+            key={plant.id}
+            size="s12"
+            id={plant.id}
+            common_name={plant.common_name}
+            scientific_name={plant.scientific_name}
+            image={plant.image}
+            handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />)}
         </Col>
 
         <Col size="s12 m4">
-          <h6 className="center">Favorite Space Info</h6>
+          <h3 className="center">Favorite Space Info</h3>
         </Col>
 
         <Col size="s12 m4">
-          <h6 className="center">No Go Plants</h6>
+          <h3 className="center">No Go Plants</h3>
         </Col>
       </Row>
     </Container>

@@ -37,7 +37,7 @@ class PlantAdd extends Component {
   handleClickEvent = event => {
     event.preventDefault();
 
-    API.plantAddTest({
+    API.plantAdd({
       id: this.state.plant_id,
       common_name: this.state.common_name,
       scientific_name: this.state.scientific_name,
