@@ -7,17 +7,17 @@ import placeholder from "./placeholder.png";
 
 const PlantCard = props => {
   return (
-    <Col size={(props.size) ? props.size : "s12 m4 plant-card"}>
+    <Col size={"plant-card " + ((props.size) ? props.size : "s12 m4")}>
       <div className={"card" + ((props.colorsCard) ? " " +  props.colorsCard : "")}>
         <div className="card-image">
           <img alt={(props.image) ? props.common_name : "Plant placeholder image"} src={(props.image) ? props.image : placeholder} />
 
           {(props.favorite)
-            ? <Btn colors="btn-floating halfway-fab red" handleClickEvent={props.handleDeleteEvent}>
+            ? <Btn colors="btn-floating halfway-fab red darken-2" handleClickEvent={props.handleDeleteEvent}>
               <i className="material-icons">delete</i>
             </Btn>
             
-            : <Btn colors="btn-floating halfway-fab green" handleClickEvent={props.handleSaveEvent}>
+            : <Btn colors="btn-floating halfway-fab green darken-2" handleClickEvent={props.handleSaveEvent}>
               <i className="material-icons">save</i>
             </Btn>
           }
