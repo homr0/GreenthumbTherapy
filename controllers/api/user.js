@@ -1,38 +1,12 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const router = require("express").Router();
 
-const saltRounds = 10;
+const User = require("../userController");
 
-const UserSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
-});
+router.route("/:id")
+  .get(User.getPlants)
+  .post(User.favoritePlant)
 
-UserSchema.pre('save', function(next) {
-  if (this.isNew || this.isModified('password')) {
-    const document = this;
-    bcrypt.hash(this.password, saltRounds, function(err, hashedPassword) {
-      if (err) {
-        next(err);
-      } else {
-        document.password = hashedPassword;
-        next();
-      }
-    });
-  } else {
-    next();
-  }
-});
+router.route("/:id/:plant_id") 
+  .delete(User.removePlant);
 
-UserSchema.methods.isCorrectPassword = function(password, callback) {
-  bcrypt.compare(password, this.password, function(err, same) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(err, same);
-    }
-  });
-}
-
-module.exports = mongoose.model('User', UserSchema);
-
+module.exports = router;
