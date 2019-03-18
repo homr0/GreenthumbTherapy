@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Input } from "../components/Form";
 import { Col, Row, Container } from "../components/Grid";
+import API from '../utils/API';
 
 export default class Register extends Component {
   state = {
@@ -14,11 +15,8 @@ export default class Register extends Component {
     login_message: ""
   }
 
-  onChange = e => {
-    const target = e.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-
+  handleInputChange = event => {
+    const { value, name } = event.target;
     this.setState({
       [name]: value
     });
@@ -59,6 +57,13 @@ export default class Register extends Component {
     }));
      
   }
+
+  onSubmit = event => {
+    event.preventDefault();
+    API.registerTest(JSON.stringify(this.state))
+      .then(() => console.log("New user registered."))
+      .catch(err => console.log("There was an error registering a new user."));
+  };
 
   render() {
     return(
@@ -128,3 +133,5 @@ export default class Register extends Component {
     );
   }
 }
+
+  
