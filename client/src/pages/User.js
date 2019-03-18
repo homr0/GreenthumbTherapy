@@ -77,7 +77,7 @@ class User extends Component {
         <Col size="s12 m4">
           <h3 className="center">Favorites</h3>
 
-          {this.state.favorites.map(plant => <PlantCard
+          {this.state.plants.map(plant => <PlantCard
             key={plant.id}
             size="s12"
             id={plant.id}
