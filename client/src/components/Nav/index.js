@@ -14,6 +14,7 @@ const Nav = props => {
           <a href="/" className="brand-logo">
             Greenthumb Therapy
           </a>
+          {/* eslint-disable-next-line */}
           <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
