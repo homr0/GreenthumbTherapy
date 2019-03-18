@@ -34,11 +34,7 @@ class App extends Component {
           <Route path="/secret" exact component={withAuth(SecretTest)} />
           <Route path="/login" exact component={LoginTest} /> */}
           <Route path="/plant" exact component={PlantAdd} />
-<<<<<<< HEAD
-          <Route path="/register" exact component={UserDetails} />
-=======
           <Route path="/register" exact component={Register} />
->>>>>>> 674661c89247f8ea2fc6a59eb854f75a749c249b
         </Switch>
         </>
       </Router>
