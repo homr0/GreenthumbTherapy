@@ -1,58 +1,68 @@
-import React, { Component } from "react";
-import {Btn}  from "../components/Btn";
-import { Input } from "../components/Form";
-import { Col, Row, Container } from "../components/Grid";
+import React, { Component } from 'react';
+import API from '../utils/API';
 
 export default class Register extends Component {
-  state = {
-    email: "",
-    password: ""
+  constructor(props){
+    super(props);
+    this.state={
+      first_name:'',
+      last_name:'',
+      email:'',
+      password:''
+    };
   }
 
-  onChange = e => {
-    const target = e.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-
+  handleInputChange = (event) => {
+    const { value, name } = event.target;
     this.setState({
       [name]: value
     });
-  };
-
-  handleFormSubmit = e => {
-    e.preventDefault();
-
-    // Modify this so that the email and password are sent to the API.
-    console.log("Need to do something with the email and password.");
   }
 
-  render() {
-    return(
-      <Container>
-        <Row>
-          <Col>
-            <form>
-              <Input
-                size="s6"
-                name="email"
-                type="email"
-                id="email"
-                handleInputChange={this.onChange}
-                >Email</Input>
+  onSubmit = (event) => {
+    event.preventDefault();
+    API.registerTest(JSON.stringify(this.state))
+    console.log('New User Registered');
+    };
 
-                <Input
-                  size="s6"
-                  name="password"
-                  type="password"
-                  id="password"
-                  handleInputChange={this.onChange}
-                  >Password</Input>
-
-                  <Btn handleClickEvent={this.handleFormSubmit}>Update Password</Btn>
-            </form>
-          </Col>
-        </Row>
-      </Container>
-    );
+    render() {
+      return (
+        <form onSubmit={this.onSubmit}>
+          <h1>Register Below!</h1>
+          <input 
+          type="firstname"
+          name="firstname"
+          placeholder="Enter first name"
+          value={this.state.firstname}
+          onchange={this.handleInputChange}
+          />
+          <input
+          type="lastname"
+          name="lastname"
+          placeholder="Enter last name"
+          value={this.state.lastname}
+          onchange={this.handleInputChange}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            value={this.state.email}
+            onChange={this.handleInputChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter password"
+            value={this.state.password}
+            onChange={this.handleInputChange}
+            required
+          />
+          <input type="submit" value="Submit"/>
+        </form>
+      );
+    }
   }
-}
+
+  
