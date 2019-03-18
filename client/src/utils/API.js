@@ -5,14 +5,16 @@ const PLANTAPIKEY = "WGEzWlEvMDFpOGlCQ3haODB1MC81UT09";
 
 export default {
   // Goes to Trefle to find a selection of plants and individual plant information.
-  searchPlants: query => {
-    // query.token = PLANTAPIKEY;
-    // return axios.get(PROXYURL + PLANTURL + "api/plants", {params: query});
-    return axios.post("/api/plants/search", query);
-  },
+  searchPlants: query => axios.post("/api/plants/search", query),
   searchPlant: id => axios.get(PROXYURL + PLANTURL + "api/plants/" + id + "?" + PLANTAPIKEY),
 
-  plantAddTest: query => axios.post("/api/plants/", query),
+  // Manually adds a plant to the database.
+  plantAdd: query => axios.post("/api/plants/", query),
+
+  // Allows users to view, add, or remove favorite plants.
+  viewFavorites: userId => axios.get("/api/user/" + userId),
+  addFavorite: (userId, plantId) => axios.post("/api/user/" + userId, plantId),
+  removeFavorite: (userId, plantId) => axios.delete("/api/user/" + userId + "/" + plantId),
 
   homeTest: () => axios.get("/api/home"),
   loginTest: userData => axios.post("/api/authenticate", userData),

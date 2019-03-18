@@ -8,6 +8,9 @@ import PlantCard from "../components/PlantCard";
 
 class Questionnaire extends Component {
   state = {
+    user: null,
+    favorites: [],
+
     plants: [],
     plant_type: "",
     plant_height: "none",
@@ -17,16 +20,31 @@ class Questionnaire extends Component {
 
   componentDidMount() {
     // this.loadPlants();
+    // Load the user id into the state.
+    
+    // Load the user's favorite plant list into the 
+    API.viewFavorites(this.state.user)
+      .then(data => this.setState({favorites: data}))
+      .catch(err => console.log(err));
   }
 
   loadPlants = query => {
     API.searchPlants(query)
-      .then(res => {
-        console.log(res.data);
-        this.setState({ plants: res.data });
-      })
+      .then(res => this.setState({ plants: res.data }))
       .catch(err => console.log(err));
   };
+
+  favoritePlant = id => {
+    API.addFavorite(this.state.user, id)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
+
+  unfavoritePlant = id => {
+    API.removeFavorite(this.state.user, id)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
 
   handleInputChange = event => {
     const target = event.target;
@@ -84,7 +102,6 @@ class Questionnaire extends Component {
     // Load plants
     this.loadPlants(query);
   };
-
 
   render() {
     return (
@@ -260,7 +277,9 @@ class Questionnaire extends Component {
                   id={plant.id}
                   common_name={plant.common_name}
                   scientific_name={plant.scientific_name}
-                  image={plant.image} />
+                  image={plant.image}
+                  handleSaveEvent={() => this.favoritePlant(plant.id)}
+                  handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />
               ))}
             </Row>
           </Col>
