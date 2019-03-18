@@ -15,7 +15,10 @@ const Nav = props => {
             Greenthumb Therapy
           </a>
           {/* eslint-disable-next-line */}
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+          <a href="#" data-target="mobile-demo" className="sidenav-trigger right">
+            <i className="material-icons">menu</i>
+          </a>
+
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
               <Link
@@ -57,7 +60,7 @@ const Nav = props => {
           </ul>
         </div>
       </nav>
-      <ul class="sidenav" id="mobile-demo">
+      <ul className="sidenav" id="mobile-demo">
         <li>
           <Link to="/questionnaire">Questionnaire</Link>
         </li>
