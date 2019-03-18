@@ -18,7 +18,7 @@ import withAuth from "./withAuth";
 // import LoginTest from "./Login";
 
 import PlantAdd from "./pages/PlantAdd";
-import Register from "./pages/Register";
+import Register from "./pages/register";
 
 class App extends Component {
   render() {

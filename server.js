@@ -1,13 +1,14 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 const mongoose = require("mongoose");
-//const User = require("./models/User");
-//const withAuth = require("./controllers/withAuth");
+const routes = require("./controllers");
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-
 // Define middleware here
+app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -18,17 +19,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Connect to the Mongo DB
-const mongo_uri = "mongodb://localhost/react-auth";
+// const mongo_uri = "mongodb://localhost/react-auth";
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/greenthumbtherapy", { useNewUrlParser: true });
 
 // Add routes for API and for database.
 app.use(routes);
-
-//app.get(User);
-
-//app.get("/checkToken", withAuth, function(req, res) {
-  //res.sendStatus(200);
-//});
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
