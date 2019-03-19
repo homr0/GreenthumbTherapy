@@ -1,8 +1,8 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-//const User = require("./models/User");
-//const withAuth = require("./controllers/withAuth");
+const User = require("./models/User");
+const withAuth = require("./controllers/withAuth");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -24,11 +24,11 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/greenthumbthera
 // Add routes for API and for database.
 app.use(routes);
 
-//app.get(User);
+app.get(User);
 
-//app.get("/checkToken", withAuth, function(req, res) {
-  //res.sendStatus(200);
-//});
+app.get("/checkToken", withAuth, function(req, res) {
+  res.sendStatus(200);
+});
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
