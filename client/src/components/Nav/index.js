@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
+import greenthumb from "./greenthumb.jpg";
 
 const Nav = props => {
   return (
@@ -13,6 +14,7 @@ const Nav = props => {
         >
           <a href="/" className="brand-logo">
             Greenthumb Therapy
+            <img src={greenthumb} alt="" width="50px" height="50px"/>
           </a>
           {/* eslint-disable-next-line */}
           <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
