@@ -19,9 +19,9 @@ export const Row = ({id, children}) => {
 }
 
 
-export const Col =({ size, children })=> {
+export const Col =({ id, size, children })=> {
   return (
-    <div className={"col " + ((size) ? size : "s12")}>
+    <div className={"col " + ((size) ? size : "s12")} id={id}>
       {children}
     </div>
   );
