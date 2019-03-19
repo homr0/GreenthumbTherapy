@@ -3,7 +3,7 @@ import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Input } from "../components/Form";
 import { Col, Row, Container } from "../components/Grid";
-import API from '../utils/API';
+import Tabs from "../components/Tabs"
 
 export default class Register extends Component {
   state = {
@@ -68,19 +68,10 @@ export default class Register extends Component {
   render() {
     return(
       <Container>
-        <Row>
-          <Col>
-            <ul className="tabs">
-              <li className="tab">
-                <a href="#register">Register</a>
-              </li>
-
-              <li className="tab">
-                <a href="#login">Log in</a>
-              </li>
-            </ul>
-          </Col>
-          
+        <Tabs tabs={[
+          {link: "register", label: "Register"},
+          {link: "login", label: "Login"}
+        ]}>
           <Col id="register">
             <form>
               <Input
@@ -128,7 +119,7 @@ export default class Register extends Component {
                   <p>{this.state.login_message}</p>
               </form>
           </Col>
-        </Row>
+        </Tabs>
       </Container>
     );
   }
