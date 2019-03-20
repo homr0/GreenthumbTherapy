@@ -15,7 +15,7 @@ export default class Register extends Component {
     login_password: "",
     login_message: "Please type in the email and password for your account.",
     login_status: 200
-  }
+  };
 
   handleInputChange = event => {
     const { value, name } = event.target;
@@ -65,7 +65,7 @@ export default class Register extends Component {
         <Tabs tabs={[
           {link: "register", label: "Register"},
           {link: "login", label: "Login"}
-        ]}>
+        ]} activeTab={this.props.activeTab}>
           <Col id="register">
             <form>
               <Input
