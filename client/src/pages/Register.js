@@ -10,11 +10,13 @@ export default class Register extends Component {
   state = {
     register_email: "",
     register_password: "",
-    register_message: "",
+    register_message: "Please fill in the information to create your account.",
+    register_status: 200,
     login_email: "",
     login_password: "",
-    login_message: ""
-  }
+    login_message: "Please type in the email and password for your account.",
+    login_status: 200
+  };
 
   handleInputChange = event => {
     const { value, name } = event.target;
@@ -25,22 +27,19 @@ export default class Register extends Component {
 
   handleFormSubmit = e => {
     e.preventDefault();
-
-    // Modify this so that the email and password are sent to the API.
-    console.log("Need to do something with the email and password.");
   
     API.registerTest({
       email: this.state.register_email,
       password: this.state.register_password
     })
     .then(res => this.setState({
-      register_message: res.data
+      register_status: res.data.status,
+      register_message: res.data.message
     }))
     .catch(err => this.setState({
-      register_message: err.data
+      register_status: 500,
+      register_message: "Internal server error!"
     }));
-      
-
   }
 
   handleLogin = e => {
@@ -51,20 +50,15 @@ export default class Register extends Component {
       password: this.state.login_password,
     })
     .then(res => this.setState({
-      login_message: res.data
+      login_message: res.data.message,
+      login_status: res.data.status
     }))
     .catch(err => this.setState({
-      login_message: err.data
-    }));
-     
+        status: 500,
+        login_message: "Internal server error!"
+      })
+    );
   }
-
-  onSubmit = event => {
-    event.preventDefault();
-    API.registerTest(JSON.stringify(this.state))
-      .then(() => console.log("New user registered."))
-      .catch(err => console.log("There was an error registering a new user."));
-  };
 
   render() {
     return(
@@ -72,7 +66,7 @@ export default class Register extends Component {
         <Tabs tabs={[
           {link: "register", label: "Register"},
           {link: "login", label: "Login"}
-        ]}>
+        ]} activeTab={this.props.activeTab}>
           <Col id="register">
             <form>
               <Input
@@ -80,7 +74,7 @@ export default class Register extends Component {
                 name="register_email"
                 type="email"
                 id="register_email"
-                handleInputChange={this.onChange}
+                handleInputChange={this.handleInputChange}
                 >Email</Input>
 
                 <Input
@@ -88,12 +82,12 @@ export default class Register extends Component {
                   name="register_password"
                   type="password"
                   id="register_password"
-                  handleInputChange={this.onChange}
+                  handleInputChange={this.handleInputChange}
                   >Password</Input>
 
                   <Btn handleClickEvent={this.handleFormSubmit}>Register User</Btn>
 
-                  <p>{this.state.register_message}</p>
+                  <p className={(this.state.register_status === 200) ? "green-text" : "red-text"}>{this.state.register_message}</p>
             </form>
           </Col>
 
@@ -104,7 +98,7 @@ export default class Register extends Component {
                 name="login_email"
                 type="email"
                 id="login_email"
-                handleInputChange={this.onChange}
+                handleInputChange={this.handleInputChange}
                 >Email</Input>
 
                 <Input
@@ -112,12 +106,12 @@ export default class Register extends Component {
                   name="login_password"
                   type="password"
                   id="login_password"
-                  handleInputChange={this.onChange}
+                  handleInputChange={this.handleInputChange}
                   >Password</Input>
 
-                  <Btn handleClickEvent={this.handleFormSubmit}>Login User</Btn>
+                  <Btn handleClickEvent={this.handleLogin}>Login User</Btn>
 
-                  <p>{this.state.login_message}</p>
+                  <p className={(this.state.login_status === 200) ? "green-text" : "red-text"}>{this.state.login_message}</p>
               </form>
           </Col>
         </Tabs>

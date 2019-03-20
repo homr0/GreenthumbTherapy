@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
@@ -8,15 +9,27 @@ import PlantCard from "../components/PlantCard";
 class User extends Component {
   state = {
     user: null,
-    plants: [],
+    favorites: [],
 
     email: null,
     password: null
   }
 
   componentDidMount() {
-    this.viewFavoritePlants();
-  }
+    // Load the user id into the state.
+    API.checkToken()
+      .then(res => {
+        this.setState({user: res.data.id});
+
+        // Loads the user's favorite plant list into the components.
+        API.viewFavorites(this.state.user)
+          .then(data => this.setState({favorites: data}))
+          .catch(err => console.log(err));
+      })
+      .catch(err => {
+        return <Redirect to="/login" />;
+      });
+  };
 
   viewFavoritePlants = () => {
     API.viewFavorites(this.state.user)
@@ -77,14 +90,14 @@ class User extends Component {
         <Col size="s12 m4">
           <h3 className="center">Favorites</h3>
 
-          {this.state.plants.map(plant => <PlantCard
+          {(this.state.favorites.length > 0) ? this.state.favorites.map(plant => <PlantCard
             key={plant.id}
             size="s12"
             id={plant.id}
             common_name={plant.common_name}
             scientific_name={plant.scientific_name}
             image={plant.image}
-            handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />)}
+            handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />) : <p className="center">You currently have no favorite plants.</p>}
         </Col>
 
         <Col size="s12 m4">

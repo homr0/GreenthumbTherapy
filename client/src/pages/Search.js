@@ -19,14 +19,18 @@ class Search extends Component {
   };
 
   componentDidMount() {
-    // this.loadPlants();
     // Load the user id into the state.
-    
-    // Load the user's favorite plant list into the 
-    API.viewFavorites(this.state.user)
-      .then(data => this.setState({favorites: data}))
+    API.checkToken()
+      .then(res => {
+        this.setState({user: res.data.id});
+
+        // Loads the user's favorite plant list into the component.
+        API.viewFavorites(this.state.user)
+          .then(data => this.setState({favorites: data}))
+          .catch(err => console.log(err));
+      })
       .catch(err => console.log(err));
-  }
+  };
 
   loadPlants = query => {
     API.searchPlants(query)
