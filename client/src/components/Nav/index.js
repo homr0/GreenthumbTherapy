@@ -4,11 +4,6 @@ import "./style.css";
 
 const Nav = props => {
   return (
-<<<<<<< HEAD
-    <nav>
-      <div className={"nav-wrapper z-depth-3" + ((props.colorNav) ? " " + props.colorNav : "")}>
-        <a href="/" className="brand-logo">Greenthumb Therapy</a>
-=======
     <>
       <nav>
         <div
@@ -23,7 +18,6 @@ const Nav = props => {
           <a href="#" data-target="mobile-demo" className="sidenav-trigger right">
             <i className="material-icons">menu</i>
           </a>
->>>>>>> 7cb085435471bdde4f65f18beabfc466c9eca474
 
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
