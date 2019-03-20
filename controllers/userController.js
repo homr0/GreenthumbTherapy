@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const secret = "mysecretsshhh";
 const db = require("../models");
 
 module.exports = {
@@ -34,12 +35,11 @@ module.exports = {
             else {
               // Issues token
               const payload = {
+                exp: Math.floor(Date.now() / 1000) + (60 * 60),
                 id: user._id
               };
 
-              const token = jwt.sign(payload, "secret", {
-                expiresIn: "1h"
-              });
+              const token = jwt.sign(payload, secret);
 
               res.cookie("token", token, {httpOnly: true}).status(200).json({
                 status: 200,
