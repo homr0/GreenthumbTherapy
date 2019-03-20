@@ -1,3 +1,10 @@
 .tab + .indicator {
   background-color: green;
+  height: 60px;
+  opacity: 0.3;
+ 
+}
+
+.tabs .tab a {
+  color:goldenrod;
 }
