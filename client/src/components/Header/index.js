@@ -7,11 +7,11 @@ const Header = ({ children }) =>{
   return (
     <header>
       <Nav
-        colorNav="green"
-        colorLink="green"
+        colorNav="teal lighten-2"
+        colorLink="teal lighten-2"
       />
 
-      <div className="parallax-container">
+      <div className="parallax-container z-depth-4">
         <div className="parallax">
           <img src={header} alt="" />
           </div>
