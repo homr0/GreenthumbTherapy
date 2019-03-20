@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-import thumb from "./thumb.jpg";
+
 
 const Nav = props => {
   return (
@@ -14,7 +14,7 @@ const Nav = props => {
         >
           <a href="/" className="brand-logo">
             Greenthumb Therapy
-            <img src={thumb} alt="" id= "thumb" width="45px" height="50px"/>
+            
           </a>
           {/* eslint-disable-next-line */}
           <a href="#" data-target="mobile-demo" className="sidenav-trigger right">
