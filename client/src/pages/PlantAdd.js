@@ -13,6 +13,12 @@ class PlantAdd extends Component {
     height_mature_ft: null,
     shade_tolerance: null,
     moisture_use: null,
+    growth_habit: null,
+    flower_conspicuous: null,
+    propogated_by_seed: null,
+    palatable_human: null,
+    lumber_product: null,
+    nursery_stock_product: null,
     status: "Register a plant!"
   }
 
@@ -31,14 +37,22 @@ class PlantAdd extends Component {
   handleClickEvent = event => {
     event.preventDefault();
 
-    API.plantAddTest({
+    API.plantAdd({
       id: this.state.plant_id,
       common_name: this.state.common_name,
       scientific_name: this.state.scientific_name,
       image: this.state.image,
+
       height_mature_ft: this.state.height_mature_ft,
       shade_tolerance: this.state.shade_tolerance,
-      moisture_use: this.state.moisture_use
+      moisture_use: this.state.moisture_use,
+      
+      growth_habit: this.state.growth_habit,
+      flower_conspicuous: this.state.flower_conspicuous,
+      propogated_by_seed: this.state.propogated_by_seed,
+      palatable_human: this.state.palatable_human,
+      lumber_product: this.state.lumber_product,
+      nursery_stock_product: this.state.nursery_stock_product
     })
       .then(() => this.setState({status: "Successfully registered a plant!"}))
       .catch(err => this.setState({status: "Plant was not successfully registered. You may have a duplicate plant id."}));

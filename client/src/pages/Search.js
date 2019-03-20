@@ -8,6 +8,9 @@ import PlantCard from "../components/PlantCard";
 
 class Search extends Component {
   state = {
+    user: null,
+    favorites: [],
+
     plants: [],
     plant_type: "",
     plant_height: "none",
@@ -17,16 +20,31 @@ class Search extends Component {
 
   componentDidMount() {
     // this.loadPlants();
+    // Load the user id into the state.
+    
+    // Load the user's favorite plant list into the 
+    API.viewFavorites(this.state.user)
+      .then(data => this.setState({favorites: data}))
+      .catch(err => console.log(err));
   }
 
   loadPlants = query => {
     API.searchPlants(query)
-      .then(res => {
-        console.log(res.data);
-        this.setState({ plants: res.data });
-      })
+      .then(res => this.setState({ plants: res.data }))
       .catch(err => console.log(err));
   };
+
+  favoritePlant = id => {
+    API.addFavorite(this.state.user, id)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
+
+  unfavoritePlant = id => {
+    API.removeFavorite(this.state.user, id)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  }
 
   handleInputChange = event => {
     const target = event.target;
@@ -81,7 +99,6 @@ class Search extends Component {
     if (this.state.plant_water !== "none")
       query.moisture_use = this.state.plant_water;
 
-    //Plant Pets
 
     // Load plants
     this.loadPlants(query);
@@ -97,22 +114,30 @@ class Search extends Component {
                 <h2 className="center">Plant Search</h2>
               </ListHeader>
 
+              
               <Input
                 onChange={this.handleInputChange}
+                size="s6"
                 name="plant_name"
                 placeholder="Search Plant Name"
               >
                 Insert Plant Name
               </Input>
+              
 
+              
               <Input
                 onChange={this.handleInputChange}
                 name="plant_height"
-                placeholder="Number in inches"
+                size="s6"
+                placeholder="Number in feet"
                 type="number"
+                min="1"
+                max="20"
               >
-                Height in inches{" "}
+                Height in feet{" "}
               </Input>
+              
 
               <ListItem>
                 {/* <Row>
@@ -155,9 +180,9 @@ class Search extends Component {
                   <Col> */}
                 Sunlight needed:
                 {[
-                  { value: "intolerant", label: " A lot of sunlight" },
-                  { value: "intermediate", label: " Some sunlight" },
-                  { value: "tolerant", label: " Not a lot of sunlight" },
+                  { value: "intolerant", label: " Full Sunlight" },
+                  { value: "intermediate", label: " Some Sunlight" },
+                  { value: "tolerant", label: " Full Shade" },
                   { value: "adjustable", label: "Adjustable" }
                 ].map(plant => (
                   <Radio
@@ -172,49 +197,7 @@ class Search extends Component {
                 </Row> */}
               </ListItem>
 
-              <ListItem>
-                {/* <Row>
-                  <Col> */}
-                Precipitation Needed:
-                {[
-                  { value: "dry", label: "Dry" },
-                  { value: "temperate", label: "Temperate" },
-                  { value: "humid", label: "Humid" },
-                  { value: "adjustable", label: "Adjustable" }
-                ].map(plant => (
-                  <Radio
-                    name="weather_space"
-                    value={plant.value}
-                    onChange={() => this.handleInputChange()}
-                  >
-                    {plant.label}
-                  </Radio>
-                ))}
-                {/* </Col>
-                </Row> */}
-              </ListItem>
-
-              <ListItem>
-                {/* <Row>
-                  <Col> */}
-                Temperature needed to grow:
-                {[
-                  { value: "45", label: "Cold (<45F)" },
-                  { value: "60", label: " Warm (45-74F)" },
-                  { value: "75", label: " Hot (>75F)" },
-                  { value: "adjustable", label: "Adjustable" }
-                ].map(plant => (
-                  <Radio
-                    name="space_climate"
-                    value={plant.value}
-                    onChange={() => this.handleInputChange()}
-                  >
-                    {plant.label}
-                  </Radio>
-                ))}
-                {/* </Col>
-                </Row> */}
-              </ListItem>
+              
 
               <ListItem>
                 {/* <Row>
@@ -257,7 +240,7 @@ class Search extends Component {
               </ListItem>
 
               <ListItem>
-                <Btn handleClickEvent={this.handleFormSubmit}>
+                <Btn handleClickEvent={this.handleFormSubmit} colors="teal darken-3">
                   Show Me Plants
                 </Btn>
               </ListItem>
@@ -276,6 +259,9 @@ class Search extends Component {
                   id={plant.id}
                   common_name={plant.common_name}
                   scientific_name={plant.scientific_name}
+                  image={plant.image}
+                  handleSaveEvent={() => this.favoritePlant(plant.id)}
+                  handleDeleteEvent={() => this.unfavoritePlant(plant.id)}
                 />
               ))}
             </Row>

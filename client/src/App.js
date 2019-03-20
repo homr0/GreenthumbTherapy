@@ -8,14 +8,17 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Questionnaire from "./pages/Questionnaire";
 import Search from "./pages/Search";
-// import User from "./pages/User";
+import User from "./pages/User";
+import Secret from "../src/Secret";
+import Login from "../src/pages/Login";
 
 // import HomeTest from "./Home";
-// import withAuth from "./withAuth";
+import withAuth from "./withAuth";
 // import SecretTest from "./Secret";
 // import LoginTest from "./Login";
 
 import PlantAdd from "./pages/PlantAdd";
+import Register from "./pages/Register";
 
 class App extends Component {
   render() {
@@ -28,12 +31,14 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/questionnaire" exact component={Questionnaire} />
           <Route path="/search" exact component={Search} />
-          {/* <Route path="/user" exact component={User} />  */}
-
+          <Route path="/user" exact component={User} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/secret" component={withAuth(Secret)}/>
           {/* <Route path="/" exact component={HomeTest} />
           <Route path="/secret" exact component={withAuth(SecretTest)} />
           <Route path="/login" exact component={LoginTest} /> */}
           <Route path="/plant" exact component={PlantAdd} />
+          <Route path="/register" exact component={Register} />
         </Switch>
         </>
       </Router>
