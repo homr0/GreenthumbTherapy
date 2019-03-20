@@ -2,14 +2,14 @@ import React from "react";
 import "./style.css";
 import { Row, Col } from  "../Grid";
 
-const Tabs = ({tabs, children}) => {
+const Tabs = ({tabs, activeTab, children}) => {
   return(
     <Row>
       <Col>
         <ul className="tabs">
           {tabs.map(tab =>
-            <li className="tab">
-              <a href={"#" + tab.link}>{tab.label}</a>
+            <li className="tab" key={tab.link}>
+              <a href={"#" + tab.link} className={(tab.link === activeTab) ? "active" : null}>{tab.label}</a>
             </li>
           )}
         </ul>
