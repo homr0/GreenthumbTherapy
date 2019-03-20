@@ -1,0 +1,12 @@
+.row {
+  margin-top: 30px;
+}
+
+h3 {
+  color: #37474f;
+}
+
+.slider .slides li .caption {
+  color: #37474f;
+  top: 25%;
+}

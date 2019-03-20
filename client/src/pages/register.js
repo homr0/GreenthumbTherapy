@@ -1,8 +1,9 @@
+
 import React, { Component } from 'react';
 import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Input } from "../components/Form";
-import { Col, Row, Container } from "../components/Grid";
+import { Col, Container } from "../components/Grid";
 import Tabs from "../components/Tabs"
 
 export default class Register extends Component {
