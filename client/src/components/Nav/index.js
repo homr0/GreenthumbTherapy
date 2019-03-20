@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 
+
 const Nav = props => {
   return (
 <<<<<<< HEAD
@@ -18,6 +19,7 @@ const Nav = props => {
         >
           <a href="/" className="brand-logo">
             Greenthumb Therapy
+            
           </a>
           {/* eslint-disable-next-line */}
           <a href="#" data-target="mobile-demo" className="sidenav-trigger right">
