@@ -8,8 +8,10 @@ const withAuth = (req, res, next) => {
     req.headers["x-access-token"] ||
     req.cookies.token;
   
-  (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, (err, decoded) => {
-    (err) ? res.status(401).send("Unauthorized: Invalid token") : req.email = decoded.email;
+  (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, {maxAge: 60 * 60}, (err, decoded) => {
+    (err) ? res.status(402).send("Unauthorized: Invalid token") : res.status(200).json({
+      id: decoded.id
+    });
   });
 }
 
