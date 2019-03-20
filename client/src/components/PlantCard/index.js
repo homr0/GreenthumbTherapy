@@ -37,7 +37,7 @@ const PlantCard = props => {
         </div>
 
         <div className={"card-action" + ((props.colorsAction) ? " " + props.colorsAction : "")}>
-          <a href={"https://wikipedia.org/wiki/" + props.scientific_name.replace(" ", "_")}>More Information</a>
+          <a href={"https://wikipedia.org/wiki/" + props.scientific_name.replace(" ", "_")} target="_blank" rel="noopener noreferrer">More Information</a>
         </div>
       </div>
     </Col>

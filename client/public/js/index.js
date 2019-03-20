@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Initializes Materialize JavaScript components.
-  var parallax = M.Parallax.init(document.querySelectorAll('.parallax'));
-  var select = M.FormSelect.init(document.querySelectorAll('select'));
+  const parallax = M.Parallax.init(document.querySelectorAll('.parallax'));
+  const select = M.FormSelect.init(document.querySelectorAll('select'));
+  const sidenav = M.Sidenav.init(document.querySelectorAll('.sidenav'));
+  const tabs = M.Tabs.init(document.querySelectorAll('.tabs'));
 });
