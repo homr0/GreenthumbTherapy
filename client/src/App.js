@@ -14,7 +14,7 @@ import Secret from "../src/Secret";
 import withAuth from "./withAuth";
 
 import PlantAdd from "./pages/PlantAdd";
-import Register from "./pages/register";
+import Register from "./pages/Register";
 
 class App extends Component {
   render() {
@@ -30,7 +30,7 @@ class App extends Component {
           <Route path="/user" exact component={withAuth(User)} />} />
           <Route path="/secret" component={withAuth(Secret)}/>
           <Route path="/plant" exact component={PlantAdd} />
-          <Route path="/register" exact render={props => <Register activeTab="register" />} />
+          <Route path="/Register" exact render={props => <Register activeTab="register" />} />
           <Route path="/login" exact render={props => <Register activeTab="login" />} />
           <Redirect from="/register#login" to="/login" />
         </Switch>
