@@ -256,7 +256,7 @@ class Search extends Component {
         <Row>
           <Col>
             <h1>Results</h1>
-            <Row id="plant-results">
+            <Row id="search-results">
               {this.state.plants.map(plant => (
                 <PlantCard
                   key={plant.id}
