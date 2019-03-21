@@ -33,6 +33,7 @@ class App extends Component {
           <Route path="/register" exact render={props => <Register activeTab="register" />} />
           <Route path="/login" exact render={props => <Register activeTab="login" />} />
           <Redirect from="/register#login" to="/login" />
+          <Redirect from="/login#register" to="/register" />
         </Switch>
         </>
       </Router>
