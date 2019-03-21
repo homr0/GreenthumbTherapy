@@ -7,16 +7,25 @@ import { Col, Container } from "../components/Grid";
 import Tabs from "../components/Tabs"
 
 export default class Register extends Component {
-  state = {
-    register_email: "",
-    register_password: "",
-    register_message: "Please fill in the information to create your account.",
-    register_status: 200,
-    login_email: "",
-    login_password: "",
-    login_message: "Please type in the email and password for your account.",
-    login_status: 200
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      register_email: "",
+      register_password: "",
+      register_message: "Please fill in the information to create your account.",
+      register_status: 200,
+      login_email: "",
+      login_password: "",
+      login_message: "Please type in the email and password for your account.",
+      login_status: 200,
+      activeTab: props.activeTab
+    };
   };
+
+  componentDidMount() {
+    setTimeout(() => (document.getElementById("register").style.display === document.getElementById("login").style.display) && window.location.reload(), 1);
+  }
 
   handleInputChange = event => {
     const { value, name } = event.target;
@@ -66,7 +75,7 @@ export default class Register extends Component {
         <Tabs tabs={[
           {link: "register", label: "Register"},
           {link: "login", label: "Login"}
-        ]} activeTab={this.props.activeTab}>
+        ]} activeTab={this.state.activeTab}>
           <Col id="register">
             <form>
               <Input
