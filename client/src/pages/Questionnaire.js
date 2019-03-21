@@ -34,7 +34,10 @@ class Questionnaire extends Component {
 
   loadPlants = query => {
     API.searchPlants(query)
-      .then(res => this.setState({ plants: res.data }))
+      .then(res => {
+        this.setState({ plants: res.data });
+        console.log(res.data);
+      })
       .catch(err => console.log(err));
   };
 
@@ -275,16 +278,17 @@ class Questionnaire extends Component {
             <h1>Your Plant Matches</h1>
 
             <Row id="plant-results">
-              {this.state.plants.map(plant => (
+              {this.state.plants.map(plant => 
                 <PlantCard
                   key={plant.id}
                   id={plant.id}
                   common_name={plant.common_name}
                   scientific_name={plant.scientific_name}
+                  shade_tolerance={plant.shade_tolerance}
                   image={plant.image}
                   handleSaveEvent={() => this.favoritePlant(plant.id)}
                   handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />
-              ))}
+              )}
             </Row>
           </Col>
         </Row>

@@ -70,7 +70,7 @@ router.route("/search")
                       .catch(err => res.status(422).json(err));
                   })
                   .catch(err => res.status(422).json(err))
-                  : plants.push(plant);
+                  : plants.push(dbModel);
 
               if((index + 1) === response.data.length) res.status(200).json(plants);
             })

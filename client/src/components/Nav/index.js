@@ -24,19 +24,32 @@ const Nav = props => {
           </a>
 
           <ul id="nav-mobile" className="right hide-on-med-and-down">
+          
           <li>
               <Link
-                to="/Users Name"
+                to="/user"
                 className={
                   props.colorLink +
-                  (window.location.pathname === "/User"
-                    ? " active"
-                    : "")
+                  (window.location.pathname === "/user" ? " active" : "")
                 }
               >
-                Users Name
+                Welcome, User
               </Link>
             </li>
+
+            <li>
+            <Link
+                to="/user"
+                className={
+                  props.colorLink +
+                  (window.location.pathname === "/user" ? " active" : "")
+                }
+              >
+              <i class="material-icons left">assignment_ind</i>
+                Login
+              </Link>
+            </li>
+
             <li>
               <Link
                 to="/questionnaire"
@@ -63,30 +76,9 @@ const Nav = props => {
               </Link>
             </li>
 
-            <li>
-              <Link
-                to="/user"
-                className={
-                  props.colorLink +
-                  (window.location.pathname === "/user" ? " active" : "")
-                }
-              >
-                User Page
-              </Link>
-            </li>
+           
 
-            <li>
-            <Link
-                to="/user"
-                className={
-                  props.colorLink +
-                  (window.location.pathname === "/user" ? " active" : "")
-                }
-              >
-              <i class="material-icons left">assignment_ind</i>
-                LOGIN
-              </Link>
-            </li>
+            
           </ul>
         </div>
       </nav>
