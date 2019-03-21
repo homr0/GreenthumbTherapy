@@ -30,7 +30,7 @@ class App extends Component {
           <Route path="/user" exact component={withAuth(User)} />} />
           <Route path="/secret" component={withAuth(Secret)}/>
           <Route path="/plant" exact component={PlantAdd} />
-          <Route path="/register" exact render={props => <Register activeTab="register" />} />
+          <Route path="/Register" exact render={props => <Register activeTab="register" />} />
           <Route path="/login" exact render={props => <Register activeTab="login" />} />
           <Redirect from="/register#login" to="/login" />
           <Redirect from="/login#register" to="/register" />
