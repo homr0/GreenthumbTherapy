@@ -3,12 +3,13 @@ import Nav from "../Nav";
 import "./style.css";
 import header from "./header.jpeg";
 
-const Header = ({ children }) =>{
+const Header = ({ name, children }) =>{
   return (
     <header>
       <Nav
         colorNav="teal lighten-2"
         colorLink="teal lighten-2"
+        name={name}
       />
 
       <div className="parallax-container z-depth-4">
