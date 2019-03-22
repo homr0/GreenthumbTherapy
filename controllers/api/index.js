@@ -9,9 +9,6 @@ router.use("/user", userRoutes);
 // Plant routes
 router.use("/plants", plantRoutes);
 
-router.route("/home")
-  .get((req, res) => res.send("The password is potato."));
-
 router.route("/register")
   .post(User.create);
 

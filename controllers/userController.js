@@ -57,13 +57,12 @@ module.exports = {
     (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, {maxAge: 60 * 60}, (err, decoded) => {
       (err) ? res.status(402).send("Unauthorized: Invalid token") : db.User.findOne({_id: decoded.id})
         .then(dbModel => res.status(200).json({
+          id: decoded.id,
           first_name: dbModel.first_name,
           last_name: dbModel.last_name,
           favorites: dbModel.plants
         }))
-        .catch(err =>{ 
-          console.log(err);
-          res.json({
+        .catch(err =>{ res.json({
           message: "Internal error. Could not find a user with this token information."
         }).status(500)});
     });
