@@ -14,7 +14,7 @@ import Secret from "../src/Secret";
 import withAuth from "./withAuth";
 
 import PlantAdd from "./pages/PlantAdd";
-import Register from "./pages/register";
+import Register from "./pages/Register";
 
 class App extends Component {
   render() {
