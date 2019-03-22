@@ -7,29 +7,19 @@ import { Input, Radio, Checkbox } from "../components/Form";
 import PlantCard from "../components/PlantCard";
 
 class Search extends Component {
-  state = {
-    user: null,
-    favorites: [],
+  constructor(props) {
+    super(props);
 
-    plants: [],
-    plant_type: "",
-    plant_height: "none",
-    plant_light: "adjustable",
-    plant_water: "none"
-  };
-
-  componentDidMount() {
-    // Load the user id into the state.
-    API.checkToken()
-      .then(res => {
-        this.setState({user: res.data.id});
-
-        // Loads the user's favorite plant list into the component.
-        API.viewFavorites(this.state.user)
-          .then(data => this.setState({favorites: data}))
-          .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
+    this.state = {
+      user: props.user || null,
+      favorites: props.favorites || [],
+  
+      plants: [],
+      plant_type: "",
+      plant_height: "none",
+      plant_light: "adjustable",
+      plant_water: "none"
+    }
   };
 
   loadPlants = query => {

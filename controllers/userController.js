@@ -7,12 +7,9 @@ module.exports = {
     db.User
       .create(req.body)
       .then(() => res.status(200).json({
-        status: 200,
         message: "Welcome to Greenthumb Therapy!"
       }))
-      // .catch(err => res.status(500).send("Error registering new user please try again."));
       .catch(err => res.json({
-        status: 500,
         message: "This email is already tied to another account."
       }).status(500));
   },
@@ -24,12 +21,10 @@ module.exports = {
       .findOne({email: email})
       .then(user => {
         (!user) ? res.json({
-          status: 401,
           message: "This email does not belong to a recognized user."
         }).status(401) : user.isCorrectPassword(password)
           .then(same => {
             if(!same) res.json({
-              status: 401,
               message: "Incorrect password."
             }).status(401);
             else {
@@ -42,25 +37,45 @@ module.exports = {
               const token = jwt.sign(payload, secret);
 
               res.cookie("token", token, {httpOnly: true}).status(200).json({
-                status: 200,
                 message: "You have signed into Greenthumb Therapy"
               });
             }
           });
       })
       .catch(err => res.json({
-          error: "Internal error please try again"
+          message: "Internal error. Please try again"
         }).status(500));
+  },
+
+  verify: (req, res, next) => {
+    const token = 
+      req.body.token ||
+      req.query.token ||
+      req.headers["x-access-token"] ||
+      req.cookies.token;
+    
+    (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, {maxAge: 60 * 60}, (err, decoded) => {
+      (err) ? res.status(402).send("Unauthorized: Invalid token") : db.User.findOne({_id: decoded.id})
+        .then(dbModel => res.status(200).json({
+          id: decoded.id,
+          first_name: dbModel.first_name,
+          last_name: dbModel.last_name,
+          favorites: dbModel.plants
+        }))
+        .catch(err =>{ res.json({
+          message: "Internal error. Could not find a user with this token information."
+        }).status(500)});
+    });
   },
 
   getPlants: (req, res) => {
     db.User
       .findOne({_id: req.params.id})
       .populate("plant")
-      .then(dbUser => res.status(200).send(dbUser))
-      .catch(err => res.status(500).json({
-          error: "Internal error please try again."
-        })
+      .then(dbUser => res.status(200).json(dbUser))
+      .catch(err => res.json({
+          message: "Internal error. Please try again."
+        }).status(500)
       );
   },
 
