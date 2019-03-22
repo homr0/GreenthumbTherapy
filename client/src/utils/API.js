@@ -1,12 +1,8 @@
 import axios from "axios";
-const PROXYURL = "https://cors-anywhere.herokuapp.com/"
-const PLANTURL = "https://trefle.io/";
-const PLANTAPIKEY = "WGEzWlEvMDFpOGlCQ3haODB1MC81UT09";
 
 export default {
-  // Goes to Trefle to find a selection of plants and individual plant information.
+  // Goes to Trefle to find a selection of plants to return to the user.
   searchPlants: query => axios.post("/api/plants/search", query),
-  searchPlant: id => axios.get(PROXYURL + PLANTURL + "api/plants/" + id + "?" + PLANTAPIKEY),
 
   // Manually adds a plant to the database.
   plantAdd: query => axios.post("/api/plants/", query),
@@ -16,9 +12,11 @@ export default {
   addFavorite: (userId, plantId) => axios.post("/api/user/" + userId, plantId),
   removeFavorite: (userId, plantId) => axios.delete("/api/user/" + userId + "/" + plantId),
 
-  homeTest: () => axios.get("/api/home"),
-  loginTest: userData => axios.post("/api/authenticate", userData),
-  registerTest: userData => axios.post("/api/register", userData),
+  // User-related functions
+  register: userData => axios.post("/api/register", userData),
+  login: userData => axios.post("/api/authenticate", userData),
+  verify: () => axios.get("/api/verify"),
+
   secretTest: () => axios.get("/api/secret"),
   checkToken: () => axios.get("/checkToken")
 }

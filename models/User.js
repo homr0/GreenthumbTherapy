@@ -15,6 +15,16 @@ const UserSchema = new mongoose.Schema({
     required: true
   },
 
+  first_name: {
+    type: String,
+    required: true
+  },
+
+  last_name: {
+    type: String,
+    required: true
+  },
+
   plants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Plant"
