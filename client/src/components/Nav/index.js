@@ -6,20 +6,11 @@ const Nav = props => {
   return (
     <>
       <nav>
-        <div
-          className={
-            "nav-wrapper" + (props.colorNav ? " " + props.colorNav : "")
-          }
-        >
-          <a href="/" className="brand-logo">
-            Greenthumb Therapy
-          </a>
+        <div className={"nav-wrapper" + (props.colorNav) ? " " + props.colorNav : ""}>
+          <a href="/" className="brand-logo">Greenthumb Therapy</a>
+
           {/* eslint-disable-next-line */}
-          <a
-            href="#"
-            data-target="mobile-demo"
-            className="sidenav-trigger right"
-          >
+          <a href="#" data-target="mobile-demo" className="sidenav-trigger right">
             <i className="material-icons">menu</i>
           </a>
 
@@ -74,12 +65,6 @@ const Nav = props => {
         </li>
         <li>
           <Link to="/search">Search</Link>
-        </li>
-        <li>
-          <Link to="/user">User Page</Link>
-        </li>
-        <li>
-          <Link to="/user">Login</Link>
         </li>
       </ul>
     </>

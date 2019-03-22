@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
