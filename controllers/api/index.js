@@ -18,4 +18,7 @@ router.route("/register")
 router.route("/authenticate")
   .post(User.login);
 
+router.route("/verify")
+  .get(User.verify);
+
 module.exports = router;
