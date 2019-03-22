@@ -7,28 +7,16 @@ import { Input } from "../components/Form";
 import PlantCard from "../components/PlantCard";
 
 class User extends Component {
-  state = {
-    user: null,
-    favorites: [],
+  constructor(props) {
+    super(props);
 
-    email: null,
-    password: null
-  }
-
-  componentDidMount() {
-    // Load the user id into the state.
-    API.checkToken()
-      .then(res => {
-        this.setState({user: res.data.id});
-
-        // Loads the user's favorite plant list into the components.
-        API.viewFavorites(this.state.user)
-          .then(data => this.setState({favorites: data}))
-          .catch(err => console.log(err));
-      })
-      .catch(err => {
-        return <Redirect to="/login" />;
-      });
+    this.state = {
+      user: props.user,
+      favorites: props.favorites || [],
+  
+      email: null,
+      password: null
+    }
   };
 
   viewFavoritePlants = () => {

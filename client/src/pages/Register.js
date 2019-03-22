@@ -48,7 +48,6 @@ export default class Register extends Component {
       last_name: this.state.register_last_name
     })
     .then(res => {
-      console.log(res);
       this.setState({
       register_status: res.status,
       register_message: res.data.message
