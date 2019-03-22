@@ -6,7 +6,7 @@ const Nav = props => {
   return (
     <>
       <nav>
-        <div className={"nav-wrapper" + (props.colorNav) ? " " + props.colorNav : ""}>
+        <div className={"nav-wrapper" + ((props.colorNav) ? " " + props.colorNav : "")}>
           <a href="/" className="brand-logo">Greenthumb Therapy</a>
 
           {/* eslint-disable-next-line */}
