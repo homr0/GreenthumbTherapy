@@ -7,7 +7,7 @@ import placeholder from "./placeholder.png";
 
 const PlantCard = props => {
   return (
-    <Col size={"plant-card " + ((props.size) ? props.size : "s12 m4")}>
+    <Col size={"plant-card " + ((props.size) ? props.size : "s12 m6 l4")}>
       <div className={"card" + ((props.colorsCard) ? " " +  props.colorsCard : "")}>
         <div className="card-image">
           <img alt={(props.image) ? props.common_name : "Plant placeholder image"} src={(props.image) ? props.image : placeholder} />
@@ -33,7 +33,18 @@ const PlantCard = props => {
             <ListItem>
               <strong>Scientific Name:</strong> {props.scientific_name}
             </ListItem>
+
+            {(props.shade_tolerance) && 
+              <ListItem>
+                <strong>Needs: </strong>
+                {((props.shade_tolerance === "Intolerant") && <span><i class="fas fa-sun"></i> Full Sun</span>)
+                  || ((props.shade_tolerance === "Intermediate") && <span><i class="fas fa-cloud-sun"></i> Partial Sun</span>)
+                  || ((props.shade_tolerance === "Tolerant") && <span><i class="fas fa-cloud"></i> Shade</span>)
+                }
+              </ListItem>}
           </List>
+
+          
         </div>
 
         <div className={"card-action" + ((props.colorsAction) ? " " + props.colorsAction : "")}>

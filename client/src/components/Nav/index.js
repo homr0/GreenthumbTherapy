@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 
-
 const Nav = props => {
   return (
     <>
@@ -14,14 +13,43 @@ const Nav = props => {
         >
           <a href="/" className="brand-logo">
             Greenthumb Therapy
-            
           </a>
           {/* eslint-disable-next-line */}
-          <a href="#" data-target="mobile-demo" className="sidenav-trigger right">
+          <a
+            href="#"
+            data-target="mobile-demo"
+            className="sidenav-trigger right"
+          >
             <i className="material-icons">menu</i>
           </a>
 
           <ul id="nav-mobile" className="right hide-on-med-and-down">
+          
+          <li>
+              <Link
+                to="/user"
+                className={
+                  props.colorLink +
+                  (window.location.pathname === "/user" ? " active" : "")
+                }
+              >
+                Welcome, User
+              </Link>
+            </li>
+
+            <li>
+            <Link
+                to="/user"
+                className={
+                  props.colorLink +
+                  (window.location.pathname === "/user" ? " active" : "")
+                }
+              >
+              <i class="material-icons left">assignment_ind</i>
+                Login
+              </Link>
+            </li>
+
             <li>
               <Link
                 to="/questionnaire"
@@ -48,21 +76,17 @@ const Nav = props => {
               </Link>
             </li>
 
-            <li>
-              <Link
-                to="/user"
-                className={
-                  props.colorLink +
-                  (window.location.pathname === "/user" ? " active" : "")
-                }
-              >
-                User Page
-              </Link>
-            </li>
+           
+
+            
           </ul>
         </div>
       </nav>
+
       <ul className="sidenav" id="mobile-demo">
+      <li>
+          <Link to="/user">Users Name</Link>
+        </li>
         <li>
           <Link to="/questionnaire">Questionnaire</Link>
         </li>
@@ -71,6 +95,9 @@ const Nav = props => {
         </li>
         <li>
           <Link to="/user">User Page</Link>
+        </li>
+        <li>
+          <Link to="/user">Login</Link>
         </li>
       </ul>
     </>
