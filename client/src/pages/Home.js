@@ -31,6 +31,32 @@ class Home extends Component {
             </Slider>
           </Col>
         </Row>
+
+        <Row>
+          <Col size="s12 m4 center plant-box">
+            <h2>
+              <a href="/questionnaire">Plant Matcher</a>
+            </h2>
+
+            <p>Don't know where to start? Take our quiz to find the plant that is right for you!</p>
+          </Col>
+
+          <Col size="s12 m4 center plant-box">
+            <h2>
+              <a href="/search">Search Plants</a>
+            </h2>
+
+            <p>Have an idea of the plant you want? Use our search engine to find the plant you're looking for.</p>
+          </Col>
+
+          <Col size="s12 m4 center plant-box">
+            <h2>
+              <a href="/user">User Planter</a>
+            </h2>
+
+            <p>Already a member of Greenthumb Therapy? Manage your plants, whether you love them or can't stand them.</p>
+          </Col>
+        </Row>
       </Container>
     );
   }
