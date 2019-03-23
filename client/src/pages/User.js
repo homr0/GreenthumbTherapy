@@ -13,6 +13,7 @@ class User extends Component {
     this.state = {
       user: null,
       favorites: [],
+      banned: [],
 
       email: null,
       password: null
@@ -23,9 +24,11 @@ class User extends Component {
     API.verify()
       .then(res => {
         this.setState({
-          user: res.data.id,
-          favorites: res.data.favorites
+          user: res.data.id
         });
+
+        this.viewFavoritePlants();
+        this.viewBannedPlants();
       })
       .catch(err => {
         this.props.history.push("/login");
@@ -35,13 +38,25 @@ class User extends Component {
 
   viewFavoritePlants = () => {
     API.viewFavorites(this.state.user)
-      .then(res => this.setState({favorites: res.data.plants}))
+      .then(res => this.setState({favorites: res.data}))
       .catch(err => console.log(err));
   }
 
   unfavoritePlant = id => {
     API.removeFavorite(this.state.user, id)
       .then(() => this.viewFavoritePlants())
+      .catch(err => console.log(err));
+  }
+
+  viewBannedPlants = () => {
+    API.viewBanned(this.state.user)
+      .then(res => this.setState({banned: res.data}))
+      .catch(err => console.log(err));
+  }
+
+  unBanPlant = id => {
+    API.removeBanned(this.state.user)
+      .then(() => this.viewBannedPlants())
       .catch(err => console.log(err));
   }
 
