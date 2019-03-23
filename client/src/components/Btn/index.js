@@ -2,7 +2,7 @@ import React from "react";
 
 export const Btn = (props) => {
   return(
-    <button onClick={props.handleClickEvent} className={"btn waves-effect waves-light" + ((props.colors) ? " " + props.color : "")}>
+    <button onClick={props.handleClickEvent} className={"btn waves-effect waves-light" + ((props.colors) ? " " + props.colors : "")}>
       {props.children}
     </button>
   );

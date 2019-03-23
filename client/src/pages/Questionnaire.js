@@ -24,31 +24,55 @@ class Questionnaire extends Component {
 
   componentDidMount() {
     API.verify()
-      .then(res => this.setState({
-        user: res.data.id,
-        favorites: res.data.favorites
-      }))
+      .then(res => {
+        API.checkFavorites(res.data.id)
+          .then(response => {
+            this.setState({
+              user: res.data.id,
+              favorites: response.data
+            });
+          })
+          .catch(err => console.log(err));
+      })
       .catch(err => console.log(err));
   }
 
   loadPlants = query => {
     API.searchPlants(query)
       .then(res => {
+        res.data.map(plant => plant.favorite = this.state.favorites.includes(plant.id));
         this.setState({ plants: res.data });
-        console.log(res.data);
       })
       .catch(err => console.log(err));
   };
 
   favoritePlant = id => {
     API.addFavorite(this.state.user, id)
-      .then(res => console.log(res))
+      .then(res => {
+        let {favorites, plants} = this.state;
+        favorites.push(id);
+        plants.map(plant => plant.favorite = favorites.includes(plant.id));
+        
+        this.setState({
+          favorites: favorites,
+          plants: plants
+        });
+      })
       .catch(err => console.log(err));
   }
 
   unfavoritePlant = id => {
     API.removeFavorite(this.state.user, id)
-      .then(res => console.log(res))
+      .then(res => {
+        let {favorites, plants} = this.state;
+        favorites.splice(favorites.indexOf(id), 1);
+        plants.map(plant => plant.favorite = favorites.includes(plant.id));
+
+        this.setState({
+          favorites: favorites,
+          plants: plants
+        });
+      })
       .catch(err => console.log(err));
   }
 
@@ -65,7 +89,6 @@ class Questionnaire extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    // let query="&nursery_stock_product=true";
     let query = {};
 
     // Translate type of plant to query.
@@ -285,6 +308,7 @@ class Questionnaire extends Component {
                   scientific_name={plant.scientific_name}
                   shade_tolerance={plant.shade_tolerance}
                   image={plant.image}
+                  favorite={plant.favorite}
                   handleSaveEvent={() => this.favoritePlant(plant.id)}
                   handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />
               )}
