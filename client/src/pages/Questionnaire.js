@@ -13,6 +13,7 @@ class Questionnaire extends Component {
     this.state = {
       user: null,
       favorites: [],
+      banned: [],
   
       plants: [],
       plant_type: "",
@@ -54,6 +55,12 @@ class Questionnaire extends Component {
           document.querySelectorAll("[name=plant_allergy][value=" + this.state.plant_allergy + "]")[0].checked = true;
         })
         .catch(err => console.log(err));
+
+        API.checkBanned(res.data.id)
+          .then(response => this.setState({
+              banned: response.data
+            }))
+          .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
   }
@@ -61,7 +68,11 @@ class Questionnaire extends Component {
   loadPlants = query => {
     API.searchPlants(query)
       .then(res => {
-        res.data.map(plant => plant.favorite = this.state.favorites.includes(plant.id));
+        // eslint-disable-next-line
+        res.data.map(plant => {
+          plant.favorite = this.state.favorites.includes(plant.id);
+          plant.banned = this.state.banned.includes(plant.id);
+        });
         this.setState({ plants: res.data });
       })
       .catch(err => console.log(err));
@@ -95,6 +106,34 @@ class Questionnaire extends Component {
         });
       })
       .catch(err => console.log(err));
+  }
+
+  banPlant = id => {
+    API.addBanned(this.state.id, id)
+      .then(res => {
+        let {banned, plants} = this.state;
+        banned.push(id);
+        plants.map(plant => plant.banned = banned.includes(id));
+
+        this.setState({
+          banned: banned,
+          plants: plants
+        });
+      })
+  }
+
+  unBanPlant = id => {
+    API.removeBanned(this.state.user, id)
+      .then(res => {
+        let {banned, plants} = this.state;
+        banned.splice(banned.indexOf(id), 1);
+        plants.map(plant => plant.banned = banned.includes(plant.id));
+
+        this.setState({
+          banned: banned,
+          plants: plants
+        });
+      })
   }
 
   handleInputChange = event => {
@@ -362,6 +401,7 @@ class Questionnaire extends Component {
                   shade_tolerance={plant.shade_tolerance}
                   image={plant.image}
                   favorite={plant.favorite}
+                  banned={plant.banned}
                   handleSaveEvent={() => this.favoritePlant(plant.id)}
                   handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />
               )}
