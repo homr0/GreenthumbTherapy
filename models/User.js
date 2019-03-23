@@ -30,6 +30,11 @@ const UserSchema = new mongoose.Schema({
     ref: "Plant"
   }],
 
+  banned: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Plant"
+  }],
+
   preferred_room: [{
     type: String
   }],

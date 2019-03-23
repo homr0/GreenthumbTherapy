@@ -57,12 +57,11 @@ module.exports = {
       req.cookies.token;
     
     (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, (err, decoded) => {
-      (err) ? res.status(402).send("Unauthorized: Invalid token") : db.User.findOne({_id: decoded.id}).populate("plants")
+      (err) ? res.status(402).send("Unauthorized: Invalid token") : db.User.findOne({_id: decoded.id})
         .then(dbModel => res.status(200).json({
           id: decoded.id,
           first_name: dbModel.first_name,
-          last_name: dbModel.last_name,
-          favorites: dbModel.plants
+          last_name: dbModel.last_name
         }))
         .catch(err => res.json({
           message: "Internal error. Could not find a user with this token information."
@@ -90,7 +89,7 @@ module.exports = {
       .findOne({_id: req.params.id})
       .populate("plants")
       .then(dbUser => 
-        res.status(200).json(dbUser))
+        res.status(200).json(dbUser.plants))
       .catch(err => res.json({
           message: "Internal error. Please try again."
         }).status(500)
@@ -102,8 +101,7 @@ module.exports = {
       .findOne({_id: req.params.id})
       .populate("plants")
       .then(dbUser => {
-        let plantIds = [];
-        dbUser.plants.map(plant => plantIds.push(plant.id));
+        let plantIds = dbUser.plants.map(plant => plantIds.push(plant.id));
         res.status(200).json(plantIds);
       })
       .catch(err => res.json({
@@ -168,5 +166,63 @@ module.exports = {
       .catch(err => res.json({
         message: "Internal error. Could not retrieve preferences."
       }).status(500));
+  },
+
+  // Handles banned plants
+  getBanned: (req, res) => {
+    db.User
+      .findOne({_id: req.params.id})
+      .populate("plants")
+      .then(dbUser => 
+        res.status(200).json(dbUser.banned))
+      .catch(err => res.json({
+          message: "Internal error. Please try again."
+        }).status(500)
+      );
+  },
+
+  getBannedIds: (req, res) => {
+    db.User
+      .findOne({_id: req.params.id})
+      .populate("plants")
+      .then(dbUser => {
+        let plantIds = dbUser.banned.map(plant => plantIds.push(plant.id));
+        res.status(200).json(plantIds);
+      })
+      .catch(err => res.json({
+          message: "Internal error. Please try again."
+        }).status(500)
+      );
+  },
+
+  banPlant: (req, res) => {
+    db.Plant
+      .findOne({id: req.body.plant_id})
+      .then(dbModel => db.User
+        .findOneAndUpdate({_id: req.params.id}, {$push: {banned: dbModel}}, {new: true})
+          .then(() => res.status(200).json({
+            message: "Banned plant successfully!"
+          }))
+          .catch(err => res.json({
+            message: "Internal error. Could not ban plant."
+          }).status(500)))
+      .catch(err => res.json({
+        message: "Internal error. Could not find the plant the user wanted to ban."
+      }).status(500));
+  },
+
+  unBanPlant: (req, res) => {
+    db.Plant
+      .findOne({id: req.params.plant_id})
+        .then(dbModel => db.User
+          .findOneAndUpdate({_id: req.params.id}, {$pull: {plants: dbModel._id}})
+          .then(() =>res.status(200).send("Plant has been unbanned."))
+          .catch(err => res.json({
+              message: "Internal error. Could not unban plant."
+            }).status(500))
+        )
+        .catch(err => res.json({
+          message: "Internal error. Could not find the plant the user wanted to unban."
+        }).status(500));
   }
 }

@@ -13,6 +13,9 @@ router.route("/:id/preferences")
   .get(User.getPreferences)
   .post(User.setPreferences);
 
+router.route("/:id/banned")
+  .get(User.getBanned);
+
 router.route("/:id/:plant_id") 
   .delete(User.removePlant);
 

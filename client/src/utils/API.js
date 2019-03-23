@@ -13,12 +13,19 @@ export default {
   addFavorite: (userId, plantId) => axios.post("/api/user/" + userId, {plant_id: plantId}),
   removeFavorite: (userId, plantId) => axios.delete("/api/user/" + userId + "/" + plantId),
 
-  // User-related functions
+  // User management functions
   register: userData => axios.post("/api/register", userData),
   login: userData => axios.post("/api/authenticate", userData),
   verify: () => axios.get("/api/verify"),
   logout: () => axios.get("/api/logout"),
 
+  // User preferences
   setPreferences: (userId, userData) => axios.post("/api/user/" + userId + "/preferences", userData),
-  getPreferences: userId => axios.get("/api/user/" + userId + "/preferences")
+  getPreferences: userId => axios.get("/api/user/" + userId + "/preferences"),
+
+  // Allows users to view, add, or remove banned plants.
+  viewBanned: userId => axios.get("/api/user/" + userId + "/banned/"),
+  checkBanned: userId => axios.get("/api/user/" + userId + "/banned/plants"),
+  addBanned: (userId, plantId) => axios.post("/api/user/" + userId + "/banned", {plant_id: plantId}),
+  removeBanned: (userId, plantId) => axios.delete("/api/user/" + userId + "/banned/" + plantId)
 }
