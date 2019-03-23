@@ -76,9 +76,9 @@ module.exports = {
       req.headers["x-access-token"] ||
       req.cookies.token;
 
-    // Creates a short-lived token with an invalid secret that will fail the verification.
+    // Clears the token from the server.
     (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, (err, decoded) =>
-      (err) ? res.status(402).send("Unauthorized: Invalid token") : res.cookie("token", jwt.sign({expiresIn: 1}, secret+"logout"), cookieOptions).status(200).json({
+      (err) ? res.status(402).send("Unauthorized: Invalid token") : res.clearCookie("token", cookieOptions).status(200).json({
         message: "You have successfully logged out!"
       }));
   },
