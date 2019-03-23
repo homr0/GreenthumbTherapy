@@ -27,7 +27,8 @@ router.route("/search")
           db.findOne({id: plant.id})
             .then(dbModel => {
               // Checks if the plant is in the database.
-              (!dbModel) ? axios.get(PLANTURL + "/" + plant.id, {
+              if(!dbModel) {
+                axios.get(PLANTURL + "/" + plant.id, {
                   params:  { token: PLANTAPIKEY }
                 })
                   .then(plantData => {
@@ -69,8 +70,10 @@ router.route("/search")
                       .then(dbModelNew => plants.push(dbModelNew))
                       .catch(err => res.status(422).json(err));
                   })
-                  .catch(err => res.status(422).json(err))
-                  : plants.push(dbModel);
+                  .catch(err => res.status(422).json(err));
+                } else {
+                  plants.push(dbModel);
+                }
 
               if((index + 1) === response.data.length) res.status(200).json(plants);
             })
