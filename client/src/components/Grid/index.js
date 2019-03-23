@@ -15,7 +15,7 @@ export const Container = ({children}) => {
 
 export const Row = ({id, children}) => {
   return(
-    <div className="row" data-aos={(id="plant-results") && "zoom-in"} id={id}>
+    <div className="row" data-aos={(id === "plant-results") && "zoom-in"} id={id}>
       {children}
     </div>
   );
