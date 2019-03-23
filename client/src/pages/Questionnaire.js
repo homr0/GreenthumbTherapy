@@ -18,7 +18,12 @@ class Questionnaire extends Component {
       plant_type: "",
       plant_height: "none",
       plant_light: "adjustable",
-      plant_water: "none"
+      plant_water: "none",
+
+      plant_pets: [],
+      plant_location: [],
+      save_preferences: false,
+      plant_allergy: false
     }
   };
 
@@ -33,6 +38,22 @@ class Questionnaire extends Component {
             });
           })
           .catch(err => console.log(err));
+
+        API.getPreferences(res.data.id)
+        .then(response => {
+          this.setState(response.data);
+
+          // Parse answers into the form.
+          this.state.plant_location.map(place => document.querySelectorAll("[name=plant_location][value=" + place + "]")[0].checked = true);
+
+          document.querySelectorAll("[name=plant_light][value=" + this.state.plant_light + "]")[0].checked = true;
+          document.querySelectorAll("[name=plant_water][value=" + this.state.plant_water + "]")[0].checked = true;
+          
+          this.state.plant_pets.map(pet => document.querySelectorAll("[name=plant_pets][value=" + pet + "]")[0].checked = true);
+
+          document.querySelectorAll("[name=plant_allergy][value=" + this.state.plant_allergy + "]")[0].checked = true;
+        })
+        .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
   }
@@ -81,9 +102,18 @@ class Questionnaire extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({
-      [name]: value
-    });
+    if(target.type === "checkbox") {
+      let answers = this.state[name];
+      (value) ? answers.push(target.value) : answers.splice(answers.indexOf(target.value), 1);
+
+      this.setState({
+        [name]: answers
+      });
+    } else {
+      this.setState({
+        [name]: value
+      })
+    }
   };
 
   handleFormSubmit = event => {
@@ -126,10 +156,18 @@ class Questionnaire extends Component {
     //Plant Water
     if(this.state.plant_water !== "none" ) query.moisture_use = this.state.plant_water;
 
-    //Plant Pets
-
     // Load plants
     this.loadPlants(query);
+
+    (this.state.save_preferences) && API.setPreferences(this.state.user, {
+      preferred_room: this.state.plant_location,
+      preferred_sunlight: this.state.plant_light,
+      preferred_water: this.state.plant_water,
+      pets: this.state.plant_pets,
+      allergy: this.state.plant_allergy
+    })
+      .then(res => console.log("Sucessfully saved preferences"))
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -262,7 +300,7 @@ class Questionnaire extends Component {
                     key={"plant_pets=" + plant.value}
                     name="plant_pets"
                     value={plant.value}
-                    onChange={this.handleInputChange}
+                    handleInputChange={this.handleInputChange}
                   >
                     {plant.label}
                   </Checkbox>
@@ -273,14 +311,14 @@ class Questionnaire extends Component {
                 <p>7. Do you have an allergy to pollen?</p>
                     
                 {[
-                  { value: "yes", label: "Yes" },
-                  { value: "no", label: "No" },
+                  { value: true, label: "Yes" },
+                  { value: false, label: "No" },
                 ].map(plant => (
                   <Radio
                     key={"plant_allergy=" + plant.value}
                     name="plant_allergy"
                     value={plant.value}
-                    onChange={this.handleInputChange}
+                    handleInputChange={this.handleInputChange}
                   >
                     {plant.label}
                   </Radio>
@@ -289,6 +327,21 @@ class Questionnaire extends Component {
 
                <ListItem>
                 <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
+
+                <p>Save Preferences: </p>
+                {[
+                  { value: true, label: "Yes" },
+                  { value: false, label: "No" },
+                ].map(plant => (
+                  <Radio
+                    key={"save_preferences=" + plant.value}
+                    name="save_preferences"
+                    value={plant.value}
+                    handleInputChange={this.handleInputChange}
+                  >
+                    {plant.label}
+                  </Radio>
+                ))}
               </ListItem>
 
             </List>

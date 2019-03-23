@@ -28,7 +28,27 @@ const UserSchema = new mongoose.Schema({
   plants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Plant"
-  }]
+  }],
+
+  preferred_room: [{
+    type: String
+  }],
+
+  preferred_sunlight: {
+    type: String
+  },
+
+  preferred_water: {
+    type: String
+  },
+
+  pets: [{
+    type: String
+  }],
+
+  allergy: {
+    type: Boolean
+  }
 });
 
 UserSchema.pre("save", function(next) {
