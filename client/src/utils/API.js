@@ -15,8 +15,5 @@ export default {
   // User-related functions
   register: userData => axios.post("/api/register", userData),
   login: userData => axios.post("/api/authenticate", userData),
-  verify: () => axios.get("/api/verify"),
-
-  secretTest: () => axios.get("/api/secret"),
-  checkToken: () => axios.get("/checkToken")
+  verify: () => axios.get("/api/verify")
 }

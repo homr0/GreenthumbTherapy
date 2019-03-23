@@ -9,18 +9,18 @@ import Home from "./pages/Home";
 import Questionnaire from "./pages/Questionnaire";
 import Search from "./pages/Search";
 import User from "./pages/User";
-import Secret from "../src/Secret";
-
-import withAuth from "./withAuth";
 
 import PlantAdd from "./pages/PlantAdd";
 import Register from "./pages/Register";
 import API from './utils/API';
 
 class App extends Component {
-  state = {
-    id: null,
-    first_name: null
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      first_name: null
+    };
   };
 
   componentDidMount() {
@@ -37,10 +37,9 @@ class App extends Component {
 
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/questionnaire" exact component={Questionnaire} user={this.state.id} favorites={this.state.favorites} />} />
-          <Route path="/search" exact component={Search} user={this.state.id} favorites={this.state.favorites} />} />
-          <Route path="/user" exact component={User} user={this.state.id} favorites={this.state.favorites} />} />
-          <Route path="/secret" component={withAuth(Secret)}/>
+          <Route path="/questionnaire" exact component={Questionnaire} />} />
+          <Route path="/search" exact component={Search} />} />
+          <Route path="/user" exact component={User} />
           <Route path="/plant" exact component={PlantAdd} />
           <Route path="/register" exact render={props => <Register activeTab="register" />} />
           <Route path="/login" exact render={props => <Register activeTab="login" />} />

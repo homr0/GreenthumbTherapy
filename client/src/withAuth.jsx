@@ -13,7 +13,7 @@ export default function withAuth(ComponentToProtect) {
         }
 
         componentDidMount() {
-            API.checkToken()
+            API.verify()
             .then(res => {
                 if (res.status === 200) {
                     this.setState({ loading: false });

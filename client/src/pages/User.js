@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {withRouter} from "react-router-dom";
 import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
@@ -26,7 +27,10 @@ class User extends Component {
           favorites: res.data.favorites
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.props.history.push("/login");
+        console.log(err)
+      });
   }
 
   viewFavoritePlants = () => {
@@ -109,4 +113,4 @@ class User extends Component {
     </Container>
   )};
 }
-export default User;
+export default withRouter(User);
