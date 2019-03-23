@@ -6,6 +6,7 @@ import { List, ListItem, ListHeader } from "../components/List";
 import { Input, Radio, Checkbox } from "../components/Form";
 import PlantCard from "../components/PlantCard";
 
+
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -259,7 +260,7 @@ class Search extends Component {
             <h1>Results</h1>
             <Row id="plant-results">
               {this.state.plants.map(plant => (
-                <PlantCard
+                <PlantCard 
                   key={plant.id}
                   id={plant.id}
                   common_name={plant.common_name}
