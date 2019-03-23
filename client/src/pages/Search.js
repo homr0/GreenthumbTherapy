@@ -296,7 +296,7 @@ class Search extends Component {
         
         <Row>
           <Col>
-            <h1>Results</h1>
+            {/* <h1>Results</h1> */}
             <Row id="plant-results">
               {this.state.plants.map(plant => (
                 <PlantCard 
