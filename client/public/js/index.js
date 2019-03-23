@@ -6,4 +6,5 @@ document.addEventListener('DOMContentLoaded', function() {
   const tabs = M.Tabs.init(document.querySelectorAll('.tabs'));
   // const Materialbox = M.Materialbox(document.querySelectorAll('.materialboxed'));
   const slider = M.Slider.init(document.querySelectorAll('.slider'));
+  const dropdown = M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
 });
