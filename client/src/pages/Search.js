@@ -11,8 +11,8 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      user: props.user || null,
-      favorites: props.favorites || [],
+      user: null,
+      favorites: [],
   
       plants: [],
       plant_type: "",
@@ -22,21 +22,57 @@ class Search extends Component {
     }
   };
 
+  componentDidMount() {
+    API.verify()
+      .then(res => {
+        API.checkFavorites(res.data.id)
+          .then(response => {
+            this.setState({
+              user: res.data.id,
+              favorites: response.data
+            });
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
+  }
+
   loadPlants = query => {
     API.searchPlants(query)
-      .then(res => this.setState({ plants: res.data }))
+      .then(res => {
+        res.data.map(plant => plant.favorite = this.state.favorites.includes(plant.id));
+        this.setState({ plants: res.data });
+      })
       .catch(err => console.log(err));
   };
 
   favoritePlant = id => {
     API.addFavorite(this.state.user, id)
-      .then(res => console.log(res))
+      .then(res => {
+        let {favorites, plants} = this.state;
+        favorites.push(id);
+        plants.map(plant => plant.favorite = favorites.includes(plant.id));
+        
+        this.setState({
+          favorites: favorites,
+          plants: plants
+        });
+      })
       .catch(err => console.log(err));
   }
 
   unfavoritePlant = id => {
     API.removeFavorite(this.state.user, id)
-      .then(res => console.log(res))
+      .then(res => {
+        let {favorites, plants} = this.state;
+        favorites.splice(favorites.indexOf(id), 1);
+        plants.map(plant => plant.favorite = favorites.includes(plant.id));
+
+        this.setState({
+          favorites: favorites,
+          plants: plants
+        });
+      })
       .catch(err => console.log(err));
   }
 
@@ -134,8 +170,6 @@ class Search extends Component {
               
 
               <ListItem>
-                {/* <Row>
-                    <Col> */}
                 Type of plant:
                 {[
                   { value: "flower", label: "Flower" },
@@ -153,25 +187,9 @@ class Search extends Component {
                     {plant.label}
                   </Radio>
                 ))}
-                {/* <Select
-                        name="plant_type"
-                        options={[
-                          { value: "flower", label: "Flower" },
-                          { value: "edible", label: "Edible" },
-                          { value: "succulent", label: "Succulent/Cactus" },
-                          { value: "tree", label: "Tree" },
-                          { value: "shrub", label: "Shrub" },
-                        ]}
-                        onChange={this.handleInputChange}
-                      >Type of Plant:
-                      </Select> */}
-                {/* </Col>
-                </Row> */}
               </ListItem>
 
               <ListItem>
-                {/* <Row>
-                  <Col> */}
                 Sunlight needed:
                 {[
                   { value: "intolerant", label: " Full Sunlight" },
@@ -180,6 +198,7 @@ class Search extends Component {
                   { value: "adjustable", label: "Adjustable" }
                 ].map(plant => (
                   <Radio
+                    key={"plant_light=" + plant.value}
                     name="plant_light"
                     value={plant.value}
                     onChange={() => this.handleInputChange()}
@@ -187,21 +206,18 @@ class Search extends Component {
                     {plant.label}
                   </Radio>
                 ))}
-                {/* </Col>
-                </Row> */}
               </ListItem>
 
               
 
               <ListItem>
-                {/* <Row>
-                  <Col> */}
                 Safe to consume for:
                 {[
                   { value: "humans", label: "Human" },
                   { value: "animals", label: "Animal" }
                 ].map(plant => (
                   <Checkbox
+                    key={"plant_consume=" + plant.value}
                     name="plant_consume"
                     value={plant.value}
                     onChange={() => this.handleInputChange()}
@@ -209,19 +225,16 @@ class Search extends Component {
                     {plant.label}
                   </Checkbox>
                 ))}
-                {/* </Col>
-                </Row> */}
               </ListItem>
 
               <ListItem>
-                {/* <Row>
-                  <Col> */}
                 Allergies:
                 {[
                   { value: "yes", label: "Yes" },
                   { value: "no", label: "No" }
                 ].map(plant => (
                   <Radio
+                    key={"plant_allergy=" + plant.value}
                     name="plant_allergy"
                     value={plant.value}
                     onChange={() => this.handleInputChange()}
@@ -229,8 +242,6 @@ class Search extends Component {
                     {plant.label}
                   </Radio>
                 ))}
-                {/* </Col>
-                </Row> */}
               </ListItem>
 
               <ListItem>
@@ -254,6 +265,7 @@ class Search extends Component {
                   common_name={plant.common_name}
                   scientific_name={plant.scientific_name}
                   image={plant.image}
+                  favorite={plant.favorite}
                   handleSaveEvent={() => this.favoritePlant(plant.id)}
                   handleDeleteEvent={() => this.unfavoritePlant(plant.id)}
                 />

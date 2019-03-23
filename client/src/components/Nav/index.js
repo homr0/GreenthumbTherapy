@@ -30,14 +30,14 @@ const Nav = props => {
 
           {(props.name) 
             ? <span className="right hide-on-med-and-down">
-                Welcome, <Link to="/user">{props.name}</Link>
-                <Link to="/logout">
+                Welcome, <a href="/user">{props.name}</a>
+                <a href="/logout">
                   <i className="material-icons left">assignment_ind</i> Logout
-                </Link>
+                </a>
               </span>
             : <span className="right hide-on-med-and-down">
                 <i className="material-icons left">assignment_ind</i>
-                <Link to="/login">Log in</Link> or <Link to="/register">Register</Link>
+                <a href="/login">Log in</a> or <a href="/register">Register</a>
               </span>
           }
         </div>

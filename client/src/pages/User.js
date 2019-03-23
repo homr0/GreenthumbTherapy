@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {withRouter} from "react-router-dom";
 import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
@@ -10,23 +11,37 @@ class User extends Component {
     super(props);
 
     this.state = {
-      user: props.user,
-      favorites: props.favorites || [],
-  
+      user: null,
+      favorites: [],
+
       email: null,
       password: null
-    }
+    };
   };
+
+  componentDidMount() {
+    API.verify()
+      .then(res => {
+        this.setState({
+          user: res.data.id,
+          favorites: res.data.favorites
+        });
+      })
+      .catch(err => {
+        this.props.history.push("/login");
+        console.log(err)
+      });
+  }
 
   viewFavoritePlants = () => {
     API.viewFavorites(this.state.user)
-      .then(data => this.setState({favorites: data}))
+      .then(res => this.setState({favorites: res.data.plants}))
       .catch(err => console.log(err));
   }
 
   unfavoritePlant = id => {
     API.removeFavorite(this.state.user, id)
-      .then(res => console.log(res))
+      .then(() => this.viewFavoritePlants())
       .catch(err => console.log(err));
   }
 
@@ -84,6 +99,7 @@ class User extends Component {
             common_name={plant.common_name}
             scientific_name={plant.scientific_name}
             image={plant.image}
+            favorite={true}
             handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />) : <p className="center">You currently have no favorite plants.</p>}
         </Col>
 
@@ -98,4 +114,4 @@ class User extends Component {
     </Container>
   )};
 }
-export default User;
+export default withRouter(User);
