@@ -13,12 +13,21 @@ const PlantCard = props => {
           <img alt={(props.image) ? props.common_name : "Plant placeholder image"} src={(props.image) ? props.image : placeholder} />
 
           {(props.favorite)
-            ? <Btn colors="btn-floating halfway-fab red darken-2" handleClickEvent={props.handleDeleteEvent}>
+            ? <Btn colors="btn-floating halfway-fab red darken-2 right" handleClickEvent={props.handleDeleteEvent}>
               <i className="material-icons">delete</i>
             </Btn>
             
-            : <Btn colors="btn-floating halfway-fab green darken-2" handleClickEvent={props.handleSaveEvent}>
+            : <Btn colors="btn-floating halfway-fab green darken-2 right" handleClickEvent={props.handleSaveEvent}>
               <i className="material-icons">save</i>
+            </Btn>
+          }
+
+          {(props.banned)
+            ? <Btn colors="btn-floating halfway-fab blue darken-2 left" handleClickEvent={props.handleUnBanEvent}>
+              <i className="material-icons">done</i>
+            </Btn>
+            : <Btn colors="btn-floating halfway-fab orange darken-2 left" handleClickEvent={props.handleBanEvent}>
+              <i className="material-icons">do_not_disturb</i>
             </Btn>
           }
 
