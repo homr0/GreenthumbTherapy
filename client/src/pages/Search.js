@@ -14,6 +14,7 @@ class Search extends Component {
     this.state = {
       user: null,
       favorites: [],
+      banned: [],
   
       plants: [],
       plant_type: "",
@@ -34,6 +35,12 @@ class Search extends Component {
             });
           })
           .catch(err => console.log(err));
+
+        API.checkBanned(res.data.id)
+        .then(response => this.setState({
+            banned: response.data
+          }))
+        .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
   }
@@ -41,7 +48,11 @@ class Search extends Component {
   loadPlants = query => {
     API.searchPlants(query)
       .then(res => {
-        res.data.map(plant => plant.favorite = this.state.favorites.includes(plant.id));
+        // eslint-disable-next-line
+        res.data.map(plant => {
+          plant.favorite = this.state.favorites.includes(plant.id);
+          plant.banned = this.state.banned.includes(plant.id);
+        });
         this.setState({ plants: res.data });
       })
       .catch(err => console.log(err));
@@ -75,6 +86,34 @@ class Search extends Component {
         });
       })
       .catch(err => console.log(err));
+  }
+
+  banPlant = id => {
+    API.addBanned(this.state.id, id)
+      .then(res => {
+        let {banned, plants} = this.state;
+        banned.push(id);
+        plants.map(plant => plant.banned = banned.includes(id));
+
+        this.setState({
+          banned: banned,
+          plants: plants
+        });
+      })
+  }
+
+  unBanPlant = id => {
+    API.removeBanned(this.state.user, id)
+      .then(res => {
+        let {banned, plants} = this.state;
+        banned.splice(banned.indexOf(id), 1);
+        plants.map(plant => plant.banned = banned.includes(plant.id));
+
+        this.setState({
+          banned: banned,
+          plants: plants
+        });
+      })
   }
 
   handleInputChange = event => {
@@ -261,15 +300,19 @@ class Search extends Component {
             <Row id="plant-results">
               {this.state.plants.map(plant => (
                 <PlantCard 
-                  key={plant.id}
-                  id={plant.id}
-                  common_name={plant.common_name}
-                  scientific_name={plant.scientific_name}
-                  image={plant.image}
-                  favorite={plant.favorite}
-                  handleSaveEvent={() => this.favoritePlant(plant.id)}
-                  handleDeleteEvent={() => this.unfavoritePlant(plant.id)}
-                />
+                key={plant.id}
+                id={plant.id}
+                common_name={plant.common_name}
+                scientific_name={plant.scientific_name}
+                shade_tolerance={plant.shade_tolerance}
+                image={plant.image}
+                favorite={plant.favorite}
+                banned={plant.banned}
+                
+                handleSaveEvent={() => this.favoritePlant(plant.id)}
+                handleDeleteEvent={() => this.unfavoritePlant(plant.id)}
+                handleBanEvent={() => this.banPlant(plant.id)}
+                handleUnBanEvent={() => this.unBanPlant(plant.id)} />
               ))}
             </Row>
           </Col>

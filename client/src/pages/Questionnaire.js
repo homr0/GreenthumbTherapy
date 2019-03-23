@@ -402,8 +402,11 @@ class Questionnaire extends Component {
                   image={plant.image}
                   favorite={plant.favorite}
                   banned={plant.banned}
+                  
                   handleSaveEvent={() => this.favoritePlant(plant.id)}
-                  handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />
+                  handleDeleteEvent={() => this.unfavoritePlant(plant.id)}
+                  handleBanEvent={() => this.banPlant(plant.id)}
+                  handleUnBanEvent={() => this.unBanPlant(plant.id)} />
               )}
             </Row>
           </Col>
