@@ -44,16 +44,12 @@ class Questionnaire extends Component {
           this.setState(response.data);
 
           // Parse answers into the form.
-          this.state.plant_location.map(place => {
-            document.querySelectorAll("[name=plant_location][value=" + place + "]")[0].checked = true;
-          });
+          this.state.plant_location.map(place => document.querySelectorAll("[name=plant_location][value=" + place + "]")[0].checked = true);
 
           document.querySelectorAll("[name=plant_light][value=" + this.state.plant_light + "]")[0].checked = true;
           document.querySelectorAll("[name=plant_water][value=" + this.state.plant_water + "]")[0].checked = true;
           
-          this.state.plant_pets.map(pet => {
-            document.querySelectorAll("[name=plant_pets][value=" + pet + "]")[0].checked = true;
-          });
+          this.state.plant_pets.map(pet => document.querySelectorAll("[name=plant_pets][value=" + pet + "]")[0].checked = true);
 
           document.querySelectorAll("[name=plant_allergy][value=" + this.state.plant_allergy + "]")[0].checked = true;
         })
@@ -159,12 +155,6 @@ class Questionnaire extends Component {
 
     //Plant Water
     if(this.state.plant_water !== "none" ) query.moisture_use = this.state.plant_water;
-
-    // Plant Rooms
-    console.log(this.state.plant_location);
-
-    //Plant Pets
-    console.log(this.state.plant_pets);
 
     // Load plants
     this.loadPlants(query);
