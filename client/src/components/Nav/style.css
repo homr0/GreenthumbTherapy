@@ -9,16 +9,7 @@
 nav .material-icons{
   margin: 0 0.5rem 0 0;
 }
-nav .dropdown-trigger{
-  margin: 10px ;
-}
 
-.dropdown-content{
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
-  z-index: 1;
+nav .hide-on-med-and-down :hover{
+  color: #e65100;
 }
