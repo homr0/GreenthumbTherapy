@@ -37,9 +37,9 @@ const PlantCard = props => {
             {(props.shade_tolerance) && 
               <ListItem>
                 <strong>Needs: </strong>
-                {((props.shade_tolerance === "Intolerant") && <span><i class="fas fa-sun"></i> Full Sun</span>)
-                  || ((props.shade_tolerance === "Intermediate") && <span><i class="fas fa-cloud-sun"></i> Partial Sun</span>)
-                  || ((props.shade_tolerance === "Tolerant") && <span><i class="fas fa-cloud"></i> Shade</span>)
+                {((props.shade_tolerance === "Intolerant") && <span><i className="fas fa-sun"></i> Full Sun</span>)
+                  || ((props.shade_tolerance === "Intermediate") && <span><i className="fas fa-cloud-sun"></i> Partial Sun</span>)
+                  || ((props.shade_tolerance === "Tolerant") && <span><i className="fas fa-cloud"></i> Shade</span>)
                 }
               </ListItem>}
           </List>
