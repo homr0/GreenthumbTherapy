@@ -41,7 +41,7 @@ class User extends Component {
 
   unfavoritePlant = id => {
     API.removeFavorite(this.state.user, id)
-      .then(res => console.log(res))
+      .then(() => this.viewFavoritePlants())
       .catch(err => console.log(err));
   }
 
@@ -99,7 +99,8 @@ class User extends Component {
             common_name={plant.common_name}
             scientific_name={plant.scientific_name}
             image={plant.image}
-            handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />) : <p className="center">You currently have no favorite plants.</p>}
+            favorite={true}
+            handleDeleteEvent={() => this.unfavoritePlant(plant._id)} />) : <p className="center">You currently have no favorite plants.</p>}
         </Col>
 
         <Col size="s12 m4">
