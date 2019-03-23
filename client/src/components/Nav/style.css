@@ -2,10 +2,14 @@
   padding: 1rem;
 }
 
-.button{
+ .button{
   padding-right: 10px;
 }
 
 nav .material-icons{
   margin: 0 0.5rem 0 0;
+}
+
+nav .hide-on-med-and-down :hover{
+  color: #e65100;
 }
