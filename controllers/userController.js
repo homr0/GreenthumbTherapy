@@ -101,7 +101,7 @@ module.exports = {
       .findOne({_id: req.params.id})
       .populate("plants")
       .then(dbUser => {
-        let plantIds = dbUser.plants.map(plant => plantIds.push(plant.id));
+        let plantIds = dbUser.plants.map(plant => plant.id);
         res.status(200).json(plantIds);
       })
       .catch(err => res.json({
@@ -186,7 +186,7 @@ module.exports = {
       .findOne({_id: req.params.id})
       .populate("plants")
       .then(dbUser => {
-        let plantIds = dbUser.banned.map(plant => plantIds.push(plant.id));
+        let plantIds = dbUser.banned.map(plant => plant.id);
         res.status(200).json(plantIds);
       })
       .catch(err => res.json({
