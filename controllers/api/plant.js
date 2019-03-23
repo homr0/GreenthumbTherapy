@@ -70,7 +70,7 @@ router.route("/search")
                       .then(dbModelNew => plants.push(dbModelNew))
                       .catch(err => res.status(422).json(err));
                   })
-                  .catch(err => res.status(422).json(err));
+                  .catch(err => console.log(err));
                 } else {
                   plants.push(dbModel);
                 }

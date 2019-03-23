@@ -30,7 +30,12 @@ class Register extends Component {
   componentDidMount() {
     API.verify()
       .then(() => this.props.history.push("/user"))
-      .catch(() => setTimeout(() => (document.getElementById("register").style.display === document.getElementById("login").style.display) && window.location.reload(), 1));
+      .catch(() => setTimeout(() => {
+        (document.getElementById("register").style.display === document.getElementById("login").style.display) && window.location.reload();
+        const tabs = document.getElementsByClassName("tab");
+        tabs[0].firstChild.addEventListener("click", () => this.props.history.push("/register"));
+        tabs[1].firstChild.addEventListener("click", () => this.props.history.push("/login"));
+      }, 1));
   }
 
   handleInputChange = event => {
