@@ -6,6 +6,9 @@ router.route("/:id")
   .get(User.getPlants)
   .post(User.favoritePlant)
 
+router.route("/:id/plants")
+  .get(User.getPlantIds);
+
 router.route("/:id/:plant_id") 
   .delete(User.removePlant);
 

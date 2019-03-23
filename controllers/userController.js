@@ -95,6 +95,21 @@ module.exports = {
       );
   },
 
+  getPlantIds: (req, res) => {
+    db.User
+      .findOne({_id: req.params.id})
+      .populate("plants")
+      .then(dbUser => {
+        let plantIds = [];
+        dbUser.plants.map(plant => plantIds.push(plant.id));
+        res.status(200).json(plantIds);
+      })
+      .catch(err => res.json({
+          message: "Internal error. Please try again."
+        }).status(500)
+      );
+  },
+
   favoritePlant: (req, res) => {
     db.Plant
       .findOne({id: req.body.plant_id})
@@ -112,12 +127,17 @@ module.exports = {
   },
 
   removePlant: (req, res) => {
-    db.User
-      .findOneAndUpdate({_id: req.params.id}, {$pull: {plants: req.params.plant_id}})
-      .then(() =>res.status(200).send("Plant has been removed from favorites"))
-      .catch(err => res.status(500).json({
-          error: "Internal error. Could not remove plant from favorites."
-        })
-      );
+    db.Plant
+      .findOne({id: req.params.plant_id})
+        .then(dbModel => db.User
+          .findOneAndUpdate({_id: req.params.id}, {$pull: {plants: dbModel._id}})
+          .then(() =>res.status(200).send("Plant has been removed from favorites"))
+          .catch(err => res.json({
+              message: "Internal error. Could not remove plant from favorites."
+            }).status(500))
+        )
+        .catch(err => res.json({
+          message: "Internal error. Could not find the plant the user wanted to remove from their favorites."
+        }).status(500));
   }
 }

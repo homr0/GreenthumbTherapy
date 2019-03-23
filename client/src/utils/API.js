@@ -9,6 +9,7 @@ export default {
 
   // Allows users to view, add, or remove favorite plants.
   viewFavorites: userId => axios.get("/api/user/" + userId),
+  checkFavorites: userId => axios.get("/api/user/" + userId + "/plants"),
   addFavorite: (userId, plantId) => axios.post("/api/user/" + userId, {plant_id: plantId}),
   removeFavorite: (userId, plantId) => axios.delete("/api/user/" + userId + "/" + plantId),
 
