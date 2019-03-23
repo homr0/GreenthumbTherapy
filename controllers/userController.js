@@ -215,7 +215,7 @@ module.exports = {
     db.Plant
       .findOne({id: req.params.plant_id})
         .then(dbModel => db.User
-          .findOneAndUpdate({_id: req.params.id}, {$pull: {plants: dbModel._id}})
+          .findOneAndUpdate({_id: req.params.id}, {$pull: {banned: dbModel._id}})
           .then(() =>res.status(200).send("Plant has been unbanned."))
           .catch(err => res.json({
               message: "Internal error. Could not unban plant."
