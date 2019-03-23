@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import API from './utils/API';
 
 import Header from "./components/Header";
 
@@ -12,7 +13,7 @@ import User from "./pages/User";
 
 import PlantAdd from "./pages/PlantAdd";
 import Register from "./pages/Register";
-import API from './utils/API';
+import Logout from "./pages/Logout";
 
 class App extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class App extends Component {
           <Route path="/plant" exact component={PlantAdd} />
           <Route path="/register" exact render={props => <Register activeTab="register" />} />
           <Route path="/login" exact render={props => <Register activeTab="login" />} />
+          <Route path="/logout" exact component={Logout} />
           <Redirect from="/register#login" to="/login" />
           <Redirect from="/login#register" to="/register" />
         </Switch>

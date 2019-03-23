@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const secret = "mysecretsshhh";
+const cookieOptions = {httpOnly: true};
 const db = require("../models");
 
 module.exports = {
@@ -36,7 +37,7 @@ module.exports = {
 
               const token = jwt.sign(payload, secret);
 
-              res.cookie("token", token, {httpOnly: true}).status(200).json({
+              res.cookie("token", token, cookieOptions).status(200).json({
                 message: "You have signed into Greenthumb Therapy"
               });
             }
@@ -54,7 +55,7 @@ module.exports = {
       req.headers["x-access-token"] ||
       req.cookies.token;
     
-    (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, {maxAge: 60 * 60}, (err, decoded) => {
+    (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, (err, decoded) => {
       (err) ? res.status(402).send("Unauthorized: Invalid token") : db.User.findOne({_id: decoded.id}).populate("plants")
         .then(dbModel => res.status(200).json({
           id: decoded.id,
@@ -66,6 +67,20 @@ module.exports = {
           message: "Internal error. Could not find a user with this token information."
         }).status(500));
     });
+  },
+
+  logout: (req, res) => {
+    const token = 
+      req.body.token ||
+      req.query.token ||
+      req.headers["x-access-token"] ||
+      req.cookies.token;
+
+    // Creates a short-lived token with an invalid secret that will fail the verification.
+    (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, (err, decoded) =>
+      (err) ? res.status(402).send("Unauthorized: Invalid token") : res.cookie("token", jwt.sign({expiresIn: 1}, secret+"logout"), cookieOptions).status(200).json({
+        message: "You have successfully logged out!"
+      }));
   },
 
   getPlants: (req, res) => {
