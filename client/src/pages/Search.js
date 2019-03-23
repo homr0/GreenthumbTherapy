@@ -49,9 +49,8 @@ class Search extends Component {
   favoritePlant = id => {
     API.addFavorite(this.state.user, id)
       .then(res => {
-        let favorites = this.state.favorites;
+        let {favorites, plants} = this.state;
         favorites.push(id);
-        let plants = this.state.plants;
         plants.map(plant => plant.favorite = favorites.includes(plant.id));
         
         this.setState({
@@ -65,9 +64,8 @@ class Search extends Component {
   unfavoritePlant = id => {
     API.removeFavorite(this.state.user, id)
       .then(res => {
-        let favorites = this.state.favorites;
+        let {favorites, plants} = this.state;
         favorites.splice(favorites.indexOf(id), 1);
-        let plants = this.state.plants;
         plants.map(plant => plant.favorite = favorites.includes(plant.id));
 
         this.setState({
