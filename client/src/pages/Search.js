@@ -11,8 +11,8 @@ class Search extends Component {
     super(props);
 
     this.state = {
-      user: props.user || null,
-      favorites: props.favorites || [],
+      user: null,
+      favorites: [],
   
       plants: [],
       plant_type: "",
@@ -21,6 +21,15 @@ class Search extends Component {
       plant_water: "none"
     }
   };
+
+  componentDidMount() {
+    API.verify()
+      .then(res => this.setState({
+        user: res.data.id,
+        favorites: res.data.favorites
+      }))
+      .catch(err => console.log(err));
+  }
 
   loadPlants = query => {
     API.searchPlants(query)
@@ -134,8 +143,6 @@ class Search extends Component {
               
 
               <ListItem>
-                {/* <Row>
-                    <Col> */}
                 Type of plant:
                 {[
                   { value: "flower", label: "Flower" },
@@ -153,25 +160,9 @@ class Search extends Component {
                     {plant.label}
                   </Radio>
                 ))}
-                {/* <Select
-                        name="plant_type"
-                        options={[
-                          { value: "flower", label: "Flower" },
-                          { value: "edible", label: "Edible" },
-                          { value: "succulent", label: "Succulent/Cactus" },
-                          { value: "tree", label: "Tree" },
-                          { value: "shrub", label: "Shrub" },
-                        ]}
-                        onChange={this.handleInputChange}
-                      >Type of Plant:
-                      </Select> */}
-                {/* </Col>
-                </Row> */}
               </ListItem>
 
               <ListItem>
-                {/* <Row>
-                  <Col> */}
                 Sunlight needed:
                 {[
                   { value: "intolerant", label: " Full Sunlight" },
@@ -180,6 +171,7 @@ class Search extends Component {
                   { value: "adjustable", label: "Adjustable" }
                 ].map(plant => (
                   <Radio
+                    key={"plant_light=" + plant.value}
                     name="plant_light"
                     value={plant.value}
                     onChange={() => this.handleInputChange()}
@@ -187,21 +179,18 @@ class Search extends Component {
                     {plant.label}
                   </Radio>
                 ))}
-                {/* </Col>
-                </Row> */}
               </ListItem>
 
               
 
               <ListItem>
-                {/* <Row>
-                  <Col> */}
                 Safe to consume for:
                 {[
                   { value: "humans", label: "Human" },
                   { value: "animals", label: "Animal" }
                 ].map(plant => (
                   <Checkbox
+                    key={"plant_consume=" + plant.value}
                     name="plant_consume"
                     value={plant.value}
                     onChange={() => this.handleInputChange()}
@@ -209,19 +198,16 @@ class Search extends Component {
                     {plant.label}
                   </Checkbox>
                 ))}
-                {/* </Col>
-                </Row> */}
               </ListItem>
 
               <ListItem>
-                {/* <Row>
-                  <Col> */}
                 Allergies:
                 {[
                   { value: "yes", label: "Yes" },
                   { value: "no", label: "No" }
                 ].map(plant => (
                   <Radio
+                    key={"plant_allergy=" + plant.value}
                     name="plant_allergy"
                     value={plant.value}
                     onChange={() => this.handleInputChange()}
@@ -229,8 +215,6 @@ class Search extends Component {
                     {plant.label}
                   </Radio>
                 ))}
-                {/* </Col>
-                </Row> */}
               </ListItem>
 
               <ListItem>

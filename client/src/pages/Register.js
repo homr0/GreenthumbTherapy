@@ -1,12 +1,12 @@
-
 import React, { Component } from 'react';
+import {withRouter} from "react-router-dom";
 import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Input } from "../components/Form";
 import { Col, Row, Container } from "../components/Grid";
 import Tabs from "../components/Tabs"
 
-export default class Register extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
 
@@ -28,7 +28,9 @@ export default class Register extends Component {
   };
 
   componentDidMount() {
-    setTimeout(() => (document.getElementById("register").style.display === document.getElementById("login").style.display) && window.location.reload(), 1);
+    API.verify()
+      .then(() => this.props.history.push("/user"))
+      .catch(() => setTimeout(() => (document.getElementById("register").style.display === document.getElementById("login").style.display) && window.location.reload(), 1));
   }
 
   handleInputChange = event => {
@@ -65,10 +67,14 @@ export default class Register extends Component {
       email: this.state.login_email,
       password: this.state.login_password,
     })
-    .then(res => this.setState({
-      login_message: res.data.message,
-      login_status: res.status
-    }))
+    .then(res => {
+      this.setState({
+        login_message: res.data.message,
+        login_status: res.status
+      });
+
+      setTimeout(() => this.props.history.push("/user"), 1000);
+    })
     .catch(err => this.setState({
         status: 500,
         login_message: "Internal server error!"
@@ -154,4 +160,4 @@ export default class Register extends Component {
   }
 }
 
-  
+export default withRouter(Register);
