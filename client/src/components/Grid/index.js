@@ -1,5 +1,8 @@
 import React from "react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
+AOS.init();
 
 export const Container = ({children}) => {
   return(
@@ -12,7 +15,7 @@ export const Container = ({children}) => {
 
 export const Row = ({id, children}) => {
   return(
-    <div className="row" id={id}>
+    <div className="row" data-aos="zoom-in" id={id}>
       {children}
     </div>
   );

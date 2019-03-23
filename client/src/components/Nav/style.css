@@ -1,5 +1,6 @@
-.brand-logo{
-  padding: 1rem;
+nav .brand-logo {
+  padding-left: 1rem;
+  position: relative;
 }
 
  .button{
