@@ -4,6 +4,7 @@ const cookieOptions = {httpOnly: true};
 const db = require("../models");
 
 module.exports = {
+  // Handles user account functions.
   create: (req, res) => {
     db.User
       .create(req.body)
@@ -83,6 +84,7 @@ module.exports = {
       }));
   },
 
+  // Handles favorite plants
   getPlants: (req, res) => {
     db.User
       .findOne({_id: req.params.id})
@@ -139,5 +141,32 @@ module.exports = {
         .catch(err => res.json({
           message: "Internal error. Could not find the plant the user wanted to remove from their favorites."
         }).status(500));
+  },
+
+  // Handles the user's preferences.
+  setPreferences: (req, res) => {
+    db.User
+      .findOneAndUpdate({_id: req.params.id}, req.body)
+      .then(dbModel => res.status(200).json({
+        message: "User's preferences have been updated."
+      }))
+      .catch(err => res.json({
+        message: "Internal error. Had an issue with updating user's preferences."
+      }).status(500));
+  },
+
+  getPreferences: (req, res) => {
+    db.User
+      .findOne({_id: req.params.id})
+      .then(dbModel => res.status(200).json({
+        plant_location: dbModel.preferred_room,
+        plant_light: dbModel.preferred_sunlight,
+        plant_water: dbModel.preferred_water,
+        plant_pets: dbModel.pets,
+        plant_allergy: dbModel.allergy
+      }))
+      .catch(err => res.json({
+        message: "Internal error. Could not retrieve preferences."
+      }).status(500));
   }
 }

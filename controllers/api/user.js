@@ -9,6 +9,10 @@ router.route("/:id")
 router.route("/:id/plants")
   .get(User.getPlantIds);
 
+router.route("/:id/preferences")
+  .get(User.getPreferences)
+  .post(User.setPreferences);
+
 router.route("/:id/:plant_id") 
   .delete(User.removePlant);
 

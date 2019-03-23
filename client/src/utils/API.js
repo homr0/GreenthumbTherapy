@@ -17,5 +17,8 @@ export default {
   register: userData => axios.post("/api/register", userData),
   login: userData => axios.post("/api/authenticate", userData),
   verify: () => axios.get("/api/verify"),
-  logout: () => axios.get("/api/logout")
+  logout: () => axios.get("/api/logout"),
+
+  setPreferences: (userId, userData) => axios.post("/api/user/" + userId + "/preferences", userData),
+  getPreferences: userId => axios.get("/api/user/" + userId + "/preferences")
 }
