@@ -70,7 +70,7 @@ router.route("/search")
                       .then(dbModelNew => plants.push(dbModelNew))
                       .catch(err => res.status(422).json(err));
                   })
-                  .catch(err => console.log(err));
+                  .catch(err => console.log("Could not add plant to database due to Trefle."));
                 } else {
                   plants.push(dbModel);
                 }
