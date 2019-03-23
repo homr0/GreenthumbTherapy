@@ -11,8 +11,8 @@ class Questionnaire extends Component {
     super(props);
 
     this.state = {
-      user: props.user || null,
-      favorites: props.favorites || [],
+      user: null,
+      favorites: [],
   
       plants: [],
       plant_type: "",
@@ -21,6 +21,15 @@ class Questionnaire extends Component {
       plant_water: "none"
     }
   };
+
+  componentDidMount() {
+    API.verify()
+      .then(res => this.setState({
+        user: res.data.id,
+        favorites: res.data.favorites
+      }))
+      .catch(err => console.log(err));
+  }
 
   loadPlants = query => {
     API.searchPlants(query)
@@ -92,7 +101,7 @@ class Questionnaire extends Component {
 
 
     //Plant Water
-    if(this.state.plant_water !=="none" ) query.moisture_use = this.state.plant_water;
+    if(this.state.plant_water !== "none" ) query.moisture_use = this.state.plant_water;
 
     //Plant Pets
 

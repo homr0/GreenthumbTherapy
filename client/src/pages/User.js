@@ -10,17 +10,28 @@ class User extends Component {
     super(props);
 
     this.state = {
-      user: props.user,
-      favorites: props.favorites || [],
-  
+      user: null,
+      favorites: [],
+
       email: null,
       password: null
-    }
+    };
   };
+
+  componentDidMount() {
+    API.verify()
+      .then(res => {
+        this.setState({
+          user: res.data.id,
+          favorites: res.data.favorites
+        });
+      })
+      .catch(err => console.log(err));
+  }
 
   viewFavoritePlants = () => {
     API.viewFavorites(this.state.user)
-      .then(data => this.setState({favorites: data}))
+      .then(res => this.setState({favorites: res.data.plants}))
       .catch(err => console.log(err));
   }
 
