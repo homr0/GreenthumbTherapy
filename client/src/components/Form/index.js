@@ -43,3 +43,18 @@ export const Select = props => {
     </div>        
   );
 }
+
+export const Switch = props => {
+  return (
+
+  <div className="switch">
+    <label>
+      {props.offLabel}
+      <input type="checkbox" name={props.name} />
+      <span className="lever"></span>
+      {props.onLabel}
+    </label>
+  </div>
+        
+  );
+}

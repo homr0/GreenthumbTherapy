@@ -3,8 +3,9 @@ import {Btn} from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem, ListHeader } from "../components/List";
-import { Radio, Checkbox } from "../components/Form";
+import { Radio, Switch, Checkbox } from "../components/Form";
 import PlantCard from "../components/PlantCard";
+
 
 class Questionnaire extends Component {
   constructor(props) {
@@ -309,8 +310,10 @@ class Questionnaire extends Component {
 
               <ListItem>
                 <p>7. Do you have an allergy to pollen?</p>
+
+                <Switch name="plant_allergy2" onLabel="Yes" offLabel="No" />
                     
-                {[
+                {/* {[
                   { value: true, label: "Yes" },
                   { value: false, label: "No" },
                 ].map(plant => (
@@ -321,8 +324,8 @@ class Questionnaire extends Component {
                     handleInputChange={this.handleInputChange}
                   >
                     {plant.label}
-                  </Radio>
-                ))}
+                  </Radio> */}
+                {/* ))} */}
               </ListItem>
 
                <ListItem>
