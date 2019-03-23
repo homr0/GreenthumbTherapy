@@ -53,7 +53,7 @@ class Questionnaire extends Component {
           
           this.state.plant_pets.map(pet => document.querySelectorAll("[name=plant_pets][value=" + pet + "]")[0].checked = true);
 
-          document.querySelectorAll("[name=plant_allergy][value=" + this.state.plant_allergy + "]")[0].checked = true;
+          document.querySelectorAll("[name=plant_allergy]")[0].checked = this.state.plant_allergy;
         })
         .catch(err => console.log(err));
 
@@ -110,7 +110,7 @@ class Questionnaire extends Component {
   }
 
   banPlant = id => {
-    API.addBanned(this.state.id, id)
+    API.addBanned(this.state.user, id)
       .then(res => {
         let {banned, plants} = this.state;
         banned.push(id);
@@ -350,7 +350,7 @@ class Questionnaire extends Component {
               <ListItem>
                 <p>7. Do you have an allergy to pollen?</p>
 
-                <Switch name="plant_allergy2" onLabel="Yes" offLabel="No" />
+                <Switch name="plant_allergy" onLabel="Yes" offLabel="No" />
                     
                 {/* {[
                   { value: true, label: "Yes" },
@@ -405,7 +405,7 @@ class Questionnaire extends Component {
                   image={plant.image}
                   favorite={plant.favorite}
                   banned={plant.banned}
-                  
+
                   handleSaveEvent={() => this.favoritePlant(plant.id)}
                   handleDeleteEvent={() => this.unfavoritePlant(plant.id)}
                   handleBanEvent={() => this.banPlant(plant.id)}
