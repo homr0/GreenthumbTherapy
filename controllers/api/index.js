@@ -18,4 +18,7 @@ router.route("/authenticate")
 router.route("/verify")
   .get(User.verify);
 
+router.route("/logout")
+  .get(User.logout);
+
 module.exports = router;

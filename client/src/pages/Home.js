@@ -9,28 +9,13 @@ class Home extends Component {
     plant: []
   };
 
+  componentDidMount() {
+    setTimeout(() => (!document.getElementsByClassName("slider")[0].style.height) && window.location.reload(), 1);
+  }
+
   render() {
     return (
       <Container>
-          <Row>
-          <Col size="s12 m4 center plant-box">
-            <h2>
-
-            </h2>
-          </Col>
-
-          <Col size="s12 m4 center plant-box">
-            <h2>
-
-            </h2>
-          </Col>
-
-          <Col size="s12 m4 center plant-box">
-            <h2>
-
-            </h2>
-          </Col>
-        </Row>
         <Row>
           <Col>
             <Slider>
@@ -46,7 +31,6 @@ class Home extends Component {
             </Slider>
           </Col>
         </Row>
-
       </Container>
     );
   }
