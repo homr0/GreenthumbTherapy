@@ -7,8 +7,8 @@ const Header = ({ name, children }) =>{
   return (
     <header>
       <Nav
-        colorNav="teal lighten-2"
-        colorLink="teal lighten-2"
+        colorNav="teal darken-3"
+        colorLink="teal darken-3"
         name={name}
       />
 
