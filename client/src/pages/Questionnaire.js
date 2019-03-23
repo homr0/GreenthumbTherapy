@@ -350,7 +350,7 @@ class Questionnaire extends Component {
 
         <Row>
           <Col>
-            <h1>Your Plant Matches</h1>
+            {/* <h1>Your Plant Matches</h1> */}
 
             <Row id="plant-results">
               {this.state.plants.map(plant => 
