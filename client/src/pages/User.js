@@ -100,7 +100,7 @@ class User extends Component {
             scientific_name={plant.scientific_name}
             image={plant.image}
             favorite={true}
-            handleDeleteEvent={() => this.unfavoritePlant(plant._id)} />) : <p className="center">You currently have no favorite plants.</p>}
+            handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />) : <p className="center">You currently have no favorite plants.</p>}
         </Col>
 
         <Col size="s12 m4">
