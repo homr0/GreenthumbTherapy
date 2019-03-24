@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import {withRouter} from "react-router-dom";
-import {Btn}  from "../components/Btn";
+// import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
-import { Input } from "../components/Form";
+// import { Input } from "../components/Form";
 import PlantCard from "../components/PlantCard";
 
 class User extends Component {
@@ -14,6 +14,9 @@ class User extends Component {
       user: null,
       favorites: [],
       banned: [],
+
+      plant_location: [],
+      plant_pets: [],
 
       email: null,
       password: null
@@ -28,6 +31,7 @@ class User extends Component {
         });
 
         this.viewFavoritePlants();
+        this.viewPreferences();
         this.viewBannedPlants();
       })
       .catch(err => {
@@ -45,6 +49,15 @@ class User extends Component {
   unfavoritePlant = id => {
     API.removeFavorite(this.state.user, id)
       .then(() => this.viewFavoritePlants())
+      .catch(err => console.log(err));
+  }
+
+  viewPreferences = () => {
+    API.getPreferences(this.state.user)
+      .then(res => {
+        this.setState(res.data);
+        console.log(this.state);
+      })
       .catch(err => console.log(err));
   }
 
@@ -73,8 +86,8 @@ class User extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    //Calling Login test to validate email and password from API
-    API.loginTest({
+    //Calling Login to validate email and password from API
+    API.login({
       email: this.state.email,
       password: this.state.password
     });
@@ -84,7 +97,7 @@ class User extends Component {
   render() {
     return (
       <Container>
-        <Row>
+        {/* <Row>
           <Col size="m6">
             <form>
               <Input
@@ -101,7 +114,7 @@ class User extends Component {
               <Btn handleClickEvent={this.handleFormSubmit}>Update Password</Btn>
             </form>
           </Col>
-      </Row>
+      </Row> */}
 
       <Row>
         <Col size="s12 m4">
@@ -114,16 +127,39 @@ class User extends Component {
             common_name={plant.common_name}
             scientific_name={plant.scientific_name}
             image={plant.image}
+            shade_tolerance={plant.shade_tolerance}
             favorite={true}
+            userFav={true}
             handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />) : <p className="center">You currently have no favorite plants.</p>}
         </Col>
 
         <Col size="s12 m4">
-          <h3 className="center">Favorite Space Info</h3>
+          <h3 className="center">Preferred Environment</h3>
+
+          <p><strong>Primary Plant Locations: </strong>{this.state.plant_location.join(", ")}</p>
+
+          <p><strong>Average Shade Tolerance: </strong>{this.state.plant_light}</p>
+
+          <p><strong>Average Watering Frequency: </strong>{this.state.plant_water}</p>
+
+          <p><strong>Pets to Consider: </strong>{this.state.plant_pets.join(", ")}</p>
+
+          <p><strong>Allergies?: {this.state.plant_allergy ? "Yes" : "No"}</strong></p>
         </Col>
 
         <Col size="s12 m4">
-          <h3 className="center">No Go Plants</h3>
+          <h3 className="center">Banned Plants</h3>
+          {(this.state.banned.length > 0) ? this.state.banned.map(plant => <PlantCard
+            key={plant.id}
+            size="s12"
+            id={plant.id}
+            common_name={plant.common_name}
+            scientific_name={plant.scientific_name}
+            image={plant.image}
+            shade_tolerance={plant.shade_tolerance}
+            banned={true}
+            userBan={true}
+            handleUnBanEvent={() => this.unBanPlant(plant.id)} />) : <p className="center">You currently have no banned plants.</p>}
         </Col>
       </Row>
     </Container>
