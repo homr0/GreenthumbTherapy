@@ -4,11 +4,15 @@ import {List, ListItem} from "../List";
 import {Btn} from "../Btn";
 import "./style.css";
 import placeholder from "./placeholder.png";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+AOS.init();
 
 const PlantCard = props => {
   return (
     <Col size={"plant-card " + ((props.size) ? props.size : "s12 m6 l4")}>
-      <div className={"card" + ((props.colorsCard) ? " " +  props.colorsCard : "")}>
+      <div data-aos="zoom-out" className={"card" + ((props.colorsCard) ? " " +  props.colorsCard : "")}>
         <div className="card-image">
           <img alt={(props.image) ? props.common_name : "Plant placeholder image"} src={(props.image) ? props.image : placeholder} />
 
