@@ -15,6 +15,9 @@ class User extends Component {
       favorites: [],
       banned: [],
 
+      plant_location: [],
+      plant_pets: [],
+
       email: null,
       password: null
     };
@@ -28,6 +31,7 @@ class User extends Component {
         });
 
         this.viewFavoritePlants();
+        this.viewPreferences();
         this.viewBannedPlants();
       })
       .catch(err => {
@@ -45,6 +49,15 @@ class User extends Component {
   unfavoritePlant = id => {
     API.removeFavorite(this.state.user, id)
       .then(() => this.viewFavoritePlants())
+      .catch(err => console.log(err));
+  }
+
+  viewPreferences = () => {
+    API.getPreferences(this.state.user)
+      .then(res => {
+        this.setState(res.data);
+        console.log(this.state);
+      })
       .catch(err => console.log(err));
   }
 
@@ -121,7 +134,17 @@ class User extends Component {
         </Col>
 
         <Col size="s12 m4">
-          <h3 className="center">Favorite Space Info</h3>
+          <h3 className="center">Preferred Environment</h3>
+
+          <p><strong>Primary Plant Locations: </strong>{this.state.plant_location.join(", ")}</p>
+
+          <p><strong>Average Shade Tolerance: </strong>{this.state.plant_light}</p>
+
+          <p><strong>Average Watering Frequency: </strong>{this.state.plant_water}</p>
+
+          <p><strong>Pets to Consider: </strong>{this.state.plant_pets.join(", ")}</p>
+
+          <p><strong>Allergies?: {this.state.plant_allergy ? "Yes" : "No"}</strong></p>
         </Col>
 
         <Col size="s12 m4">
