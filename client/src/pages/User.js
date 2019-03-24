@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import {withRouter} from "react-router-dom";
-import {Btn}  from "../components/Btn";
+// import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
-import { Input } from "../components/Form";
+// import { Input } from "../components/Form";
 import PlantCard from "../components/PlantCard";
 
 class User extends Component {
@@ -97,7 +97,7 @@ class User extends Component {
   render() {
     return (
       <Container>
-        <Row>
+        {/* <Row>
           <Col size="m6">
             <form>
               <Input
@@ -114,7 +114,7 @@ class User extends Component {
               <Btn handleClickEvent={this.handleFormSubmit}>Update Password</Btn>
             </form>
           </Col>
-      </Row>
+      </Row> */}
 
       <Row>
         <Col size="s12 m4">
