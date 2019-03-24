@@ -73,8 +73,8 @@ class User extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    //Calling Login test to validate email and password from API
-    API.loginTest({
+    //Calling Login to validate email and password from API
+    API.login({
       email: this.state.email,
       password: this.state.password
     });
@@ -114,7 +114,9 @@ class User extends Component {
             common_name={plant.common_name}
             scientific_name={plant.scientific_name}
             image={plant.image}
+            shade_tolerance={plant.shade_tolerance}
             favorite={true}
+            userFav={true}
             handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />) : <p className="center">You currently have no favorite plants.</p>}
         </Col>
 
@@ -123,7 +125,18 @@ class User extends Component {
         </Col>
 
         <Col size="s12 m4">
-          <h3 className="center">No Go Plants</h3>
+          <h3 className="center">Banned Plants</h3>
+          {(this.state.banned.length > 0) ? this.state.banned.map(plant => <PlantCard
+            key={plant.id}
+            size="s12"
+            id={plant.id}
+            common_name={plant.common_name}
+            scientific_name={plant.scientific_name}
+            image={plant.image}
+            shade_tolerance={plant.shade_tolerance}
+            banned={true}
+            userBan={true}
+            handleUnBanEvent={() => this.unBanPlant(plant.id)} />) : <p className="center">You currently have no banned plants.</p>}
         </Col>
       </Row>
     </Container>
