@@ -172,7 +172,7 @@ module.exports = {
   getBanned: (req, res) => {
     db.User
       .findOne({_id: req.params.id})
-      .populate("plants")
+      .populate("banned")
       .then(dbUser => 
         res.status(200).json(dbUser.banned))
       .catch(err => res.json({
@@ -184,7 +184,7 @@ module.exports = {
   getBannedIds: (req, res) => {
     db.User
       .findOne({_id: req.params.id})
-      .populate("plants")
+      .populate("banned")
       .then(dbUser => {
         let plantIds = dbUser.banned.map(plant => plant.id);
         res.status(200).json(plantIds);
@@ -215,7 +215,7 @@ module.exports = {
     db.Plant
       .findOne({id: req.params.plant_id})
         .then(dbModel => db.User
-          .findOneAndUpdate({_id: req.params.id}, {$pull: {plants: dbModel._id}})
+          .findOneAndUpdate({_id: req.params.id}, {$pull: {banned: dbModel._id}})
           .then(() =>res.status(200).send("Plant has been unbanned."))
           .catch(err => res.json({
               message: "Internal error. Could not unban plant."

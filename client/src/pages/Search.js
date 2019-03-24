@@ -93,7 +93,7 @@ class Search extends Component {
       .then(res => {
         let {banned, plants} = this.state;
         banned.push(id);
-        plants.map(plant => plant.banned = banned.includes(id));
+        plants.map(plant => plant.banned = banned.includes(plant.id));
 
         this.setState({
           banned: banned,

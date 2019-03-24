@@ -58,9 +58,11 @@ class Questionnaire extends Component {
         .catch(err => console.log(err));
 
         API.checkBanned(res.data.id)
-          .then(response => this.setState({
+          .then(response => {
+            this.setState({
               banned: response.data
-            }))
+            });
+          })
           .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
@@ -112,9 +114,10 @@ class Questionnaire extends Component {
   banPlant = id => {
     API.addBanned(this.state.user, id)
       .then(res => {
+        console.log(this.state);
         let {banned, plants} = this.state;
         banned.push(id);
-        plants.map(plant => plant.banned = banned.includes(id));
+        plants.map(plant => plant.banned = banned.includes(plant.id));
 
         this.setState({
           banned: banned,
