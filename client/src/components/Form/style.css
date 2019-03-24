@@ -7,4 +7,7 @@ label.input-line {
   display: inline;
   padding: 0 1rem 0 0;
 }
-
+.switch label .lever:before, .switch label .lever:after {
+  /* background-image: url("./flower1.jpg"); */
+  background-color: goldenrod;
+}
