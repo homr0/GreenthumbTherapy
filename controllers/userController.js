@@ -9,10 +9,12 @@ module.exports = {
     db.User
       .create(req.body)
       .then(() => res.status(200).json({
-        message: "Welcome to Greenthumb Therapy!"
+        message: "Welcome to Greenthumb Therapy!",
+        status: 200
       }))
       .catch(err => res.json({
-        message: "This email is already tied to another account."
+        message: "This email is already tied to another account.",
+        status: 500
       }).status(500));
   },
 
@@ -27,7 +29,8 @@ module.exports = {
         }).status(401) : user.isCorrectPassword(password)
           .then(same => {
             if(!same) res.json({
-              message: "Incorrect password."
+              message: "Incorrect password.",
+              status: 401
             }).status(401);
             else {
               // Issues token
@@ -39,13 +42,15 @@ module.exports = {
               const token = jwt.sign(payload, secret);
 
               res.cookie("token", token, cookieOptions).status(200).json({
-                message: "You have signed into Greenthumb Therapy"
+                message: "You have signed into Greenthumb Therapy",
+                status: 200
               });
             }
           });
       })
       .catch(err => res.json({
-          message: "Internal error. Please try again"
+          message: "Internal error. Please try again",
+          status: 500
         }).status(500));
   },
 
@@ -63,9 +68,9 @@ module.exports = {
           first_name: dbModel.first_name,
           last_name: dbModel.last_name
         }))
-        .catch(err => res.json({
-          message: "Internal error. Could not find a user with this token information."
-        }).status(500));
+        .catch(err => res.status(500).json({
+          message: "Internal error. Could not find a token."
+        }));
     });
   },
 
@@ -79,7 +84,8 @@ module.exports = {
     // Clears the token from the server.
     (!token) ? res.status(401).send("Unauthorized: No token provided") : jwt.verify(token, secret, (err, decoded) =>
       (err) ? res.status(402).send("Unauthorized: Invalid token") : res.clearCookie("token", cookieOptions).status(200).json({
-        message: "You have successfully logged out!"
+        message: "You have successfully logged out!",
+        status: 200
       }));
   },
 
@@ -94,18 +100,22 @@ module.exports = {
           .then(hashedPassword => user.isCorrectPassword(password)
               .then(same => (!same) 
                 ? res.json({
-                  message: "The old password you put in does not match your current password!"
+                  message: "The old password you put in does not match your current password!",
+                  status: 401
                 }).status(401)
                 : db.User.findOneAndUpdate({_id: id}, {password: hashedPassword}, {new: true})
                   .then(() => res.status(200).json({
-                    message: "Successfully updated password!"
+                    message: "Successfully updated password!",
+                    status: 200
                   }))))
           .catch(err => res.json({
-            message: "Could not hash password."
+            message: "Could not hash password.",
+            status: 500
           }).status(500));
       })
       .catch(err => res.json({
-        message: "Internal error. Please try again."
+        message: "Internal error. Please try again.",
+        status: 500
       }).status(500));
   },
 
