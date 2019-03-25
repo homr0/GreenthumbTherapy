@@ -11,7 +11,7 @@ nav .material-icons {
   margin: 0 0.5rem 0 0;
 }
 
-nav .hide-on-med-and-down :hover {
+nav .hide-on-med-and-down a:hover {
   color: goldenrod;
 }
 
