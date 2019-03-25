@@ -18,6 +18,7 @@ export default {
   login: userData => axios.post("/api/authenticate", userData),
   verify: () => axios.get("/api/verify"),
   logout: () => axios.get("/api/logout"),
+  updatePassword: userData => axios.post("/api/password", userData),
 
   // User preferences
   setPreferences: (userId, userData) => axios.post("/api/user/" + userId + "/preferences", userData),

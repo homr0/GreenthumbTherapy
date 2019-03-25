@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import {withRouter} from "react-router-dom";
-// import {Btn}  from "../components/Btn";
+import {Btn}  from "../components/Btn";
 import API from "../utils/API";
 import { Col, Row, Container } from "../components/Grid";
-// import { Input } from "../components/Form";
+import { Input } from "../components/Form";
 import PlantCard from "../components/PlantCard";
+import profile from "../components/PlantCard/placeholder.png"
 
 class User extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class User extends Component {
 
     this.state = {
       user: null,
+      first_name: null,
       favorites: [],
       banned: [],
 
@@ -27,7 +29,9 @@ class User extends Component {
     API.verify()
       .then(res => {
         this.setState({
-          user: res.data.id
+          user: res.data.id,
+          first_name: res.data.first_name,
+          last_name: res.data.last_name
         });
 
         this.viewFavoritePlants();
@@ -86,83 +90,91 @@ class User extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
 
-    //Calling Login to validate email and password from API
-    API.login({
-      email: this.state.email,
-      password: this.state.password
-    });
-
+    API.updatePassword({
+      id: this.state.user,
+      password: this.state.password,
+      new_password: this.state.new_password
+    })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   }
 
   render() {
     return (
       <Container>
-        {/* <Row>
-          <Col size="m6">
+        <Row id="profile">
+          <Col size="s6">
+            <h2>{this.state.first_name} {this.state.last_name}</h2>
+            
             <form>
               <Input
-                name="email" type="email" id="email"
+                name="password" type="password" id="password"
                 handleInputChange={this.handleInputChange}
-                size="s6">Email
+                size="s12">Old Password
               </Input>
 
               <Input
-                name="password" type="password" id="password"
+                name="new_password" type="password" id="new_password"
                   handleInputChange={this.handleInputChange}
-                  size="s6">Password
+                  size="s12">New Password
               </Input>
               <Btn handleClickEvent={this.handleFormSubmit}>Update Password</Btn>
             </form>
           </Col>
-      </Row> */}
 
-      <Row>
-        <Col size="s12 m4">
-          <h3 className="center">Favorites</h3>
+          <Col size="s4 offset-s2">
+            <img className="profile-img" src={(this.state.favorites.length > 0) ? this.state.favorites[0].image : profile} alt="Plant profile"/>
+          </Col>
+        </Row>
 
-          {(this.state.favorites.length > 0) ? this.state.favorites.map(plant => <PlantCard
-            key={plant.id}
-            size="s12"
-            id={plant.id}
-            common_name={plant.common_name}
-            scientific_name={plant.scientific_name}
-            image={plant.image}
-            shade_tolerance={plant.shade_tolerance}
-            favorite={true}
-            userFav={true}
-            handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />) : <p className="center">You currently have no favorite plants.</p>}
-        </Col>
+        <Row>
+          <Col size="s12 m4">
+            <h3 className="center">Favorites</h3>
 
-        <Col size="s12 m4">
-          <h3 className="center">Preferred Environment</h3>
+            {(this.state.favorites.length > 0) ? this.state.favorites.map(plant => <PlantCard
+              key={plant.id}
+              size="s12"
+              id={plant.id}
+              common_name={plant.common_name}
+              scientific_name={plant.scientific_name}
+              image={plant.image}
+              shade_tolerance={plant.shade_tolerance}
+              favorite={true}
+              userFav={true}
+              handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />) : <p className="center">You currently have no favorite plants.</p>}
+          </Col>
 
-          <p><strong>Primary Plant Locations: </strong>{this.state.plant_location.join(", ")}</p>
+          <Col size="s12 m4">
+            <h3 className="center">Preferred Environment</h3>
 
-          <p><strong>Average Shade Tolerance: </strong>{this.state.plant_light}</p>
+            <p><strong>Primary Plant Locations: </strong>{this.state.plant_location.join(", ")}</p>
 
-          <p><strong>Average Watering Frequency: </strong>{this.state.plant_water}</p>
+            <p><strong>Average Shade Tolerance: </strong>{this.state.plant_light}</p>
 
-          <p><strong>Pets to Consider: </strong>{this.state.plant_pets.join(", ")}</p>
+            <p><strong>Average Watering Frequency: </strong>{this.state.plant_water}</p>
 
-          <p><strong>Allergies?: {this.state.plant_allergy ? "Yes" : "No"}</strong></p>
-        </Col>
+            <p><strong>Pets to Consider: </strong>{this.state.plant_pets.join(", ")}</p>
 
-        <Col size="s12 m4">
-          <h3 className="center">Banned Plants</h3>
-          {(this.state.banned.length > 0) ? this.state.banned.map(plant => <PlantCard
-            key={plant.id}
-            size="s12"
-            id={plant.id}
-            common_name={plant.common_name}
-            scientific_name={plant.scientific_name}
-            image={plant.image}
-            shade_tolerance={plant.shade_tolerance}
-            banned={true}
-            userBan={true}
-            handleUnBanEvent={() => this.unBanPlant(plant.id)} />) : <p className="center">You currently have no banned plants.</p>}
-        </Col>
-      </Row>
-    </Container>
-  )};
+            <p><strong>Allergies?: {this.state.plant_allergy ? "Yes" : "No"}</strong></p>
+          </Col>
+
+          <Col size="s12 m4">
+            <h3 className="center">Banned Plants</h3>
+            {(this.state.banned.length > 0) ? this.state.banned.map(plant => <PlantCard
+              key={plant.id}
+              size="s12"
+              id={plant.id}
+              common_name={plant.common_name}
+              scientific_name={plant.scientific_name}
+              image={plant.image}
+              shade_tolerance={plant.shade_tolerance}
+              banned={true}
+              userBan={true}
+              handleUnBanEvent={() => this.unBanPlant(plant.id)} />) : <p className="center">You currently have no banned plants.</p>}
+          </Col>
+        </Row>
+      </Container>
+    )
+  };
 }
 export default withRouter(User);

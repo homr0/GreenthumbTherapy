@@ -83,6 +83,32 @@ module.exports = {
       }));
   },
 
+  updatePassword: (req, res) => {
+    const {id, password, new_password} = req.body;
+
+    db.User
+      .findOne({_id: id})
+      .then(user => {
+        // Checks if the user exists and if their password matches to update password
+        user.hashedPassword(new_password)
+          .then(hashedPassword => user.isCorrectPassword(password)
+              .then(same => (!same) 
+                ? res.json({
+                  message: "The old password you put in does not match your current password!"
+                }).status(401)
+                : db.User.findOneAndUpdate({_id: id}, {password: hashedPassword}, {new: true})
+                  .then(() => res.status(200).json({
+                    message: "Successfully updated password!"
+                  }))))
+          .catch(err => res.json({
+            message: "Could not hash password."
+          }).status(500));
+      })
+      .catch(err => res.json({
+        message: "Internal error. Please try again."
+      }).status(500));
+  },
+
   // Handles favorite plants
   getPlants: (req, res) => {
     db.User
