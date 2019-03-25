@@ -41,11 +41,10 @@ class User extends Component {
         this.viewFavoritePlants();
         this.viewPreferences();
         this.viewBannedPlants();
+
+        setTimeout(() => (document.getElementById("favorites").style.display === document.getElementById("banned").style.display) && window.location.reload(), 1);
       })
-      .catch(err => {
-        this.props.history.push("/login");
-        console.log(err)
-      });
+      .catch(() => this.props.history.push("/login"));
   }
 
   viewFavoritePlants = () => {
