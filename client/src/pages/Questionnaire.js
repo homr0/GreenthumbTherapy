@@ -145,15 +145,13 @@ class Questionnaire extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if(target.type === "checkbox" && target.className !== "switch-box") {
+    if((target.type === "checkbox") && (target.className !== "switch-box")) {
       let answers = this.state[name];
       (value) ? answers.push(target.value) : answers.splice(answers.indexOf(target.value), 1);
 
       this.setState({
         [name]: answers
       });
-
-      console.log(this.state[name]);
     } else {
       this.setState({
         [name]: value
@@ -202,8 +200,6 @@ class Questionnaire extends Component {
 
     // Load plants
     this.loadPlants(query);
-
-    console.log(this.state);
 
     (this.state.save_preferences) && API.setPreferences(this.state.user, {
       preferred_room: this.state.plant_location,
