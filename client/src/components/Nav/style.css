@@ -3,14 +3,26 @@ nav .brand-logo {
   position: relative;
 }
 
- .button{
+ .button {
   padding-right: 10px;
 }
 
-nav .material-icons{
+nav .material-icons {
   margin: 0 0.5rem 0 0;
 }
 
-nav .hide-on-med-and-down :hover{
-  color: #e65100;
+nav .hide-on-med-and-down a:hover {
+  color: goldenrod;
+}
+
+nav a {
+  font-weight: 700;
+}
+
+nav #nav-menu {
+  margin-left: 1rem;
+}
+
+nav #nav-menu a:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }

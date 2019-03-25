@@ -9,6 +9,15 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Gentium Book Basic", sans-serif;
 }
 
+#planter-box {
+  background-image: url("/images/flower3.jpeg");
+}
+
+#planter-box .plant-box {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 1rem;
+}
+
 #plant-results {
   display: flex;
   flex-wrap: wrap;
