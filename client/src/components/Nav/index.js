@@ -10,30 +10,28 @@ const Nav = props => {
           <a href="/" className="brand-logo">Greenthumb Therapy</a>
 
           {/* eslint-disable-next-line */}
-          <a href="#" data-target="mobile-demo" className="sidenav-trigger right">
+          <a href="#" data-target="mobile-menu" className="sidenav-trigger right">
             <i className="material-icons">menu</i>
           </a>
 
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
+          <ul id="nav-menu" className="right hide-on-med-and-down">
             <li>
               <Link to="/questionnaire" className={props.colorLink + ((window.location.pathname === "/questionnaire") ? " active" : "")}>
-              <i className="material-icons left">content_paste</i>Questionnaire
+                <i className="material-icons left">content_paste</i>Questionnaire
               </Link>
             </li>
 
             <li>
               <Link to="/search" className={props.colorLink + ((window.location.pathname === "/search") ? " active" : "")}>
-              <i className="material-icons left">search</i>Search
+                <i className="material-icons left">search</i>Search
               </Link>
             </li>
           </ul>
 
           {(props.name) 
             ? <span className="right hide-on-med-and-down">
-                Welcome, <a href="/user">{props.name}</a>
-                <a href="/logout">
-                  <i className="material-icons left">assignment_ind</i> Logout
-                </a>
+                <i className="material-icons left">assignment_ind</i>
+                Welcome, <a href="/user">{props.name}</a> (<a href="/logout">Logout</a>)
               </span>
             : <span className="right hide-on-med-and-down">
                 <i className="material-icons left">assignment_ind</i>
@@ -41,11 +39,9 @@ const Nav = props => {
               </span>
           }
         </div>
-
-
       </nav>
 
-      <ul className="sidenav" id="mobile-demo">
+      <ul className="sidenav" id="mobile-menu">
         {(props.name) 
           ? <li>
               <Link to="/user">
@@ -56,17 +52,23 @@ const Nav = props => {
               </Link>
             </li>
           : <li>
-              <i className="material-icons left">assignment_ind</i>
-              <Link to="/login">Log in</Link> or <Link to="/register">Register</Link>
+              <Link to="/login">
+                <i className="material-icons left">assignment_ind</i> Log in
+              </Link>
+              <Link to="/register">
+                <i className="material-icons left">assignment_ind</i> Register
+              </Link>
             </li>
           }
         <li>
-        <i className="material-icons left">content_paste</i>
-          <Link to="/questionnaire">Questionnaire</Link>
+          <Link to="/questionnaire">
+            <i className="material-icons left">content_paste</i> Questionnaire
+          </Link>
         </li>
         <li>
-        <i className="material-icons left">search</i>
-          <Link to="/search">Search</Link>
+          <Link to="/search">
+            <i className="material-icons left">search</i> Search
+          </Link>
         </li>
       </ul>
     </>
