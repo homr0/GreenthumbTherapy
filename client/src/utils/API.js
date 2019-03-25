@@ -7,6 +7,9 @@ export default {
   // Manually adds a plant to the database.
   plantAdd: query => axios.post("/api/plants/", query),
 
+  // Pulls the entire plant database.
+  getPlants: query => axios.get("/api/plants"),
+
   // Allows users to view, add, or remove favorite plants.
   viewFavorites: userId => axios.get("/api/user/" + userId),
   checkFavorites: userId => axios.get("/api/user/" + userId + "/check/favorites"),

@@ -2,15 +2,22 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import {Slider, SliderItem} from "../components/Slider";
-
+import API from "../utils/API";
 
 class Home extends Component {
   state = {
-    plant: []
+    random_plant: {}
   };
 
   componentDidMount() {
     setTimeout(() => (!document.getElementsByClassName("slider")[0].style.height) && window.location.reload(), 1);
+    API.getPlants()
+      .then(res => {
+        let plant = res.data[Math.floor(Math.random() * res.data.length)];
+        this.setState({random_plant: plant});
+        console.log(this.state.random_plant);
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -25,8 +32,8 @@ class Home extends Component {
               <SliderItem image="images/flower2.jpeg" caption="Looking for the right plant?">
                 <Link to="/search"><h3>Search Plants</h3></Link>
               </SliderItem>
-              <SliderItem image="images/flower3.jpeg" caption="Do these belong to you?">
-                <Link to="/user"><h3 className="left-align">User Page</h3></Link>
+              <SliderItem image={(this.state.random_plant.image) ? this.state.random_plant.image : "images/flower3.jpeg"} caption={((this.state.random_plant.common_name) && ("Commonly known as " + this.state.random_plant.common_name + ",")) + " is your random plant."}>
+                <h3 className="left-align">{this.state.random_plant.scientific_name}</h3>
               </SliderItem>
             </Slider>
           </Col>
