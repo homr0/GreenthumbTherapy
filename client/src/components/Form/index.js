@@ -48,9 +48,10 @@ export const Switch = props => {
   return (
 
   <div className="switch">
+    {props.children}
     <label>
       {props.offLabel}
-      <input type="checkbox" name={props.name} />
+      <input type="checkbox" className="switch-box" name={props.name} onChange={props.handleInputChange} />
       <span className="lever"></span>
       {props.onLabel}
     </label>

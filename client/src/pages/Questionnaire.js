@@ -14,6 +14,7 @@ class Questionnaire extends Component {
     this.state = {
       user: null,
       favorites: [],
+      banned: [],
   
       plants: [],
       plant_type: "",
@@ -52,9 +53,17 @@ class Questionnaire extends Component {
           
           this.state.plant_pets.map(pet => document.querySelectorAll("[name=plant_pets][value=" + pet + "]")[0].checked = true);
 
-          document.querySelectorAll("[name=plant_allergy][value=" + this.state.plant_allergy + "]")[0].checked = true;
+          document.querySelectorAll("[name=plant_allergy]")[0].checked = this.state.plant_allergy;
         })
         .catch(err => console.log(err));
+
+        API.checkBanned(res.data.id)
+          .then(response => {
+            this.setState({
+              banned: response.data
+            });
+          })
+          .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
   }
@@ -62,7 +71,11 @@ class Questionnaire extends Component {
   loadPlants = query => {
     API.searchPlants(query)
       .then(res => {
-        res.data.map(plant => plant.favorite = this.state.favorites.includes(plant.id));
+        // eslint-disable-next-line
+        res.data.map(plant => {
+          plant.favorite = this.state.favorites.includes(plant.id);
+          plant.banned = this.state.banned.includes(plant.id);
+        });
         this.setState({ plants: res.data });
       })
       .catch(err => console.log(err));
@@ -98,12 +111,41 @@ class Questionnaire extends Component {
       .catch(err => console.log(err));
   }
 
+  banPlant = id => {
+    API.addBanned(this.state.user, id)
+      .then(res => {
+        console.log(this.state);
+        let {banned, plants} = this.state;
+        banned.push(id);
+        plants.map(plant => plant.banned = banned.includes(plant.id));
+
+        this.setState({
+          banned: banned,
+          plants: plants
+        });
+      })
+  }
+
+  unBanPlant = id => {
+    API.removeBanned(this.state.user, id)
+      .then(res => {
+        let {banned, plants} = this.state;
+        banned.splice(banned.indexOf(id), 1);
+        plants.map(plant => plant.banned = banned.includes(plant.id));
+
+        this.setState({
+          banned: banned,
+          plants: plants
+        });
+      })
+  }
+
   handleInputChange = event => {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if(target.type === "checkbox") {
+    if((target.type === "checkbox") && (target.className !== "switch-box")) {
       let answers = this.state[name];
       (value) ? answers.push(target.value) : answers.splice(answers.indexOf(target.value), 1);
 
@@ -113,7 +155,7 @@ class Questionnaire extends Component {
     } else {
       this.setState({
         [name]: value
-      })
+      });
     }
   };
 
@@ -152,7 +194,6 @@ class Questionnaire extends Component {
 
     //Plant Shade
     if(this.state.plant_light !== "adjustable") query.shade_tolerance = this.state.plant_light;
-
 
     //Plant Water
     if(this.state.plant_water !== "none" ) query.moisture_use = this.state.plant_water;
@@ -311,40 +352,20 @@ class Questionnaire extends Component {
               <ListItem>
                 <p>7. Do you have an allergy to pollen?</p>
 
-                <Switch name="plant_allergy2" onLabel="Yes" offLabel="No" />
-                    
-                {/* {[
-                  { value: true, label: "Yes" },
-                  { value: false, label: "No" },
-                ].map(plant => (
-                  <Radio
-                    key={"plant_allergy=" + plant.value}
-                    name="plant_allergy"
-                    value={plant.value}
-                    handleInputChange={this.handleInputChange}
-                  >
-                    {plant.label}
-                  </Radio> */}
-                {/* ))} */}
+                <Switch name="plant_allergy" onLabel="Yes" offLabel="No" handleInputChange={this.handleInputChange} />
               </ListItem>
 
                <ListItem>
-                <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
+                <Row>
+                  <Col size="s6">
+                    <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
+                  </Col>
 
-                <p>Save Preferences: </p>
-                {[
-                  { value: true, label: "Yes" },
-                  { value: false, label: "No" },
-                ].map(plant => (
-                  <Radio
-                    key={"save_preferences=" + plant.value}
-                    name="save_preferences"
-                    value={plant.value}
-                    handleInputChange={this.handleInputChange}
-                  >
-                    {plant.label}
-                  </Radio>
-                ))}
+                  <Col size="s6">
+                    {this.state.user 
+                      && <Switch name="save_preferences" onLabel="Yes" offLabel="No" handleInputChange={this.handleInputChange}>Save Preferences: </Switch>}
+                  </Col>
+                </Row>
               </ListItem>
 
             </List>
@@ -353,8 +374,6 @@ class Questionnaire extends Component {
 
         <Row>
           <Col>
-            {/* <h1>Your Plant Matches</h1> */}
-
             <Row id="plant-results">
               {this.state.plants.map(plant => 
                 <PlantCard
@@ -365,8 +384,12 @@ class Questionnaire extends Component {
                   shade_tolerance={plant.shade_tolerance}
                   image={plant.image}
                   favorite={plant.favorite}
+                  banned={plant.banned}
+
                   handleSaveEvent={() => this.favoritePlant(plant.id)}
-                  handleDeleteEvent={() => this.unfavoritePlant(plant.id)} />
+                  handleDeleteEvent={() => this.unfavoritePlant(plant.id)}
+                  handleBanEvent={() => this.banPlant(plant.id)}
+                  handleUnBanEvent={() => this.unBanPlant(plant.id)} />
               )}
             </Row>
           </Col>

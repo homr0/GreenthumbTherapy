@@ -4,21 +4,34 @@ import {List, ListItem} from "../List";
 import {Btn} from "../Btn";
 import "./style.css";
 import placeholder from "./placeholder.png";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+AOS.init();
 
 const PlantCard = props => {
   return (
     <Col size={"plant-card " + ((props.size) ? props.size : "s12 m6 l4")}>
-      <div className={"card" + ((props.colorsCard) ? " " +  props.colorsCard : "")}>
+      <div data-aos="zoom-out" className={"card" + ((props.colorsCard) ? " " +  props.colorsCard : "")}>
         <div className="card-image">
           <img alt={(props.image) ? props.common_name : "Plant placeholder image"} src={(props.image) ? props.image : placeholder} />
 
           {(props.favorite)
-            ? <Btn colors="btn-floating halfway-fab red darken-2" handleClickEvent={props.handleDeleteEvent}>
+            ? <Btn colors={"btn-floating halfway-fab red darken-2 right"  + ((props.userBan) ? " hide" : "")} handleClickEvent={props.handleDeleteEvent}>
               <i className="material-icons">delete</i>
             </Btn>
             
-            : <Btn colors="btn-floating halfway-fab green darken-2" handleClickEvent={props.handleSaveEvent}>
+            : <Btn colors={"btn-floating halfway-fab green darken-2 right"  + ((props.userBan) ? " hide" : "")} handleClickEvent={props.handleSaveEvent}>
               <i className="material-icons">save</i>
+            </Btn>
+          }
+
+          {(props.banned)
+            ? <Btn colors={"btn-floating halfway-fab blue darken-2 left" + ((props.userFav) ? " hide" : "")} handleClickEvent={props.handleUnBanEvent}>
+              <i className="material-icons">done</i>
+            </Btn>
+            : <Btn colors={"btn-floating halfway-fab orange darken-2 left"  + ((props.userFav) ? " hide" : "")} handleClickEvent={props.handleBanEvent}>
+              <i className="material-icons">do_not_disturb</i>
             </Btn>
           }
 
@@ -49,6 +62,7 @@ const PlantCard = props => {
 
         <div className={"card-action" + ((props.colorsAction) ? " " + props.colorsAction : "")}>
           <a href={"https://wikipedia.org/wiki/" + props.scientific_name.replace(" ", "_")} target="_blank" rel="noopener noreferrer">More Information</a>
+          {(props.common_name) && <a href={"https://www.google.com/search?tbm=shop&q=" + props.common_name.replace(" ", "+")} target="_blank" rel="noopener noreferrer">Purchase</a>}
         </div>
       </div>
     </Col>
