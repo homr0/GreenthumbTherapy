@@ -2,8 +2,27 @@
 
 body {
   font-family: "Raleway", sans-serif;
+  font-size: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Gentium Book Basic", sans-serif;
+}
+
+#plant-results {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#profile .profile-img {
+  max-width: 100%;
+  height: auto;
+}
+
+#profile .profile-card {
+  text-transform: capitalize;
+}
+
+#profile .profile-card .collection {
+  margin: 0;
 }

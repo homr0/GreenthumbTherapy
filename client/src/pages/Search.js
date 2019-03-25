@@ -285,7 +285,7 @@ class Search extends Component {
               </ListItem>
 
               <ListItem>
-                <Btn handleClickEvent={this.handleFormSubmit} colors="teal darken-3">
+                <Btn handleClickEvent={this.handleFormSubmit}>
                   Show Me Plants
                 </Btn>
               </ListItem>
@@ -296,7 +296,6 @@ class Search extends Component {
         
         <Row>
           <Col>
-            {/* <h1>Results</h1> */}
             <Row id="plant-results">
               {this.state.plants.map(plant => (
                 <PlantCard 

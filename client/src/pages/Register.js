@@ -56,7 +56,7 @@ class Register extends Component {
     })
     .then(res => {
       this.setState({
-      register_status: res.status,
+      register_status: res.data.status,
       register_message: res.data.message
     })})
     .catch(err => this.setState({
@@ -75,13 +75,13 @@ class Register extends Component {
     .then(res => {
       this.setState({
         login_message: res.data.message,
-        login_status: res.status
+        login_status: res.data.status
       });
 
       setTimeout(() => this.props.history.push("/user"), 1000);
     })
     .catch(err => this.setState({
-        status: 500,
+        login_status: 500,
         login_message: "Internal server error!"
       })
     );

@@ -145,7 +145,7 @@ class Questionnaire extends Component {
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
-    if(target.type === "checkbox") {
+    if((target.type === "checkbox") && (target.className !== "switch-box")) {
       let answers = this.state[name];
       (value) ? answers.push(target.value) : answers.splice(answers.indexOf(target.value), 1);
 
@@ -155,7 +155,7 @@ class Questionnaire extends Component {
     } else {
       this.setState({
         [name]: value
-      })
+      });
     }
   };
 
@@ -194,7 +194,6 @@ class Questionnaire extends Component {
 
     //Plant Shade
     if(this.state.plant_light !== "adjustable") query.shade_tolerance = this.state.plant_light;
-
 
     //Plant Water
     if(this.state.plant_water !== "none" ) query.moisture_use = this.state.plant_water;
@@ -353,40 +352,20 @@ class Questionnaire extends Component {
               <ListItem>
                 <p>7. Do you have an allergy to pollen?</p>
 
-                <Switch name="plant_allergy" onLabel="Yes" offLabel="No" />
-                    
-                {/* {[
-                  { value: true, label: "Yes" },
-                  { value: false, label: "No" },
-                ].map(plant => (
-                  <Radio
-                    key={"plant_allergy=" + plant.value}
-                    name="plant_allergy"
-                    value={plant.value}
-                    handleInputChange={this.handleInputChange}
-                  >
-                    {plant.label}
-                  </Radio> */}
-                {/* ))} */}
+                <Switch name="plant_allergy" onLabel="Yes" offLabel="No" handleInputChange={this.handleInputChange} />
               </ListItem>
 
                <ListItem>
-                <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
+                <Row>
+                  <Col size="s6">
+                    <Btn handleClickEvent={this.handleFormSubmit}>Show Me Plants</Btn>
+                  </Col>
 
-                <p>Save Preferences: </p>
-                {[
-                  { value: true, label: "Yes" },
-                  { value: false, label: "No" },
-                ].map(plant => (
-                  <Radio
-                    key={"save_preferences=" + plant.value}
-                    name="save_preferences"
-                    value={plant.value}
-                    handleInputChange={this.handleInputChange}
-                  >
-                    {plant.label}
-                  </Radio>
-                ))}
+                  <Col size="s6">
+                    {this.state.user 
+                      && <Switch name="save_preferences" onLabel="Yes" offLabel="No" handleInputChange={this.handleInputChange}>Save Preferences: </Switch>}
+                  </Col>
+                </Row>
               </ListItem>
 
             </List>
@@ -395,8 +374,6 @@ class Questionnaire extends Component {
 
         <Row>
           <Col>
-            {/* <h1>Your Plant Matches</h1> */}
-
             <Row id="plant-results">
               {this.state.plants.map(plant => 
                 <PlantCard

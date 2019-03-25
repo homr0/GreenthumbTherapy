@@ -21,4 +21,7 @@ router.route("/verify")
 router.route("/logout")
   .get(User.logout);
 
+router.route("/password")
+  .post(User.updatePassword);
+
 module.exports = router;
