@@ -128,9 +128,11 @@ class Search extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
+   
 
-    // let query="&nursery_stock_product=true";
+
     let query = {};
+    query.q=(this.state.plant_name);
 
     // Translate type of plant to query.
     switch (this.state.plant_type) {
@@ -186,7 +188,7 @@ class Search extends Component {
 
               
               <Input
-                onChange={this.handleInputChange}
+                handleInputChange={this.handleInputChange}
                 size="s6"
                 name="plant_name"
                 placeholder="Search Plant Name"
@@ -197,7 +199,7 @@ class Search extends Component {
 
               
               <Input
-                onChange={this.handleInputChange}
+                handleInputChange={this.handleInputChange}
                 name="plant_height"
                 size="s6"
                 placeholder="Number in feet"
