@@ -132,7 +132,8 @@ class Search extends Component {
 
 
     let query = {};
-    query.q=(this.state.plant_name);
+    
+    query.q= this.state.plant_name;
 
     // Translate type of plant to query.
     switch (this.state.plant_type) {
