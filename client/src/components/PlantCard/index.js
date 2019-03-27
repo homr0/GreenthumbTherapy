@@ -61,8 +61,8 @@ const PlantCard = props => {
         </div>
 
         <div className={"card-action" + ((props.colorsAction) ? " " + props.colorsAction : "")}>
-          <a href={"https://wikipedia.org/wiki/" + props.scientific_name.replace(" ", "_")} target="_blank" rel="noopener noreferrer">More Information</a>
-          {(props.common_name) && <a href={"https://www.google.com/search?tbm=shop&q=" + props.common_name.replace(" ", "+")} target="_blank" rel="noopener noreferrer">Purchase</a>}
+          <a href={"https://wikipedia.org/wiki/" + props.scientific_name.replace(" ", "_")} target="_blank" rel="noopener noreferrer"><i class="fab fa-wikipedia-w left small" ></i></a>
+          {(props.common_name) && <a href={"https://www.google.com/search?tbm=shop&q=" + props.common_name.replace(" ", "+")} target="_blank" rel="noopener noreferrer"><i class="fas fa-shopping-cart right small"></i></a>}
         </div>
       </div>
     </Col>
