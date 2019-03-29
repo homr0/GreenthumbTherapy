@@ -32,7 +32,7 @@ class Home extends Component {
               <SliderItem image="images/flower2.jpeg" caption="Looking for the right plant?">
                 <Link to="/search"><h3>Search Plants</h3></Link>
               </SliderItem>
-              <SliderItem image={(this.state.random_plant.image) ? this.state.random_plant.image : "images/flower4.jpeg"} caption={((this.state.random_plant.common_name) && ("Commonly known as " + this.state.random_plant.common_name + ",")) + " is your random plant."}>
+              <SliderItem image={(this.state.random_plant.image) ? this.state.random_plant.image : "images/flower4.jpeg"} caption={((this.state.random_plant.common_name) ? ("Commonly known as " + this.state.random_plant.common_name + ", ")  : " ") + "is your random plant."}>
                 <h3 className="left-align">{this.state.random_plant.scientific_name}</h3>
               </SliderItem>
             </Slider>
