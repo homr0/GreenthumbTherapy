@@ -9,4 +9,17 @@ h3 {
 .slider .slides li .caption {
   color: #37474f;
   top: 25%;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.slider .slides li:last-child {
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .slider .slides li .caption {
+    top: 10%;
+  }
 }
