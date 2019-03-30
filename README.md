@@ -30,13 +30,54 @@ After a great deal of research, we found several great resources about plants, b
 
 To get the most out of Greenthumb Therapy, we recommend that our users create an account.
 
+### Demo Account
+
+If you would like to check out Greenthumb Therapy's features before creating your own account, then you can use the demo account below:
+
+Email: `jsmith@email.com`
+Password: `password`
+
 #### Registering an Account
+
+1. Click **[Register](https://greenthumb-therapy.herokuapp.com/register)** in the menu to go to the Register page.
+![Link to register](/public/images/user-register1.PNG)
+2. Fill out the form with your *first name*, *last name*, *email*, and *password* you wish to use for your account.
+![Filled out registration form](/public/images/user-register2.PNG)
+3. Click **Register User** to submit the form.
+4. If the email is already in use, you will get an error message.
+5. Upon a successful sign up, you will get the message *Welcome to Greenthumb Therapy!* and you can now log in to Greenthumb Therapy with your email and password.
+
+**Caveat**: Please make sure your password is not a simple sequence of letters like *abc*, numbers *123*, or a single word like *password*. Even though your password will be encrypted, it is still recommended that you use a secure password.
 
 #### Logging In
 
+1. Click **[Log in](https://greenthumb-therapy.herokuapp.com/login)** in the menu to go to the Login page.
+![Link to log in](/public/images/user-login1.PNG)
+2. Fill out the form with your *email* and *password*.
+![Filled out log in form](/public/images/user-login2.PNG)
+3. Click **Login User** to submit the form.
+4. If you were not logged in, you will be redirected back to the Login page.
+5. If you were logged in successfully, you will be redirected to your User page.
+
 #### Setting Preferences
 
+1. You can see your current preferences on your **[user](https://greenthumb-therapy.herokuapp.com/user)** page.
+![Previous user preferences](/public/images/user-preferences1.PNG)
+2. Go to **[Questionnaire](https://greenthumb-therapy.herokuapp.com/questionnaire) and fill it out.
+![Questionnaire filled out](/public/images/user-preferences2.PNG)
+3. Make sure that the switch *Save Preferences* to the right of the *Show Me Plants* button is switched on.
+4. Click **Show Me Plants**.
+5. Your answers for *plant rooms*, *sunlight*, *watering frequency*, *pets* and *allergies* will be updated.
+![Current user preferences](/public/images/user-preferences3.PNG)
+
 #### Updating Account Password
+
+1. Click on **[your name](https://greenthumb-therapy.herokuapp.com/user)** in the menu to go to your User page.
+2. Go to section to update your password.
+3. Type in your *current password* and the *new password* you want to use.
+![Filled out update user password area](/public/images/user-password1.PNG)
+4. If you typed in your *current password* incorrectly you will get an error message.
+5. Once the password is successfully updated, you will get the message *Successfully updated password!*.
 
 ### Finding Plants
 
