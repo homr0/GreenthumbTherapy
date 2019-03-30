@@ -30,13 +30,54 @@ After a great deal of research, we found several great resources about plants, b
 
 To get the most out of Greenthumb Therapy, we recommend that our users create an account.
 
+### Demo Account
+
+If you would like to check out Greenthumb Therapy's features before creating your own account, then you can use the demo account below:
+
+Email: `jsmith@email.com`
+Password: `password`
+
 #### Registering an Account
+
+1. Click **[Register](https://greenthumb-therapy.herokuapp.com/register)** in the menu to go to the Register page.
+![Link to register](/public/images/user-register1.PNG)
+2. Fill out the form with your *first name*, *last name*, *email*, and *password* you wish to use for your account.
+![Filled out registration form](/public/images/user-register2.PNG)
+3. Click **Register User** to submit the form.
+4. If the email is already in use, you will get an error message.
+5. Upon a successful sign up, you will get the message *Welcome to Greenthumb Therapy!* and you can now log in to Greenthumb Therapy with your email and password.
+
+**Caveat**: Please make sure your password is not a simple sequence of letters like *abc*, numbers *123*, or a single word like *password*. Even though your password will be encrypted, it is still recommended that you use a secure password.
 
 #### Logging In
 
+1. Click **[Log in](https://greenthumb-therapy.herokuapp.com/login)** in the menu to go to the Login page.
+![Link to log in](/public/images/user-login1.PNG)
+2. Fill out the form with your *email* and *password*.
+![Filled out log in form](/public/images/user-login2.PNG)
+3. Click **Login User** to submit the form.
+4. If you were not logged in, you will be redirected back to the Login page.
+5. If you were logged in successfully, you will be redirected to your User page.
+
 #### Setting Preferences
 
+1. You can see your current preferences on your **[user](https://greenthumb-therapy.herokuapp.com/user)** page.
+![Previous user preferences](/public/images/user-preferences1.PNG)
+2. Go to **[Questionnaire](https://greenthumb-therapy.herokuapp.com/questionnaire) and fill it out.
+![Questionnaire filled out](/public/images/user-preferences2.PNG)
+3. Make sure that the switch *Save Preferences* to the right of the *Show Me Plants* button is switched on.
+4. Click **Show Me Plants**.
+5. Your answers for *plant rooms*, *sunlight*, *watering frequency*, *pets* and *allergies* will be updated.
+![Current user preferences](/public/images/user-preferences3.PNG)
+
 #### Updating Account Password
+
+1. Click on **[your name](https://greenthumb-therapy.herokuapp.com/user)** in the menu to go to your User page.
+2. Go to section to update your password.
+3. Type in your *current password* and the *new password* you want to use.
+![Filled out update user password area](/public/images/user-password1.PNG)
+4. If you typed in your *current password* incorrectly you will get an error message.
+5. Once the password is successfully updated, you will get the message *Successfully updated password!*.
 
 ### Finding Plants
 
@@ -44,20 +85,51 @@ The two ways a user can find a plant is through answering our [Plant Matcher Que
 
 #### Answering the Questionnaire
 
+1. Go to the **[Plant Matcher Questionnaire](https://greenthumb-therapy.herokuapp.com/questionnaire)**.
+2. Fill out the questionnaire.
+![Questionnaire filled out](/public/images/user-preferences2.PNG)
+3. Click **Show Me Plants**.
+4. You will be shown Plant Cards that you may then choose to favorite or ban.
+![Plant Card results](/public/images/find-questionnaire1.PNG)
+
 #### Utilizing the Plant Search
+
+1. Go to the **[Plant Search](https://greenthumb-therapy.herokuapp.com/search)**.
+2. Fill out the fields in the search area.
+![Search filled out](/public/images/find-search1.PNG)
+3. Click **Show Me Plants**.
+4. You will be shown Plant Cards that you may then choose to favorite or ban.
+![Plant Card results](/public/images/find-search2.PNG)
 
 ### Managing Plants
 
 Once the Questionnaire or Search returns some plants, the user can choose to either favorite a plant or ban a plant.
 
+![Plant Cards](/public/images/plant1.PNG)
+
 #### Favoriting Plants
+
+1. To save a plant from the Plant Results, click on the green save button with the **floppy disk** symbol.
+2. The plant will then be saved to your favorite list if you are logged in.
+3. To unfavorite a plant, click on the red remove button with the **trash can** symbol.
+4. The plant will be removed from your favorite list if you are logged in.
 
 #### Banning Plants
 
+1. To ban a plant from the Plant Results, click on the orange ban button with the **do not disturb** symbol.
+2. The plant will then be saved to your ban list if you are logged in.
+3. To unban a plant, click on the blue unban button with the **checkmark** symbol.
+4. The plant will be removed from your ban list if you are logged in.
+
+### Other Plant Card Functions
+
+- **Wikipedia** (W icon) link - allows the user to check out more information about the plant on Wikipedia.
+- **Google Shopping** (shopping card icon) link - *only appears on plants with common names* and will look on Google Shopping for any results. We cannot guarantee that it will return the result(s) you are looking for.
+
 ## willCode4Ca$h Team
 
-- [Rebecca Hom](https://github.com/homr0)
-- [Nolen Diggs](https://github.com/DiggsNG)
-- [Daniel Jacquez](https://github.com/jacquezdaniel)
-- [Rhea Quiambao](https://github.com/delquiam)
-- [Meenal Subramanian](https://github.com/meenalal)
+- **Systems Architect**: [Rebecca Hom](https://github.com/homr0)
+- **Component Horticulturist**: [Nolen Diggs](https://github.com/DiggsNG)
+- **Design Landscaper**: [Daniel Jacquez](https://github.com/jacquezdaniel)
+- **Trefle Hunter**: [Rhea Quiambao](https://github.com/delquiam)
+- **Backend Engineer**: [Meenal Subramanian](https://github.com/meenalal)
