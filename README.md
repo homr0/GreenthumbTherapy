@@ -63,7 +63,7 @@ Password: `password`
 
 1. You can see your current preferences on your **[user](https://greenthumb-therapy.herokuapp.com/user)** page.
 ![Previous user preferences](/public/images/user-preferences1.PNG)
-2. Go to **[Questionnaire](https://greenthumb-therapy.herokuapp.com/questionnaire) and fill it out.
+2. Go to **[Questionnaire](https://greenthumb-therapy.herokuapp.com/questionnaire)** and fill it out.
 ![Questionnaire filled out](/public/images/user-preferences2.PNG)
 3. Make sure that the switch *Save Preferences* to the right of the *Show Me Plants* button is switched on.
 4. Click **Show Me Plants**.
